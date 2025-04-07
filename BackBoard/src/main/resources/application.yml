@@ -3,7 +3,7 @@ spring:
     name: board
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/board?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/board_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
   mvc:
@@ -11,8 +11,8 @@ spring:
       matching-strategy: path-pattern-parser # 또는 ant-path-matcher
 
 mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-  type-aliases-package: com.board.board.domain
+  mapper-locations: classpath:mapper/**.xml
+  type-aliases-package: com.example.board.domain
   configuration:
     map-underscore-to-camel-case: true
 
