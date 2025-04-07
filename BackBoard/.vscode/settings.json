@@ -1,0 +1,14 @@
+{
+    "cSpell.words": [
+        "appender",
+        "jjwt",
+        "jsonwebtoken",
+        "mockmvc",
+        "mybatis",
+        "projectlombok",
+        "restdocs",
+        "springframework",
+        "testtest"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

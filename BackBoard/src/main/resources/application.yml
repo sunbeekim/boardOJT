@@ -6,35 +6,22 @@ spring:
     url: jdbc:mysql://localhost:3306/board?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: root
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:schema.sql
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: path-pattern-parser # 또는 ant-path-matcher
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.board.board.domain
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
 jwt:
-  secret: your-secret-key-should-be-very-long-and-secure-at-least-256-bits
+  secret: secret-key-should-be-very-long-and-secure-at-least-256-bits
   expiration: 86400000  # 24시간
   header: Authorization
   prefix: Bearer 
 
-logging:
-  level:
-    root: INFO
-    com.board.board: DEBUG
-    org.springframework.web: INFO
-    org.mybatis: DEBUG
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file:
-    name: logs/application.log
+#logging:
+#  config: classpath:log4j.xml
+   

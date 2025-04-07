@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: board
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/board?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: root
+  mvc:
+    pathmatch:
+      matching-strategy: path-pattern-parser # 또는 ant-path-matcher
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.board.board.domain
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: secret-key-should-be-very-long-and-secure-at-least-256-bits
+  expiration: 86400000  # 24시간
+  header: Authorization
+  prefix: Bearer 
+
+#logging:
+#  config: classpath:log4j.xml
+   
