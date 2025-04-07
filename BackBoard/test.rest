@@ -3,9 +3,9 @@ POST http://localhost:8080/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test2@test.com",
-  "password": "test1234!",
-  "nickname": "테스트유저2"
+  "email": "test2@testcom",
+  "password": "testsddwd1!",
+  "nickname": "테스트유저3"
 }
 
 ### 로그인

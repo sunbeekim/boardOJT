@@ -23,6 +23,9 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    // 여기서 상태코드도 포함해서 반환? 아니면 예외처리에서? 예외처리에서 하는게 맞고
+    // 예외처리에서 httpStatus.LOCKED.value() 이 값으로 상태코드 data 오브젝트에 담아서 반환해도 될듯하고
+    // 잠금유지시간 사용 x
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
