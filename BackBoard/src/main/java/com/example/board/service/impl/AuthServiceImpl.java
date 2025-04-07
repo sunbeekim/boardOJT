@@ -52,12 +52,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    @Transactional
+    //@Transactional
     public String login(LoginRequestDto request) {
         // 사용자 조회
         User user = userMapper.findByEmail(request.getEmail());
         if (user == null) {
-            throw new UnauthorizedException("이메일 또는 비밀번호가 일치하지 않습니다.");
+            
+            throw new UnauthorizedException("(이메일) 또는 비밀번호가 일치하지 않습니다.");
         }
 
         // 계정 잠금 확인
@@ -69,15 +70,15 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             // 로그인 실패 횟수 증가
             int failCount = user.getLoginFailCount() + 1;
+            // 로그인 연속 실패 5회
             boolean locked = failCount >= 5;
             
-            userMapper.updateLoginFailCount(user.getId(), failCount, locked);
-            
+            userMapper.updateLoginFailCount(user.getId(), failCount, locked);            
             if (locked) {
                 throw new AccountLockedException("비밀번호 5회 오류로 계정이 잠겼습니다. 관리자에게 문의하세요.");
             }
             
-            throw new UnauthorizedException("이메일 또는 비밀번호가 일치하지 않습니다.");
+            throw new UnauthorizedException("이메일 또는 (비밀번호)가 일치하지 않습니다.");
         }
 
         // 로그인 성공 시 실패 횟수 초기화
@@ -86,4 +87,5 @@ public class AuthServiceImpl implements AuthService {
         // JWT 토큰 생성
         return jwtUtil.createToken(user);
     }
+    
 } 

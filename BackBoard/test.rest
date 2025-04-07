@@ -3,9 +3,9 @@ POST http://localhost:8080/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "test2@test.com",
   "password": "test1234!",
-  "nickname": "테스트유저"
+  "nickname": "테스트유저2"
 }
 
 ### 로그인
@@ -14,9 +14,9 @@ Content-Type: application/json
 
 {
   "email": "test@test.com",
-  "password": "test1234!"
+  "password": "test1234v3!"
 }
 
 ### 인증 필요한 요청
-GET http://localhost:8080/api/user/me
-Authorization: Bearer <여기에_로그인_응답_토큰_붙이기>
+GET http://localhost:8080/api/????
+Authorization: Bearer <eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjEsIm5pY2tuYW1lIjoi7YWM7Iqk7Yq47Jyg7KCAIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc0NDAxMTIxNSwiZXhwIjoxNzQ0MDk3NjE1fQ.ECwTSZfZ7U_t-nbbyfpdMzXeB_k9UuT-uHzibu0jF9>
