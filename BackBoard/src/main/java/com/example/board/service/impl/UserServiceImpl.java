@@ -26,13 +26,10 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    // 여기서 상태코드도 포함해서 반환? 아니면 예외처리에서? 예외처리에서 하는게 맞고
-    // 예외처리에서 httpStatus.LOCKED.value() 이 값으로 상태코드 data 오브젝트에 담아서 반환해도 될듯하고
-    // 잠금유지시간 사용 x
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
-        try {                   
+        try {
             // 이메일 중복 체크
             if (userMapper.findByEmail(request.getEmail()) != null) {
                 throw new DuplicateResourceException("이미 사용 중인 이메일입니다.");
@@ -56,22 +53,22 @@ public class UserServiceImpl implements UserService {
                     .build();
 
             userMapper.save(user);
-        } 
+        }
         // 테이블 Not Found 예외처리
         catch (PersistenceException e) {
             if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("table")) {
-            throw new TableNotFoundException("필요한 테이블이 존재하지 않습니다: " + e.getMessage());
+                throw new TableNotFoundException("필요한 테이블이 존재하지 않습니다: " + e.getMessage());
             }
         }
     }
 
     @Override
-    //@Transactional
+    // @Transactional
     public String login(LoginRequestDto request) {
         // 사용자 조회
         User user = userMapper.findByEmail(request.getEmail());
         if (user == null) {
-            
+
             throw new UnauthorizedException("(이메일) 또는 비밀번호가 일치하지 않습니다.");
         }
 
@@ -86,12 +83,12 @@ public class UserServiceImpl implements UserService {
             int failCount = user.getLoginFailCount() + 1;
             // 로그인 연속 실패 5회
             boolean locked = failCount >= 5;
-            
-            userMapper.updateLoginFailCount(user.getId(), failCount, locked);            
+
+            userMapper.updateLoginFailCount(user.getId(), failCount, locked);
             if (locked) {
                 throw new AccountLockedException("비밀번호 5회 오류로 계정이 잠겼습니다. 관리자에게 문의하세요.");
             }
-            
+
             throw new UnauthorizedException("이메일 또는 (비밀번호)가 일치하지 않습니다.");
         }
 
@@ -101,5 +98,5 @@ public class UserServiceImpl implements UserService {
         // JWT 토큰 생성
         return jwtUtil.createToken(user);
     }
-    
-} 
+
+}
