@@ -1,4 +1,6 @@
 {
+    "files.autoSave": "afterDelay",         // or "onWindowChange", "onFocusChange"
+    "files.autoSaveDelay": 1000,             // 밀리초 단위 (1초 후 저장)
     "cSpell.words": [
         "appender",
         "jdbc",

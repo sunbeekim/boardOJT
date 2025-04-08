@@ -9,6 +9,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: path-pattern-parser # 또는 ant-path-matcher
+  profiles:
+    active: dev
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml
@@ -22,6 +24,5 @@ jwt:
   header: Authorization
   prefix: Bearer 
 
-#logging:
-#  config: classpath:log4j.xml
+
    
