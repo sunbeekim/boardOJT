@@ -46,4 +46,13 @@ public class CommonResponseDto<T> {
                 .error(error)
                 .build();
     }
-} 
+
+    public static <T> CommonResponseDto<T> error(String message, String error, T data) {
+        return CommonResponseDto.<T>builder()
+                .success(false)
+                .message(message)
+                .error(error)
+                .data(data)
+                .build();
+    }
+}

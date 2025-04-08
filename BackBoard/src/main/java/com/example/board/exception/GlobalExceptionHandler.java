@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
                 log.error("Business Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(e.getStatus())
-                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode()));
+                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode(), e.getStatus()));
         }
 
         // 인증 예외 처리 - 인증 실패 시 발생 401
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
                 log.error("Authentication Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.UNAUTHORIZED)
-                                .body(CommonResponseDto.error("인증에 실패했습니다.", "AUTHENTICATION_FAILED"));
+                                .body(CommonResponseDto.error("인증에 실패했습니다.", "AUTHENTICATION_FAILED", 401));
         }
 
         // 권한 예외 처리 - 인증 성공이나 권한 부족인 경우 403
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
                 log.error("Access Denied Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.FORBIDDEN)
-                                .body(CommonResponseDto.error("접근 권한이 없습니다. [보안설정 확인]", "ACCESS_DENIED"));
+                                .body(CommonResponseDto.error("접근 권한이 없습니다. [보안설정 확인]", "ACCESS_DENIED", 403));
         }
 
         // 유효성 검사 예외 처리 (MethodArgumentNotValidException) - dto RequestBody에 대한 매치 실패(필수
@@ -63,7 +63,8 @@ public class GlobalExceptionHandler {
                 log.error("Validation Exception: {}", errorMessage);
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
-                                .body(CommonResponseDto.error(errorMessage, "VALIDATION_FAILED"));
+                                .body(CommonResponseDto.error(errorMessage, "VALIDATION_FAILED",
+                                                "400 - DTO 조건 불충족족(요청 바디 검증 실패)"));
         }
 
         // 유효성 검사 예외 처리 (BindException)
@@ -77,7 +78,7 @@ public class GlobalExceptionHandler {
                 log.error("Binding Exception: {}", errorMessage);
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
-                                .body(CommonResponseDto.error(errorMessage, "BINDING_FAILED"));
+                                .body(CommonResponseDto.error(errorMessage, "BINDING_FAILED", "400 - 폼 필드 값 검증 실패"));
         }
 
         // 유효성 검사 예외 처리 (ConstraintViolationException) - Valid, 사이즈, 패턴 등 실패 시 발생
@@ -91,7 +92,8 @@ public class GlobalExceptionHandler {
                 log.error("Constraint Violation: {}", errorMessage);
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
-                                .body(CommonResponseDto.error(errorMessage, "CONSTRAINT_VIOLATION"));
+                                .body(CommonResponseDto.error(errorMessage, "CONSTRAINT_VIOLATION",
+                                                "400 - @Pattern, @Min(1), @NotBlank 등"));
         }
 
         @ExceptionHandler(TableNotFoundException.class)

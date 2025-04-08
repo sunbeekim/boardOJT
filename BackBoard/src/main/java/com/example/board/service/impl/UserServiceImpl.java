@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         // 테이블 Not Found 예외처리
         catch (PersistenceException e) {
             if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("table")) {
-                throw new TableNotFoundException("필요한 테이블이 존재하지 않습니다: " + e.getMessage());
+                throw new TableNotFoundException("users 테이블이 존재하지 않습니다: " + e.getMessage());
             }
         }
     }
