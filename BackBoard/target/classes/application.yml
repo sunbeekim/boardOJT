@@ -1,4 +1,10 @@
 spring:
+  # error:
+  #   whitelabel:
+  #     enabled: false
+  #   path: /error
+  #   include-message: always
+  #   include-binding-errors: always
   application:
     name: board
   datasource:
@@ -20,9 +26,6 @@ mybatis:
 
 jwt:
   secret: secret-key-should-be-very-long-and-secure-at-least-256-bits
-  expiration: 86400000  # 24시간
+  expiration: 86400000 # 24시간
   header: Authorization
-  prefix: Bearer 
-
-
-   
+  prefix: Bearer
