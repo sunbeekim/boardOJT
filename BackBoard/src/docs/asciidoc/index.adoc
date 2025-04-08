@@ -1,0 +1,25 @@
+= API 문서
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+:snippets: build/generated-snippets
+
+== 회원가입 API
+
+=== 요청
+
+include::{snippets}/signup/http-request.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/signup/request-fields.adoc[]
+
+=== 응답
+
+include::{snippets}/signup/http-response.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/signup/response-fields.adoc[]
+
+== 로그인 API
