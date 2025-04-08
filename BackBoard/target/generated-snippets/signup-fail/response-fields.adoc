@@ -1,0 +1,20 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (false)
+
+|`+message+`
+|`+String+`
+|에러 메세지
+
+|`+data+`
+|`+String+`
+|400 - DTO 조건 불충족족(요청 바디 검증 실패)
+
+|`+error+`
+|`+String+`
+|에러명
+
+|===

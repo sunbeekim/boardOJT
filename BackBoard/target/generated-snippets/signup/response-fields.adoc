@@ -11,7 +11,7 @@
 
 |`+data+`
 |`+Null+`
-|응답 데이터 (nullable)
+|응답 데이터 (200)
 
 |`+error+`
 |`+Null+`
