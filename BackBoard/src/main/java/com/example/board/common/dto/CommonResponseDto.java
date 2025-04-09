@@ -16,6 +16,7 @@ public class CommonResponseDto<T> {
     private String message;
     private T data;
     private String error;
+    private String errorPath;
 
     public static <T> CommonResponseDto<T> success(T data) {
         return CommonResponseDto.<T>builder()
@@ -53,6 +54,16 @@ public class CommonResponseDto<T> {
                 .message(message)
                 .error(error)
                 .data(data)
+                .build();
+    }
+
+    public static <T> CommonResponseDto<T> error(String message, String error, T data, String errorPath) {
+        return CommonResponseDto.<T>builder()
+                .success(false)
+                .message(message)
+                .error(error)
+                .data(data)
+                .errorPath(errorPath)
                 .build();
     }
 }

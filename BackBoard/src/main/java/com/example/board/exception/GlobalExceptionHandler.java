@@ -3,6 +3,7 @@ package com.example.board.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.board.common.dto.CommonResponseDto;
 
+import io.jsonwebtoken.JwtException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +34,8 @@ public class GlobalExceptionHandler {
                 log.error("Business Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(e.getStatus())
-                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode(), e.getStatus()));
+                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode(), e.getStatus(),
+                                                "/error/" + e.getStatus()));
         }
 
         // 인증 예외 처리 - 인증 실패 시 발생 401
@@ -38,7 +44,8 @@ public class GlobalExceptionHandler {
                 log.error("Authentication Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.UNAUTHORIZED)
-                                .body(CommonResponseDto.error("인증에 실패했습니다.", "AUTHENTICATION_FAILED", 401));
+                                .body(CommonResponseDto.error("인증에 실패했습니다.", "AUTHENTICATION_FAILED", 401,
+                                                "/error/" + 401));
         }
 
         // 권한 예외 처리 - 인증 성공이나 권한 부족인 경우 403
@@ -47,7 +54,8 @@ public class GlobalExceptionHandler {
                 log.error("Access Denied Exception: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.FORBIDDEN)
-                                .body(CommonResponseDto.error("접근 권한이 없습니다. [보안설정 확인]", "ACCESS_DENIED", 403));
+                                .body(CommonResponseDto.error("접근 권한이 없습니다. [보안설정 확인]", "ACCESS_DENIED", 403,
+                                                "/error/" + 403));
         }
 
         // 유효성 검사 예외 처리 (MethodArgumentNotValidException) - dto RequestBody에 대한 매치 실패(필수
@@ -64,7 +72,7 @@ public class GlobalExceptionHandler {
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
                                 .body(CommonResponseDto.error(errorMessage, "VALIDATION_FAILED",
-                                                "400 - DTO 조건 불충족족(요청 바디 검증 실패)"));
+                                                "400 - DTO 조건 불충족족(요청 바디 검증 실패)", "/error/" + 400));
         }
 
         // 유효성 검사 예외 처리 (BindException)
@@ -78,7 +86,8 @@ public class GlobalExceptionHandler {
                 log.error("Binding Exception: {}", errorMessage);
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
-                                .body(CommonResponseDto.error(errorMessage, "BINDING_FAILED", "400 - 폼 필드 값 검증 실패"));
+                                .body(CommonResponseDto.error(errorMessage, "BINDING_FAILED", "400 - 폼 필드 값 검증 실패",
+                                                "/error/" + 400));
         }
 
         // 유효성 검사 예외 처리 (ConstraintViolationException) - Valid, 사이즈, 패턴 등 실패 시 발생
@@ -93,14 +102,36 @@ public class GlobalExceptionHandler {
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
                                 .body(CommonResponseDto.error(errorMessage, "CONSTRAINT_VIOLATION",
-                                                "400 - @Pattern, @Min(1), @NotBlank 등"));
+                                                "400 - @Pattern, @Min(1), @NotBlank 등", "/error/" + 400));
         }
 
+        // MyBatis xml or config 잘못되어 있거나, 테이블이 없는 경우
         @ExceptionHandler(TableNotFoundException.class)
         public ResponseEntity<CommonResponseDto<?>> handleTableNotFound(TableNotFoundException e) {
                 log.error("Table Not Found: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.SERVICE_UNAVAILABLE)
-                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode()));
+                                .body(CommonResponseDto.error(e.getMessage(), e.getErrorCode(), "DB 접근에 실패했습니다.",
+                                                "/error/" + 503));
+        }
+
+        // 토큰 값을 이상하게 보내면 생기는 500 -> 401 로 전환
+        @ExceptionHandler(JwtException.class)
+        public ResponseEntity<CommonResponseDto<?>> handleJwtException(JwtException e, HttpServletRequest request) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(CommonResponseDto.error(
+                                                "유효하지 않은 토큰 : 보내는 토큰을 확인해주세요.",
+                                                e.getClass().getSimpleName(),
+                                                "구문 오류를 확인해주세요.", "/error/" + 401));
+        }
+
+        // DB 연결이 끊어져 있을 때 예외처리
+        @ExceptionHandler(CannotGetJdbcConnectionException.class)
+        public ResponseEntity<CommonResponseDto<?>> handleDbConnectionError(CannotGetJdbcConnectionException e) {
+                log.error("DB 연결 실패: {}", e.getMessage());
+                return ResponseEntity
+                                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                                .body(CommonResponseDto.error("데이터베이스 연결에 실패했습니다.", "DB_CONNECTION_ERROR",
+                                                "데이터베이스가 실행되어 있는지 확인해주세요.", "/error/" + 503));
         }
 }

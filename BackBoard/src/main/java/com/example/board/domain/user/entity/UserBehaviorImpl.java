@@ -23,4 +23,18 @@ public class UserBehaviorImpl implements UserBehavior {
         return encoder.matches(rawPassword, user.getPassword());
     }
 
+    @Override
+    public void changeNickname(String newNickname) {
+        if (newNickname != null && !newNickname.isBlank()) {
+            user.setNickname(newNickname);
+        }
+    }
+
+    @Override
+    public void changePassword(String rawPassword, PasswordEncoder encoder) {
+        if (rawPassword != null && !rawPassword.isBlank()) {
+            user.setPassword(encoder.encode(rawPassword));
+        }
+    }
+
 }

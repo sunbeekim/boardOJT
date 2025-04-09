@@ -7,10 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.board.common.factory.BehaviorFactory;
 import com.example.board.dao.UserMapper;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
+import com.example.board.domain.user.dto.UserUpdateRequestDto;
 import com.example.board.domain.user.entity.User;
+import com.example.board.domain.user.entity.interfaces.UserBehavior;
 import com.example.board.domain.user.enums.UserRole;
 import com.example.board.exception.AccountLockedException;
 import com.example.board.exception.TableNotFoundException;
@@ -26,12 +29,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final UserValidator userValidator;
+    private final BehaviorFactory behaviorFactory;
 
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
         try {
-            userValidator.validateUniqueness(request.getEmail(), request.getNickname());
+            userValidator.validateUniquenessEmail(request.getEmail());
+            userValidator.validateUniquenessNickname(request.getNickname());
             // 사용자 생성
             User user = User.builder()
                     .email(request.getEmail())
@@ -90,4 +95,19 @@ public class UserServiceImpl implements UserService {
         return jwtUtil.createToken(user);
     }
 
+    @Override
+    public void update(UserUpdateRequestDto request) {
+        userValidator.validateUniquenessNickname(request.getNickname());
+        User user = userMapper.findByEmail(request.getEmail());
+        if (user == null) {
+            throw new UnauthorizedException("로그인된 사용자를 찾을 수 없습니다.");
+        }
+
+        UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+
+        userBehavior.changeNickname(request.getNickname());
+        userBehavior.changePassword(request.getPassword(), passwordEncoder);
+
+        userMapper.update(user);
+    }
 }

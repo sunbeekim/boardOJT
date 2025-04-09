@@ -10,11 +10,15 @@
 |응답 메시지
 
 |`+data+`
-|`+Null+`
+|`+Number+`
 |응답 데이터 (200)
 
 |`+error+`
 |`+Null+`
 |에러 정보 (nullable)
+
+|`+errorPath+`
+|`+Null+`
+|에러 페이지 경로 (nullable)
 
 |===

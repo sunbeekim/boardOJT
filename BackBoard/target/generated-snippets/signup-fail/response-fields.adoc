@@ -7,7 +7,7 @@
 
 |`+message+`
 |`+String+`
-|에러 메세지
+|Bad Request
 
 |`+data+`
 |`+String+`
@@ -15,6 +15,10 @@
 
 |`+error+`
 |`+String+`
-|에러명
+|CONSTRAINT_VIOLATION
+
+|`+errorPath+`
+|`+String+`
+|/error/400
 
 |===

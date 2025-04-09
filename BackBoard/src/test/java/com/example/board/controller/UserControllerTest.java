@@ -55,7 +55,9 @@ class UserControllerTest {
                                                                 fieldWithPath("message").description("응답 메시지"),
                                                                 fieldWithPath("data").description("응답 데이터 (200)"),
                                                                 fieldWithPath("error")
-                                                                                .description("에러 정보 (nullable)"))));
+                                                                                .description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath")
+                                                                                .description("에러 페이지 경로 (nullable)"))));
         }
 
         @Test
@@ -69,10 +71,11 @@ class UserControllerTest {
                                 .andDo(document("signup-fail", responseFields(
                                                 fieldWithPath("success")
                                                                 .description("요청 성공 여부 (false)"),
-                                                fieldWithPath("message").description("에러 메세지"),
+                                                fieldWithPath("message").description("Bad Request"),
                                                 fieldWithPath("data").description(
                                                                 "400 - DTO 조건 불충족족(요청 바디 검증 실패)"),
-                                                fieldWithPath("error").description("에러명")
+                                                fieldWithPath("error").description("CONSTRAINT_VIOLATION"),
+                                                fieldWithPath("errorPath").description("/error/400")
 
                                 )
 

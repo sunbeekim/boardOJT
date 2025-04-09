@@ -42,16 +42,11 @@
 
     <update id="update" parameterType="com.example.board.domain.user.entity.User">
         UPDATE users
-        SET email = #{email},
-            password = #{password},
-            nickname = #{nickname},
-            role = #{role},
-            login_fail_count = #{loginFailCount},
-            locked = #{locked},
-            last_login_attempt = #{lastLoginAttempt},
-            updated_at = NOW(),
-            enabled = #{enabled}
-        WHERE id = #{id}
+        <set>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="password != null">password = #{password},</if>
+        </set>
+        WHERE email = #{email}
     </update>
 
     <update id="updateLoginFailCount">
