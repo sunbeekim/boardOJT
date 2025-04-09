@@ -26,3 +26,7 @@ Content-Type: application/json
   "nickname": "테스트유저",
   "password": "testtest1!"
 }
+
+### 회원탈퇴
+DELETE http://localhost:8080/api/user/me
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjQsIm5pY2tuYW1lIjoi7YWM7Iqk7Yq47Jyg7KCANCIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDQxODk0MzAsImV4cCI6MTc0NDI3NTgzMH0.Vsi1JN3V1vzAfws4iRYRLwb_rqhIsSTBofpaeeSdDQw

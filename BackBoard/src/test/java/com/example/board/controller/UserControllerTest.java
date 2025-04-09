@@ -20,6 +20,9 @@ import com.example.board.service.*;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.header;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureRestDocs
@@ -81,6 +84,143 @@ class UserControllerTest {
 
                                 ));
 
+        }
+
+        @Test
+        void deleteTest() throws Exception {
+                mockMvc.perform(delete("/api/user/me")
+                                .header("Authorization", "Bearer valid-token"))
+                                .andExpect(status().isOk())
+                                .andDo(document("delete-user",
+                                                requestHeaders(
+                                                                headerWithName("Authorization").description("JWT 토큰")
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
+                                                                fieldWithPath("message").description("응답 메시지"),
+                                                                fieldWithPath("data").description("응답 데이터 (null)"),
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)")
+                                                )));
+        }
+
+        @Test
+        void deleteFailTest_dueToInvalidToken() throws Exception {
+                mockMvc.perform(delete("/api/user/me")
+                                .header("Authorization", "Bearer invalid-token"))
+                                .andExpect(status().isUnauthorized())
+                                .andDo(document("delete-user-fail",
+                                                requestHeaders(
+                                                                headerWithName("Authorization").description("JWT 토큰")
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("에러 메시지"),
+                                                                fieldWithPath("data").description("에러 데이터"),
+                                                                fieldWithPath("error").description("에러 코드"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로")
+                                                )));
+        }
+
+        @Test
+        void loginTest() throws Exception {
+                LoginRequestDto request = new LoginRequestDto("test@email.com", "password123!");
+
+                mockMvc.perform(post("/api/user/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isOk())
+                                .andDo(document("login",
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일"),
+                                                                fieldWithPath("password").description("비밀번호")
+                                                                                .attributes(key("constraints").value("8~16자, 영문, 숫자, 특수문자 필수 포함"))
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
+                                                                fieldWithPath("message").description("응답 메시지"),
+                                                                fieldWithPath("data").description("JWT 토큰"),
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)")
+                                                )));
+        }
+
+        @Test
+        void loginFailTest_dueToInvalidCredentials() throws Exception {
+                LoginRequestDto request = new LoginRequestDto("test@email.com", "wrong-password");
+
+                mockMvc.perform(post("/api/user/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isUnauthorized())
+                                .andDo(document("login-fail",
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일"),
+                                                                fieldWithPath("password").description("비밀번호")
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("에러 메시지"),
+                                                                fieldWithPath("data").description("에러 데이터"),
+                                                                fieldWithPath("error").description("에러 코드"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로")
+                                                )));
+        }
+
+        @Test
+        void updateTest() throws Exception {
+                UserUpdateRequestDto request = new UserUpdateRequestDto("test@email.com", "newPassword123!", "newNickname");
+
+                mockMvc.perform(patch("/api/user/me")
+                                .header("Authorization", "Bearer valid-token")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isOk())
+                                .andDo(document("update-user",
+                                                requestHeaders(
+                                                                headerWithName("Authorization").description("JWT 토큰")
+                                                ),
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일").optional(),
+                                                                fieldWithPath("password").description("새 비밀번호")
+                                                                                .attributes(key("constraints").value("8~16자, 영문, 숫자, 특수문자 필수 포함")),
+                                                                fieldWithPath("nickname").description("새 닉네임")
+                                                                                .attributes(key("constraints").value("2~10자, 한글, 알파벳, 숫자만 사용 가능"))
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
+                                                                fieldWithPath("message").description("응답 메시지"),
+                                                                fieldWithPath("data").description("수정된 회원 정보"),
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)")
+                                                )));
+        }
+
+        @Test
+        void updateFailTest_dueToInvalidToken() throws Exception {
+                UserUpdateRequestDto request = new UserUpdateRequestDto("test@email.com", "newPassword123!", "newNickname");
+
+                mockMvc.perform(patch("/api/user/me")
+                                .header("Authorization", "Bearer invalid-token")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isUnauthorized())
+                                .andDo(document("update-user-fail",
+                                                requestHeaders(
+                                                                headerWithName("Authorization").description("JWT 토큰")
+                                                ),
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일").optional(),
+                                                                fieldWithPath("password").description("새 비밀번호"),
+                                                                fieldWithPath("nickname").description("새 닉네임")
+                                                ),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("에러 메시지"),
+                                                                fieldWithPath("data").description("에러 데이터"),
+                                                                fieldWithPath("error").description("에러 코드"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로")
+                                                )));
         }
 }
 

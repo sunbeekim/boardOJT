@@ -41,6 +41,10 @@ public class UserController {
         return ResponseEntity.ok(CommonResponseDto.success("회원정보 수정이 완료되었습니다.", request));
     }
 
-    // 회원탈퇴퇴
-
+    @DeleteMapping("/me")
+    public ResponseEntity<CommonResponseDto<?>> delete(@RequestHeader("Authorization") String token) {
+        String email = jwtUtil.getEmailFromToken(token);
+        userService.delete(email);
+        return ResponseEntity.ok(CommonResponseDto.success("회원탈퇴가 완료되었습니다.", null));
+    }
 }
