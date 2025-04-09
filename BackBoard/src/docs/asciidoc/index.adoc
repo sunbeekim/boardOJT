@@ -1,0 +1,32 @@
+= API 문서
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+:snippets: ${snippets}
+
+== 회원가입 API
+
+=== 요청 정보
+.HTTP 요청
+include::{snippets}/signup/http-request.adoc[]
+
+=== 요청 필드 설명
+include::{snippets}/signup/request-fields.adoc[]
+
+=== 응답 정보 (성공)
+.HTTP 응답
+include::{snippets}/signup/http-response.adoc[]
+
+=== 응답 필드 설명 (성공)
+include::{snippets}/signup/response-fields.adoc[]
+
+=== 응답 정보 (실패)
+.HTTP 응답
+include::{snippets}/signup-fail/http-request.adoc[]
+
+=== 응답 필드 설명 (실패)
+include::{snippets}/signup-fail/response-fields.adoc[]
+
+== 로그인 API
+
+// 이후 로그인 관련 요청/응답/필드가 추가될 예정

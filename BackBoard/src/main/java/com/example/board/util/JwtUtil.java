@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.example.board.config.JwtConfig;
-import com.example.board.domain.entity.User;
+import com.example.board.domain.user.entity.User;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -55,8 +55,7 @@ public class JwtUtil {
                 .getBody();
 
         List<SimpleGrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(claims.get("role", String.class))
-        );
+                new SimpleGrantedAuthority(claims.get("role", String.class)));
 
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
     }
@@ -78,4 +77,29 @@ public class JwtUtil {
             return false;
         }
     }
-} 
+
+    public String getEmailFromToken(String token) {
+        return getClaims(token).getSubject();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        return getClaims(token).get("id", Long.class);
+    }
+
+    public String getNicknameFromToken(String token) {
+        return getClaims(token).get("nickname", String.class);
+    }
+
+    public String getRoleFromToken(String token) {
+        return getClaims(token).get("role", String.class);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+}

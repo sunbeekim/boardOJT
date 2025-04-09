@@ -1,0 +1,35 @@
+package com.example.board.domain.user.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import java.time.LocalDateTime;
+
+import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.enums.UserRole;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    private Long id;
+    private String email;
+    private String password;
+    private String nickname;
+    private UserRole role;
+    private int loginFailCount;
+    private boolean locked;
+    private LocalDateTime lastLoginAttempt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private boolean enabled;
+
+    public UserBehavior behavior() {
+        return new UserBehaviorImpl(this);
+    }
+}

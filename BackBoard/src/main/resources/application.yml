@@ -1,4 +1,10 @@
 spring:
+  # error:
+  #   whitelabel:
+  #     enabled: false
+  #   path: /error
+  #   include-message: always
+  #   include-binding-errors: always
   application:
     name: board
   datasource:
@@ -9,6 +15,8 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: path-pattern-parser # 또는 ant-path-matcher
+  profiles:
+    active: dev
 
 mybatis:
   mapper-locations: classpath:mapper/**.xml
@@ -18,10 +26,6 @@ mybatis:
 
 jwt:
   secret: secret-key-should-be-very-long-and-secure-at-least-256-bits
-  expiration: 86400000  # 24시간
+  expiration: 86400000 # 24시간
   header: Authorization
-  prefix: Bearer 
-
-#logging:
-#  config: classpath:log4j.xml
-   
+  prefix: Bearer

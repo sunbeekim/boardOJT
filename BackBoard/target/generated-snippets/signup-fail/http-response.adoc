@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 352
+
+{"success":false,"message":"password: 비밀번호는 필수 입력값입니다., password: 비밀번호는 영문, 숫자, 특수문자를 모두 포함해야 합니다., password: 비밀번호는 8~16자 사이여야 합니다.","data":"400 - DTO 조건 불충족족(요청 바디 검증 실패)","error":"VALIDATION_FAILED","errorPath":"/error/400"}
+----
