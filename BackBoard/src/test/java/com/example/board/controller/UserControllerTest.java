@@ -1,6 +1,5 @@
 package com.example.board.controller;
 
-import com.example.board.dto.SignUpRequestDto;
 import com.example.board.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,6 +15,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
 
+import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.service.*;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

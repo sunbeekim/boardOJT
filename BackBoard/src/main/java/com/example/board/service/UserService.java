@@ -1,7 +1,7 @@
 package com.example.board.service;
 
-import com.example.board.dto.LoginRequestDto;
-import com.example.board.dto.SignUpRequestDto;
+import com.example.board.domain.user.dto.LoginRequestDto;
+import com.example.board.domain.user.dto.SignUpRequestDto;
 
 public interface UserService {
     void signup(SignUpRequestDto request);

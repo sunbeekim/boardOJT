@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.board.dto.CommonResponseDto;
-import com.example.board.dto.LoginRequestDto;
-import com.example.board.dto.SignUpRequestDto;
+import com.example.board.common.dto.CommonResponseDto;
+import com.example.board.domain.user.dto.LoginRequestDto;
+import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.service.UserService;
 
 import javax.validation.Valid;

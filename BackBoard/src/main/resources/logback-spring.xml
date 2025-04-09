@@ -43,5 +43,6 @@
     </springProfile>
 
     <logger name="com.example.board.service" level="DEBUG"/>
+    <logger name="com.example.board.domain" level="INFO"/>
 
 </configuration>

@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.board.dao.UserMapper;
-import com.example.board.domain.entity.User;
-import com.example.board.domain.enums.UserRole;
-import com.example.board.dto.LoginRequestDto;
-import com.example.board.dto.SignUpRequestDto;
+import com.example.board.domain.user.dto.LoginRequestDto;
+import com.example.board.domain.user.dto.SignUpRequestDto;
+import com.example.board.domain.user.entity.User;
+import com.example.board.domain.user.enums.UserRole;
 import com.example.board.exception.AccountLockedException;
-import com.example.board.exception.DuplicateResourceException;
 import com.example.board.exception.TableNotFoundException;
 import com.example.board.exception.UnauthorizedException;
 import com.example.board.service.UserService;
 import com.example.board.util.JwtUtil;
+import com.example.board.domain.user.validator.UserValidator;
 
 @Service
 @RequiredArgsConstructor
@@ -25,32 +25,23 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private final UserValidator userValidator;
 
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
         try {
-            // 이메일 중복 체크
-            if (userMapper.findByEmail(request.getEmail()) != null) {
-                throw new DuplicateResourceException("이미 사용 중인 이메일입니다.");
-            }
-
-            // 닉네임 중복 체크
-            if (userMapper.findByNickname(request.getNickname()) != null) {
-                throw new DuplicateResourceException("이미 사용 중인 닉네임입니다.");
-            }
-
-            // 비밀번호 암호화
-            String encodedPassword = passwordEncoder.encode(request.getPassword());
-
+            userValidator.validateUniqueness(request.getEmail(), request.getNickname());
             // 사용자 생성
             User user = User.builder()
                     .email(request.getEmail())
-                    .password(encodedPassword)
                     .nickname(request.getNickname())
                     .role(UserRole.ROLE_USER)
                     .enabled(true)
                     .build();
+
+            // UserBehavior를 통해 비밀번호 암호화 처리
+            user.behavior().register(request.getPassword(), passwordEncoder);
 
             userMapper.save(user);
         }

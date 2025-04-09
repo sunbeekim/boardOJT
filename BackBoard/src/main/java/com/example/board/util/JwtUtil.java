@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import com.example.board.config.JwtConfig;
-import com.example.board.domain.entity.User;
+import com.example.board.domain.user.entity.User;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;

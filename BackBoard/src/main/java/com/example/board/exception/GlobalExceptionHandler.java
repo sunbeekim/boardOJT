@@ -11,7 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.board.dto.CommonResponseDto;
+import com.example.board.common.dto.CommonResponseDto;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

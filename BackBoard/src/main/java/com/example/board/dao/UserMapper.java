@@ -3,7 +3,7 @@ package com.example.board.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.example.board.domain.entity.User;
+import com.example.board.domain.user.entity.User;
 
 @Mapper
 public interface UserMapper {
