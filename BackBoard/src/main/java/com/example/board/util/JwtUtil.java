@@ -30,6 +30,7 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(jwtConfig.getSecret().getBytes());
     }
 
+    // JWT 생성
     public String createToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getEmail());
         claims.put("id", user.getId());
@@ -47,6 +48,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    // 인증 객체 반환
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -60,6 +62,7 @@ public class JwtUtil {
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
     }
 
+    // HTTP 요청 토큰 추출
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(jwtConfig.getHeader());
         if (bearerToken != null && bearerToken.startsWith(jwtConfig.getPrefix())) {
@@ -68,6 +71,7 @@ public class JwtUtil {
         return null;
     }
 
+    // 트큰 유효성 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -78,6 +82,15 @@ public class JwtUtil {
         }
     }
 
+    // 오버헤드용 토큰 추출 메서드
+    public String resolveToken(String bearerToken) {
+        if (bearerToken != null && bearerToken.startsWith(jwtConfig.getPrefix())) {
+            return bearerToken.substring(jwtConfig.getPrefix().length());
+        }
+        return null;
+    }
+
+    // Claims 정보 추출용
     public String getEmailFromToken(String token) {
         return getClaims(token).getSubject();
     }
@@ -94,6 +107,7 @@ public class JwtUtil {
         return getClaims(token).get("role", String.class);
     }
 
+    // 내부 공용 처리
     private Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)

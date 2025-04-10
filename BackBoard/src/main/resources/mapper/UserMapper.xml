@@ -15,6 +15,12 @@
         <result property="enabled" column="enabled"/>
     </resultMap>
 
+    <select id="findById" resultMap="userMap">
+        SELECT *
+        FROM users
+        WHERE id = #{id}
+    </select>
+
     <select id="findByEmail" resultMap="userMap">
         SELECT *
         FROM users

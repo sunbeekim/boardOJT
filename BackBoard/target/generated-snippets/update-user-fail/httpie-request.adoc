@@ -1,0 +1,6 @@
+[source,bash]
+----
+$ echo '{"password":"NewPass123!","nickname":"NewNick"}' | http PATCH 'http://localhost:8080/api/users/me' \
+    'Content-Type:application/json;charset=UTF-8' \
+    'Authorization:Bearer invalid.token.here'
+----

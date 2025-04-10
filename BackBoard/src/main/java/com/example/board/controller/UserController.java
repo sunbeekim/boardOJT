@@ -8,13 +8,13 @@ import com.example.board.common.dto.CommonResponseDto;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
-import com.example.board.service.UserService;
+import com.example.board.domain.user.service.UserService;
 import com.example.board.util.JwtUtil;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -36,11 +36,16 @@ public class UserController {
     public ResponseEntity<CommonResponseDto<?>> update(@RequestHeader("Authorization") String token,
             @Valid @RequestBody UserUpdateRequestDto request) {
         String email = jwtUtil.getEmailFromToken(token);
-        request.setEmail(email);
-        userService.update(request);
+
+        userService.update(request, email);
         return ResponseEntity.ok(CommonResponseDto.success("회원정보 수정이 완료되었습니다.", request));
     }
 
-    // 회원탈퇴퇴
+    @DeleteMapping("/me")
+    public ResponseEntity<CommonResponseDto<?>> delete(@RequestHeader("Authorization") String token) {
+        Long id = jwtUtil.getUserIdFromToken(jwtUtil.resolveToken(token));
+        userService.delete(id);
+        return ResponseEntity.ok(CommonResponseDto.success("회원탈퇴가 완료되었습니다.", null));
+    }
 
 }

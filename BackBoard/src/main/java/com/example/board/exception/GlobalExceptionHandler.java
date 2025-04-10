@@ -20,13 +20,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+        @ExceptionHandler(UnauthorizedException.class)
+        public ResponseEntity<?> handleUnauthorized(UnauthorizedException e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                                .body(CommonResponseDto.error(e.getMessage(), "UNAUTHORIZED", null, "/error/401"));
+
+        }
 
         // 커스텀 비즈니스 예외 처리 - 비지니스 예외 슈퍼클래스(비즈니스 예외들이 여기서 처리 됨)
         @ExceptionHandler(BusinessException.class)

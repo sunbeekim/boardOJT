@@ -1,0 +1,7 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/users/me' -i -X PATCH \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -H 'Authorization: Bearer invalid.token.here' \
+    -d '{"password":"NewPass123!","nickname":"NewNick"}'
+----

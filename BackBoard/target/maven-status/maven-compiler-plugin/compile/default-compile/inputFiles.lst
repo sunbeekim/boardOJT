@@ -1,5 +1,6 @@
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\SignUpRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\entity\Comment.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\service\PostService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\ForbiddenException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\UserUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\dao\UserMapper.java
@@ -9,6 +10,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\R
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\entity\Post.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\dao\PostMapper.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\enums\UserRole.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\interfaces\BehaviorRegistrar.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\config\JwtConfig.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\AccountLockedException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\UserBehavior.java
@@ -18,7 +20,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\config\Secu
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\UserBehaviorImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\TableNotFoundException.java
-C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\service\impl\UserServiceImpl.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\CommentService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\util\JwtUtil.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\LoginRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\dto\CommonResponseDto.java
@@ -26,14 +28,17 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\inte
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\AdminController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\CommentController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostCreateRequestDto.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\impl\UserServiceImpl.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\impl\CommentServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\UnauthorizedException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\dao\CommentMapper.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\BusinessException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\GlobalExceptionHandler.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\UserService.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\UserBehaviorRegistrar.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\UserController.java
-C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\service\UserService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\User.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\BoardApplication.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\factory\BehaviorFactory.java
-C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\service\PostService.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\service\impl\PostServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\security\JwtAuthenticationFilter.java

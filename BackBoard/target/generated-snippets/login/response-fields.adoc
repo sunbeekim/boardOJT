@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (true)
+
+|`+message+`
+|`+String+`
+|응답 메시지
+
+|`+data+`
+|`+Null+`
+|JWT 토큰
+
+|`+error+`
+|`+Null+`
+|에러 정보 (nullable)
+
+|`+errorPath+`
+|`+Null+`
+|에러 페이지 경로 (nullable)
+
+|===
