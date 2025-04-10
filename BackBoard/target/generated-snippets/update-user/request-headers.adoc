@@ -1,7 +1,0 @@
-|===
-|Name|Description
-
-|`+Authorization+`
-|JWT 토큰
-
-|===

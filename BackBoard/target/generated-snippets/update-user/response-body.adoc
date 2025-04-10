@@ -1,4 +1,0 @@
-[source,options="nowrap"]
-----
-{"success":true,"message":"�쉶�썝�젙蹂� �닔�젙�씠 �셿猷뚮릺�뿀�뒿�땲�떎.","data":{"password":"newPassword123!","nickname":"newNickna"},"error":null,"errorPath":null}
-----

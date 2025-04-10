@@ -1,20 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.board.controller.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 0.915 s <<< FAILURE! - in com.example.board.controller.UserControllerTest
-deleteFailTest_dueToInvalidToken  Time elapsed: 0.017 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.example.board.common.dto.JwtUserInfo.getId()" because "userInfo" is null
-	at com.example.board.controller.UserControllerTest.deleteFailTest_dueToInvalidToken(UserControllerTest.java:221)
-Caused by: java.lang.NullPointerException: Cannot invoke "com.example.board.common.dto.JwtUserInfo.getId()" because "userInfo" is null
-	at com.example.board.controller.UserControllerTest.deleteFailTest_dueToInvalidToken(UserControllerTest.java:221)
-
-updateFailTest_dueToInvalidToken  Time elapsed: 0 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<401> but was:<200>
-	at com.example.board.controller.UserControllerTest.updateFailTest_dueToInvalidToken(UserControllerTest.java:247)
-
-deleteTest  Time elapsed: 0.017 s  <<< ERROR!
-org.springframework.web.util.NestedServletException: Request processing failed; nested exception is java.lang.NullPointerException: Cannot invoke "com.example.board.common.dto.JwtUserInfo.getId()" because "userInfo" is null
-	at com.example.board.controller.UserControllerTest.deleteTest(UserControllerTest.java:121)
-Caused by: java.lang.NullPointerException: Cannot invoke "com.example.board.common.dto.JwtUserInfo.getId()" because "userInfo" is null
-	at com.example.board.controller.UserControllerTest.deleteTest(UserControllerTest.java:121)
-
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.865 s - in com.example.board.controller.UserControllerTest
