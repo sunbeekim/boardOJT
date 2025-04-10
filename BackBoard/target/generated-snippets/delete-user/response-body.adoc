@@ -1,4 +1,0 @@
-[source,options="nowrap"]
-----
-{"success":true,"message":"�쉶�썝�깉�눜媛� �셿猷뚮릺�뿀�뒿�땲�떎.","data":null,"error":null,"errorPath":null}
-----

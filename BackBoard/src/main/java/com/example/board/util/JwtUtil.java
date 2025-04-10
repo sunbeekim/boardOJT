@@ -7,8 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.example.board.common.dto.JwtUserInfo;
 import com.example.board.config.JwtConfig;
 import com.example.board.domain.user.entity.User;
 
@@ -56,10 +58,15 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
 
+        JwtUserInfo userInfo = new JwtUserInfo(
+                claims.get("id", Long.class),
+                claims.getSubject(),
+                claims.get("nickname", String.class));
+
         List<SimpleGrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority(claims.get("role", String.class)));
 
-        return new UsernamePasswordAuthenticationToken(claims.getSubject(), token, authorities);
+        return new UsernamePasswordAuthenticationToken(userInfo, token, authorities);
     }
 
     // HTTP 요청 토큰 추출
@@ -78,7 +85,7 @@ public class JwtUtil {
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             log.error("Invalid JWT token: {}", e.getMessage());
-            return false;
+            throw e;
         }
     }
 

@@ -214,10 +214,12 @@ class UserControllerTest {
 
         @Test
         void deleteFailTest_dueToInvalidToken() throws Exception {
-                when(jwtUtil.getUserIdFromToken(anyString())).thenThrow(new JwtException("Invalid token"));
+                // jwtUtil에서 예외 발생하도록 mock 설정
+                when(jwtUtil.getUserIdFromToken(anyString()))
+                                .thenThrow(new JwtException("Invalid token"));
 
                 mockMvc.perform(delete("/api/users/me")
-                                .header("Authorization", "Bearer this.is.an.invalid.token"))
+                                .header(null, null))
                                 .andExpect(status().isUnauthorized())
                                 .andDo(document("delete-user-fail",
                                                 requestHeaders(
