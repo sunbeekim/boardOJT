@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (true)
+
+|`+message+`
+|`+String+`
+|응답 메시지
+
+|`+data+`
+|`+Null+`
+|응답 데이터 (null)
+
+|`+error+`
+|`+String+`
+|에러 정보 (nullable)
+
+|`+errorPath+`
+|`+String+`
+|에러 페이지 경로 (nullable)
+
+|===

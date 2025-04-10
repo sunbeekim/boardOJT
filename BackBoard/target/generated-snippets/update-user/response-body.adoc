@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"success":false,"message":"�씤利� �젙蹂닿� �뾾�뒿�땲�떎","data":null,"error":"UNAUTHORIZED","errorPath":"/error/401"}
+----
