@@ -1,7 +1,7 @@
 package com.example.board.domain.user.entity.register;
 
 import com.example.board.common.factory.BehaviorFactory;
-import com.example.board.common.interfaces.BehaviorRegistrar;
+import com.example.board.common.interfaces.BehaviorRegistrarInterface;
 import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.entity.UserBehaviorImpl;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 // 컴포넌트 어노테이션으로 빈에 등록하면 스프링이 DI(의존성 주입)을 알아서 처리
 // 따라서, 빈에 등록되는 객체에서 다른 빈을 생성자 인자로 요구해도 직접 전달하지 않아도 됨
 @Component
-public class UserBehaviorRegistrar implements BehaviorRegistrar {
+public class UserBehaviorRegistrar implements BehaviorRegistrarInterface {
 
     @Override
     public void register(BehaviorFactory factory) {

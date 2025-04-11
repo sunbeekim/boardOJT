@@ -3,9 +3,9 @@ POST http://localhost:8080/api/users/signup
 Content-Type: application/json
 
 {
-  "email": "test5@test.com",
-  "password": "testtest1!",
-  "nickname": "테스트유저5"
+  "email": "admin@admin.com",
+  "password": "admin1234!",
+  "nickname": "Admin"
 }
 
 ### 로그인
@@ -13,18 +13,18 @@ POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test4@test.com",
-  "password": "testtest1!"
+  "email": "admin@admin.com",
+  "password": "admin1234!"
 }
 
 ### 회원정보 수정
 PATCH http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NEB0ZXN0LmNvbSIsImlkIjo3LCJuaWNrbmFtZSI6Iu2FjOyKpO2KuOycoOyggDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MjYwMDMxLCJleHAiOjE3NDQzNDY0MzF9.GdMYlSTwipgWRuTzzULMw8wCy12hzOYDaTG0HOBXcsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdiLCJpZCI6OSwibmlja25hbWUiOiJBZG1pbiIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDQzMzE5MzcsImV4cCI6MTc0NDQxODMzN30._zMAQm0sm-hv1gZdj0KRiQ6YjuxzYBKs65qfZScmPGg
 Content-Type: application/json
 
 {
-  "nickname": "테스트유저",
-  "password": "testtest1!"
+  "nickname": "관리자",
+  "password": "admin1234!"
 }
 
 ### 회원탈퇴

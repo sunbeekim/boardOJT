@@ -1,7 +1,0 @@
-[source,http,options="nowrap"]
-----
-DELETE /api/users/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImlkIjo4LCJuaWNrbmFtZSI6Iu2FjOyKpO2KuOycoOyggDUiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MjYxNjY1LCJleHAiOjE3NDQzNDgwNjV9.WpsAqbEShHPybqDd0p-YVUkLQoMY379Kr3Vu6_u_5_I
-Host: localhost:8080
-
-----

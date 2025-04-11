@@ -2,10 +2,10 @@ package com.example.board.domain.user.entity.interfaces;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.board.common.interfaces.EntityBehavior;
+import com.example.board.common.interfaces.EntityBehaviorInterface;
 
 // 엔티티가 갖는 행동 명시
-public interface UserBehavior extends EntityBehavior {
+public interface UserBehavior extends EntityBehaviorInterface {
     // 회원가입 시 비밀번호 암호화
     void register(String rawPassword, PasswordEncoder encoder);
 

@@ -29,7 +29,7 @@ public class User {
     private LocalDateTime updatedAt;
     private boolean enabled;
 
-    public UserBehavior behavior() {
+    public UserBehavior userBehavior() {
         return new UserBehaviorImpl(this);
     }
 }

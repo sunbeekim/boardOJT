@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 
@@ -27,12 +25,13 @@ import com.example.board.common.dto.JwtUserInfo;
 import com.example.board.dao.UserMapper;
 import com.example.board.domain.user.dto.*;
 import com.example.board.domain.user.entity.User;
-import com.example.board.domain.user.enums.UserRole;
 import com.example.board.domain.user.service.*;
+import com.example.board.exception.GlobalExceptionHandler;
 import com.example.board.exception.UnauthorizedException;
 
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -43,14 +42,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 // @WebMvcTest(UserController.class) 시큐리티 필터체인 비적용
 @AutoConfigureRestDocs
 @WithMockUser
+@Import(GlobalExceptionHandler.class)
 class UserControllerTest {
 
         @Autowired
@@ -70,6 +67,9 @@ class UserControllerTest {
 
         @MockBean
         private PasswordEncoder passwordEncoder;
+
+        @Autowired
+        private ObjectMapper objectMapper;
 
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImlkIjo4LCJuaWNrbmFtZSI6Iu2FjOyKpO2KuOycoOyggDUiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MjYxNjY1LCJleHAiOjE3NDQzNDgwNjV9.WpsAqbEShHPybqDd0p-YVUkLQoMY379Kr3Vu6_u_5_I";
 
@@ -124,9 +124,11 @@ class UserControllerTest {
 
         @Test
         void deleteTest() throws Exception {
+                JwtUserInfo mockUserInfo = new JwtUserInfo(1L, "test@email.com", "nickname");
                 mockMvc.perform(delete("/api/users/me")
+                                .requestAttr("userInfo", mockUserInfo)
                                 .header("Authorization", "Bearer " + token))
-                                .andExpect(status().isUnauthorized())
+                                .andExpect(status().isUnauthorized()) // .andExpect(status().isOk())
                                 .andDo(document("delete-user",
                                                 requestHeaders(
                                                                 headerWithName("Authorization").description("JWT 토큰")),
@@ -165,8 +167,9 @@ class UserControllerTest {
         @Test
         void updateTest() throws Exception {
                 UserUpdateRequestDto request = new UserUpdateRequestDto("NewPass123!", "NewNick");
-
+                JwtUserInfo mockUserInfo = new JwtUserInfo(1L, "test@email.com", "nickname");
                 mockMvc.perform(patch("/api/users/me")
+                                .requestAttr("userInfo", mockUserInfo)
                                 .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
@@ -194,16 +197,21 @@ class UserControllerTest {
         @Test
         void loginFailTest_dueToInvalidCredentials() throws Exception {
                 // given
-                LoginRequestDto request = new LoginRequestDto("test@email.com", "wrongpassword!1");
+                LoginRequestDto request = new LoginRequestDto("tes3t@email.com", "wrongpassword!1");
 
                 when(userService.login(any(LoginRequestDto.class)))
-                                .thenThrow(new UnauthorizedException("비밀번호가 일치하지 않습니다."));
+                                .thenThrow(new UnauthorizedException("존재하지 않는 아이디입니다."));
 
                 // when & then
                 mockMvc.perform(post("/api/users/login")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
                                 .andExpect(status().isUnauthorized())
+                                .andExpect(jsonPath("$.success").value(false))
+                                .andExpect(jsonPath("$.message").value("존재하지 않는 아이디입니다."))
+                                .andExpect(jsonPath("$.data").doesNotExist())
+                                .andExpect(jsonPath("$.error").value("UNAUTHORIZED"))
+                                .andExpect(jsonPath("$.errorPath").value("/error/401"))
                                 .andDo(document("login-fail",
                                                 requestFields(
                                                                 fieldWithPath("email").description("회원 이메일"),
@@ -240,10 +248,10 @@ class UserControllerTest {
         @Test
         void updateFailTest_dueToInvalidToken() throws Exception {
                 UserUpdateRequestDto request = new UserUpdateRequestDto("NewPass123!", "NewNick");
-
                 when(jwtUtil.getEmailFromToken(anyString())).thenThrow(new JwtException("Invalid token"));
 
                 mockMvc.perform(patch("/api/users/me")
+
                                 .header("Authorization", "Bearer invalid.token.here")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))

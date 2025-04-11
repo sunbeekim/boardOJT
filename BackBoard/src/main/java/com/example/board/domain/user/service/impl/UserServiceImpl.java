@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 
-import com.example.board.common.factory.BehaviorFactory;
+// import com.example.board.common.factory.BehaviorFactory;
 import com.example.board.dao.UserMapper;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
 import com.example.board.domain.user.entity.User;
-import com.example.board.domain.user.entity.interfaces.UserBehavior;
+// import com.example.board.domain.user.entity.interfaces.UserBehavior;
 import com.example.board.domain.user.enums.UserRole;
 import com.example.board.exception.TableNotFoundException;
 import com.example.board.exception.UnauthorizedException;
@@ -27,31 +27,38 @@ import com.example.board.exception.BusinessException;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
-    private final BehaviorFactory behaviorFactory;
+    // private final BehaviorFactory behaviorFactory;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    // 서비스 로직의 책임:
+    // 1. 유효성 검증 (Validator를 통한 중복 검사 등)
+    // 2. 엔티티 생성 및 상태 설정 (set/get 등)
+    // 3. 엔티티 행동 위임 (ex. userBehavior().isLocked(), userBehavior().register() 등)
+    // 4. 외부와의 상호작용 (DB 저장 등: userMapper.save())
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
         try {
-            // 1. 유효성 검증 (DuplicateResourceException 발생)
+            // 유효성 검증 (DuplicateResourceException 발생)
             userValidator.validateSignUp(request);
 
-            // 2. 엔티티 생성
+            // 엔티티 생성
             User user = User.builder()
                     .email(request.getEmail())
                     .nickname(request.getNickname())
                     .role(UserRole.ROLE_USER)
                     .enabled(true)
                     .build();
+            // 레지스터에 의해 Bean에 등록된 엔티티 정적 사용
+            // 행동 기능이 래퍼로 확장된 엔티티티
+            user.userBehavior().register(request.getPassword(), passwordEncoder);
+            // 아래와 같이 엔티티와 구현체를 동적으로 할당 가능
+            // UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+            // userBehavior.register(request.getPassword(), passwordEncoder);
 
-            // 3. 비즈니스 로직 실행
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            userBehavior.register(request.getPassword(), passwordEncoder);
-
-            // 4. 저장
+            // 저장
             userMapper.save(user);
         } catch (PersistenceException e) {
             if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("table")) {
@@ -69,16 +76,14 @@ public class UserServiceImpl implements UserService {
                 throw new UnauthorizedException("존재하지 않는 아이디입니다.");
             }
 
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-
             try {
                 userValidator.validateLogin(request, passwordEncoder);
-                userBehavior.handleLoginSuccess(); // 성공 시 처리
+                user.userBehavior().handleLoginSuccess(); // 성공 시 처리
                 userMapper.updateLoginFailCount(user.getId(),
                         user.getLoginFailCount(),
                         user.isLocked());
             } catch (UnauthorizedException e) {
-                userBehavior.handleLoginFailure(); // 실패 시 처리
+                user.userBehavior().handleLoginFailure(); // 실패 시 처리
                 userMapper.updateLoginFailCount(user.getId(),
                         user.getLoginFailCount(),
                         user.isLocked());
@@ -102,9 +107,8 @@ public class UserServiceImpl implements UserService {
 
             userValidator.validateUpdate(request, user);
 
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            userBehavior.changeNickname(request.getNickname());
-            userBehavior.changePassword(request.getPassword(), passwordEncoder);
+            user.userBehavior().changeNickname(request.getNickname());
+            user.userBehavior().changePassword(request.getPassword(), passwordEncoder);
 
             userMapper.update(user);
         } catch (PersistenceException e) {

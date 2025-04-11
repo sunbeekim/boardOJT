@@ -3,6 +3,7 @@ package com.example.board.domain.user.validator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.example.board.common.validator.DomainValidator;
 import com.example.board.dao.UserMapper;
 import com.example.board.exception.AccountLockedException;
 import com.example.board.exception.DuplicateResourceException;
@@ -17,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 // 엔티티의 상태변화에 관여하지 않고 오직 검증만만
 @Component
 @RequiredArgsConstructor
-public class UserValidator {
+public class UserValidator extends DomainValidator { // 아직 확정아니라서 interface를 implement한 abstract로 확장
     private final UserMapper userMapper;
 
     public void validateSignUp(SignUpRequestDto request) {
@@ -62,4 +63,5 @@ public class UserValidator {
             validateNickname(request.getNickname());
         }
     }
+
 }

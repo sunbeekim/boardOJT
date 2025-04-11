@@ -8,7 +8,7 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 132
+Content-Length: 129
 
-{"success":false,"message":"비밀번호가 일치하지 않습니다.","data":null,"error":"UNAUTHORIZED","errorPath":"/error/401"}
+{"success":false,"message":"존재하지 않는 아이디입니다.","data":null,"error":"UNAUTHORIZED","errorPath":"/error/401"}
 ----

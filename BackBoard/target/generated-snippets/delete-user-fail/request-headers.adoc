@@ -1,7 +1,0 @@
-|===
-|Name|Description
-
-|`+Authorization+`
-|잘못된 JWT 토큰
-
-|===
