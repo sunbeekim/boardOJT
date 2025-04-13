@@ -1,4 +1,4 @@
-package com.example.board.domain.user.entity;
+package com.example.board.domain.user.entity.interfaces.impl;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
