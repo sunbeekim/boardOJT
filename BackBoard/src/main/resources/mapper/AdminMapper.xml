@@ -2,25 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.board.dao.AdminMapper">
 
-    <!-- 게시글 삭제 (관리자) -->
+    <!-- 게시글 삭제 -->
     <delete id="deletePostByAdmin" parameterType="long">
         DELETE FROM posts
         WHERE id = #{postId}
     </delete>
 
-    <!-- 댓글 삭제 (관리자) -->
+    <!-- 댓글 삭제 -->
     <delete id="deleteCommentByAdmin" parameterType="long">
         DELETE FROM comments
         WHERE id = #{commentId}
     </delete>
 
-    <!-- 사용자 계정 삭제 (관리자) -->
+    <!-- 사용자 계정 삭제 -->
     <delete id="deleteUserAccount" parameterType="long">
         DELETE FROM users
         WHERE id = #{userId}
     </delete>
 
-    <!-- 잠금 계정 해제 (관리자) -->
+    <!-- 잠금 계정 해제 -->
     <update id="unlockUserAccount" parameterType="long">
         UPDATE users
         SET locked = false,

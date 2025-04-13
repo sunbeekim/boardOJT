@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.board.dao.CommentMapper">
+    
+    <resultMap id="commentMap" type="com.example.board.domain.comment.entity.Comment">
+        <id property="id" column="id"/>
+        <result property="user_id" column="userId"/>
+        <result property="post_id" column="postId"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
 
     <!-- 댓글 등록 -->
     <insert id="insertComment" parameterType="map">
@@ -23,20 +32,20 @@
         ORDER BY c.created_at ASC
     </select>
 
-    <!-- 댓글 수정 (본인만 가능) -->
+    <!-- 댓글 수정 -->
     <update id="updateComment" parameterType="map">
         UPDATE comments
         SET content = #{content}, updated_at = NOW()
         WHERE id = #{commentId} AND user_id = #{userId}
     </update>
 
-    <!-- 댓글 삭제 (본인만 가능) -->
+    <!-- 댓글 삭제 -->
     <delete id="deleteComment" parameterType="map">
         DELETE FROM comments
         WHERE id = #{commentId} AND user_id = #{userId}
     </delete>
 
-    <!-- 댓글 존재 여부 확인 (작성자 ID와 함께) -->
+    <!-- 댓글 존재 여부 확인 삭제 시 검증용 -->
     <select id="getCommentAuthorId" resultType="long">
         SELECT user_id
         FROM comments
