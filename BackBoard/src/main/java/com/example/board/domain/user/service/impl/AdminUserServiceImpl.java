@@ -1,5 +1,6 @@
 package com.example.board.domain.user.service.impl;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,7 @@ import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.service.AdminUserService;
 import com.example.board.exception.BusinessException;
+import com.example.board.exception.TableNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +23,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     private final UserMapper userMapper;
 
     private User getUserOrThrow(Long userId, String errorMessage) {
+
         User user = userMapper.findById(userId);
-        if (user == null) {
+        log.info("user = {}", user);
+        if (user.equals(null)) {
             throw new BusinessException(errorMessage, "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND.value());
         }
         return user;
@@ -37,8 +41,16 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public void deletePost(Long postId, Long adminId) {
         User admin = getUserOrThrow(adminId, "게시글 삭제에 실패했습니다.");
+        System.out.println("test admin" + admin);
         checkPermissionOrThrow(admin, "게시글 삭제에 실패했습니다.");
-        adminMapper.postDelete(postId);
+        try {
+            adminMapper.postDelete(postId);
+        } catch (PersistenceException e) {
+            if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("unknown column")) {
+                throw new TableNotFoundException("리소스가 존재하지 않습니다: " + e.getMessage());
+            }
+            throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
     }
 
     @Override

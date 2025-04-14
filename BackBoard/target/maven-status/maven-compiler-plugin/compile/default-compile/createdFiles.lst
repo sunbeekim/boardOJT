@@ -2,6 +2,7 @@ com\example\board\domain\comment\dto\CommentResponseDto.class
 com\example\board\domain\post\dto\PostResponseDto.class
 com\example\board\exception\UnauthorizedException.class
 com\example\board\domain\user\dto\LoginRequestDto.class
+com\example\board\domain\user\entity\register\AdminUserBehaviorRegistrar.class
 com\example\board\domain\post\service\PostService.class
 com\example\board\exception\BusinessException.class
 com\example\board\domain\post\dto\PostUpdateRequestDto.class
@@ -17,9 +18,11 @@ com\example\board\controller\UserController.class
 com\example\board\exception\GlobalExceptionHandler.class
 com\example\board\util\JwtUtil.class
 com\example\board\domain\post\entity\Post.class
+com\example\board\domain\user\entity\interfaces\AdminUserBehavior.class
 com\example\board\controller\CommentController.class
 com\example\board\domain\post\dao\PostMapper.class
 com\example\board\domain\post\entity\interfaces\PostBehavior.class
+com\example\board\domain\user\dto\CheckRequestDto.class
 com\example\board\domain\comment\service\impl\CommentServiceImpl.class
 com\example\board\domain\user\dto\SignUpRequestDto.class
 com\example\board\exception\TableNotFoundException.class
@@ -27,6 +30,7 @@ com\example\board\controller\PostController.class
 com\example\board\domain\post\service\impl\PostServiceImpl.class
 com\example\board\exception\ResourceNotFoundException.class
 com\example\board\exception\DuplicateResourceException.class
+com\example\board\domain\user\service\impl\AdminUserServiceImpl.class
 com\example\board\exception\ForbiddenException.class
 com\example\board\domain\user\service\UserService.class
 com\example\board\domain\post\entity\Post$PostBuilder.class
@@ -37,6 +41,7 @@ com\example\board\common\annotation\RequireAuth.class
 com\example\board\domain\user\entity\User.class
 com\example\board\domain\post\dto\PostCreateRequestDto.class
 com\example\board\domain\user\dto\UserUpdateRequestDto.class
+com\example\board\domain\user\entity\interfaces\impl\AdminUserBehaviorImpl.class
 com\example\board\common\dto\CommonResponseDto.class
 com\example\board\config\JwtConfig.class
 com\example\board\config\SecurityConfig.class
@@ -59,6 +64,8 @@ com\example\board\domain\user\dao\UserMapper.class
 com\example\board\domain\user\entity\interfaces\UserBehavior.class
 com\example\board\domain\user\entity\register\UserBehaviorRegistrar.class
 com\example\board\domain\comment\dto\CommentResponseDto$CommentResponseDtoBuilder.class
+com\example\board\domain\user\dao\AdminMapper.class
+com\example\board\domain\user\service\AdminUserService.class
 com\example\board\domain\post\dto\PostSearchConditionDto.class
 com\example\board\domain\user\entity\User$UserBuilder.class
 com\example\board\domain\comment\dto\CommentCreateRequestDto.class
