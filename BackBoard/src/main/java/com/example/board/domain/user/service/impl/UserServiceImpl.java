@@ -1,6 +1,9 @@
 package com.example.board.domain.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,13 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 
-// import com.example.board.common.factory.BehaviorFactory;
-import com.example.board.dao.UserMapper;
+import com.example.board.common.factory.BehaviorFactory;
+import com.example.board.domain.user.dao.UserMapper;
+import com.example.board.domain.user.dto.CheckRequestDto;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
 import com.example.board.domain.user.entity.User;
-// import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.entity.interfaces.UserBehavior;
 import com.example.board.domain.user.enums.UserRole;
 import com.example.board.exception.TableNotFoundException;
 import com.example.board.exception.UnauthorizedException;
@@ -23,11 +27,12 @@ import com.example.board.util.JwtUtil;
 import com.example.board.domain.user.validator.UserValidator;
 import com.example.board.exception.BusinessException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserValidator userValidator;
-    // private final BehaviorFactory behaviorFactory;
+    private final BehaviorFactory behaviorFactory;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -42,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public void signup(SignUpRequestDto request) {
         try {
             // 유효성 검증 (DuplicateResourceException 발생)
-            userValidator.validateSignUp(request);
+            userValidator.validateCreate(request);
 
             // 엔티티 생성
             User user = User.builder()
@@ -51,12 +56,13 @@ public class UserServiceImpl implements UserService {
                     .role(UserRole.ROLE_USER)
                     .enabled(true)
                     .build();
+            user.userBehavior().handleacdd();
             // 레지스터에 의해 Bean에 등록된 엔티티 정적 사용
             // 행동 기능이 래퍼로 확장된 엔티티티
-            user.userBehavior().register(request.getPassword(), passwordEncoder);
+            // user.userBehavior().register(request.getPassword(), passwordEncoder);
             // 아래와 같이 엔티티와 구현체를 동적으로 할당 가능
-            // UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            // userBehavior.register(request.getPassword(), passwordEncoder);
+            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+            userBehavior.register(request.getPassword(), passwordEncoder);
 
             // 저장
             userMapper.save(user);
@@ -77,6 +83,7 @@ public class UserServiceImpl implements UserService {
             }
 
             try {
+
                 userValidator.validateLogin(request, passwordEncoder);
                 user.userBehavior().handleLoginSuccess(); // 성공 시 처리
                 userMapper.updateLoginFailCount(user.getId(),
@@ -120,6 +127,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Long id) {
         try {
+            userValidator.validateDelete(id);
             User user = userMapper.findById(id);
             if (user == null) {
                 throw new UnauthorizedException("로그인된 사용자를 찾을 수 없습니다.");
@@ -128,5 +136,21 @@ public class UserServiceImpl implements UserService {
         } catch (PersistenceException e) {
             throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
+    }
+
+    @Override
+    public boolean checkEmail(CheckRequestDto request) {
+        System.out.println("System print REQUEST : " + request);
+        User user = userMapper.findByEmail(request.getEmail());
+        log.info("user = {}", user);
+        System.out.println("System print : " + user);
+        log.info("request = {}", request);
+
+        return userValidator.validateBooleanEmail(request.getEmail());
+    }
+
+    @Override
+    public boolean checkNickname(CheckRequestDto request) {
+        return userValidator.validateBooleanNickname(request.getNickname());
     }
 }

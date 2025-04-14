@@ -3,8 +3,9 @@ package com.example.board.domain.user.entity.register;
 import com.example.board.common.factory.BehaviorFactory;
 import com.example.board.common.interfaces.BehaviorRegistrarInterface;
 import com.example.board.domain.user.entity.User;
-import com.example.board.domain.user.entity.UserBehaviorImpl;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.entity.interfaces.impl.UserBehaviorImpl;
+
 import org.springframework.stereotype.Component;
 
 // BehaviorFactory의 실제 생성자는 List<BehaviorRegistrar> registrars 를 인자값으로 받음

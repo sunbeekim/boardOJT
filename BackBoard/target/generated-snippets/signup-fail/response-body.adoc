@@ -1,4 +1,4 @@
 [source,options="nowrap"]
 ----
-{"success":false,"message":"password: 鍮꾨�踰덊샇�뒗 �쁺臾�, �닽�옄, �듅�닔臾몄옄瑜� 紐⑤몢 �룷�븿�빐�빞 �빀�땲�떎., password: 鍮꾨�踰덊샇�뒗 �븘�닔 �엯�젰媛믪엯�땲�떎., password: 鍮꾨�踰덊샇�뒗 8~16�옄 �궗�씠�뿬�빞 �빀�땲�떎.","data":"400 - DTO 議곌굔 遺덉땐議깆”(�슂泥� 諛붾뵒 寃�利� �떎�뙣)","error":"VALIDATION_FAILED","errorPath":"/error/400"}
+{"success":false,"message":"password: 鍮꾨�踰덊샇�뒗 8~16�옄 �궗�씠�뿬�빞 �빀�땲�떎., password: 鍮꾨�踰덊샇�뒗 �븘�닔 �엯�젰媛믪엯�땲�떎., password: 鍮꾨�踰덊샇�뒗 �쁺臾�, �닽�옄, �듅�닔臾몄옄瑜� 紐⑤몢 �룷�븿�빐�빞 �빀�땲�떎.","data":"400 - DTO 議곌굔 遺덉땐議깆”(�슂泥� 諛붾뵒 寃�利� �떎�뙣)","error":"VALIDATION_FAILED","errorPath":"/error/400"}
 ----

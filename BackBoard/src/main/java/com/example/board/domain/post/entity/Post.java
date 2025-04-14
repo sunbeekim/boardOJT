@@ -1,6 +1,9 @@
 package com.example.board.domain.post.entity;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+
+import com.example.board.domain.post.entity.interfaces.PostBehavior;
+import com.example.board.domain.post.entity.interfaces.impl.PostBehaviorImpl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,11 +17,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
+    
     private Long id;
     private String title;
     private String content;
     private Long userId;
     private int viewCount;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public PostBehavior postBehavior() {
+        return new PostBehaviorImpl(this);
+    }
 }

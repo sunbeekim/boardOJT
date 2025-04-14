@@ -22,7 +22,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
 
 import com.example.board.common.dto.JwtUserInfo;
-import com.example.board.dao.UserMapper;
+import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.dto.*;
 import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.service.*;

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.entity.interfaces.impl.UserBehaviorImpl;
 import com.example.board.domain.user.enums.UserRole;
 
 @Getter

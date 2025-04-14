@@ -20,4 +20,6 @@ public interface UserBehavior extends EntityBehaviorInterface {
 
     // 로그인 실패시 실패횟수 증가
     void handleLoginFailure();
+
+    void handleacdd();
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -48,7 +49,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 미사용
                 .authorizeHttpRequests(auth -> auth
-                        .antMatchers("/api/users/login", "/api/users/signup").permitAll()
+                        .antMatchers("/api/users/login", "/api/users/signup", "/api/users/check/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                         .antMatchers("/api/users/**").authenticated()
                         .antMatchers("/docs/**", "/error/**").permitAll()
                         .anyRequest().authenticated())

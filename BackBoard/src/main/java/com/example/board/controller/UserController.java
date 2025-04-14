@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import com.example.board.common.annotation.RequireAuth;
 import com.example.board.common.dto.CommonResponseDto;
 import com.example.board.common.dto.JwtUserInfo;
+import com.example.board.domain.user.dto.CheckRequestDto;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
@@ -27,7 +28,29 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<CommonResponseDto<?>> signup(@Valid @RequestBody SignUpRequestDto request) {
         userService.signup(request);
-        return ResponseEntity.ok(CommonResponseDto.success("회원가입이 완료되었습니다.", 200));
+        return ResponseEntity.status(201).body(CommonResponseDto.success("회원가입이 완료되었습니다.", 200));
+    }
+
+    @PostMapping("/check/email")
+    public ResponseEntity<CommonResponseDto<?>> checkEmail(@Valid @RequestBody CheckRequestDto request) {
+        boolean isDupl = userService.checkEmail(request);
+        System.out.println("이메일 중복확인 결과 : " + isDupl);
+
+        if (isDupl == false) {
+            return ResponseEntity.status(200).body(CommonResponseDto.success("중복된 이메일이 있습니다.", isDupl));
+        } else {
+            return ResponseEntity.status(200).body(CommonResponseDto.success("사용가능한 이메일입니다.", isDupl));
+        }
+    }
+
+    @PostMapping("/check/nickname")
+    public ResponseEntity<CommonResponseDto<?>> checkNickname(@Valid @RequestBody CheckRequestDto request) {
+        boolean isDupl = userService.checkNickname(request);
+        if (isDupl == false) {
+            return ResponseEntity.status(200).body(CommonResponseDto.success("중복된 닉네임이 있습니다.", isDupl));
+        } else {
+            return ResponseEntity.status(200).body(CommonResponseDto.success("사용가능한 닉네임입니다.", isDupl));
+        }
     }
 
     @PostMapping("/login")

@@ -3,25 +3,47 @@ package com.example.board.domain.user.validator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.example.board.common.validator.DomainValidator;
-import com.example.board.dao.UserMapper;
+import com.example.board.common.interfaces.DomainValidatorInterface;
 import com.example.board.exception.AccountLockedException;
 import com.example.board.exception.DuplicateResourceException;
 import com.example.board.exception.UnauthorizedException;
+import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.dto.LoginRequestDto;
 import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
 import com.example.board.domain.user.entity.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 // 엔티티의 상태변화에 관여하지 않고 오직 검증만만
+// 외부접근 통한 검증 or 유저 엔티티 필수 검증이 아닌 것것
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserValidator extends DomainValidator { // 아직 확정아니라서 interface를 implement한 abstract로 확장
+public class UserValidator implements
+        DomainValidatorInterface.CreateValidator<SignUpRequestDto, Void>,
+        DomainValidatorInterface.UpdateValidator<UserUpdateRequestDto, User>,
+        DomainValidatorInterface.DeleteValidator {
+
     private final UserMapper userMapper;
 
-    public void validateSignUp(SignUpRequestDto request) {
+    @Override
+    public void validateDelete(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validateDelete'");
+    }
+
+    @Override
+    public void validateUpdate(UserUpdateRequestDto request, User currentUser) {
+        // 현재 사용자의 닉네임이 아닌 경우에만 중복 검증
+        if (!request.getNickname().equals(currentUser.getNickname())) {
+            validateNickname(request.getNickname());
+        }
+    }
+
+    @Override
+    public void validateCreate(SignUpRequestDto request, Void context) {
         validateEmail(request.getEmail());
         validateNickname(request.getNickname());
     }
@@ -50,6 +72,15 @@ public class UserValidator extends DomainValidator { // 아직 확정아니라�
         }
     }
 
+    public boolean validateBooleanEmail(String email) {
+
+        // 이메일 중복 검증
+        if (userMapper.findByEmail(email) == null) {
+            return true;
+        }
+        return false;
+    }
+
     private void validateNickname(String nickname) {
         // 닉네임 중복 검증
         if (userMapper.findByNickname(nickname) != null) {
@@ -57,11 +88,12 @@ public class UserValidator extends DomainValidator { // 아직 확정아니라�
         }
     }
 
-    public void validateUpdate(UserUpdateRequestDto request, User currentUser) {
-        // 현재 사용자의 닉네임이 아닌 경우에만 중복 검증
-        if (!request.getNickname().equals(currentUser.getNickname())) {
-            validateNickname(request.getNickname());
+    public boolean validateBooleanNickname(String nickname) {
+        // 닉네임 중복 검증
+        if (userMapper.findByNickname(nickname) == null) {
+            return true;
         }
+        return false;
     }
 
 }

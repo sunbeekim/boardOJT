@@ -1,12 +1,26 @@
 package com.example.board.common.interfaces;
 
-// 지금 당장 확장 불필요 추후 작업업
-public interface DomainValidatorInterface<T> {
+public interface DomainValidatorInterface<T, E> {
     // 도메인 내 엔티티에서 사용할 검증클래스에서 사용할 공통 인터페이스
     // 예시시
-    void validateCreate(T request);
 
-    void validateUpdate(T request);
+    // 생성할때 검증용
+    public interface CreateValidator<T, U> {
+        void validateCreate(T request, U context);
 
-    void validateDelete(Long id);
+        default void validateCreate(T request) {
+            validateCreate(request, null);
+        }
+    }
+
+    // 업데이트할때 검증용
+    public interface UpdateValidator<T, E> {
+        void validateUpdate(T request, E entity);
+    }
+
+    // 삭제할때 검증용
+    public interface DeleteValidator {
+        void validateDelete(Long id);
+    }
+
 }
