@@ -4,6 +4,10 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.example.board.domain.comment.dao.CommentMapper;
+import com.example.board.domain.comment.entity.Comment;
+import com.example.board.domain.post.dao.PostMapper;
+import com.example.board.domain.post.entity.Post;
 import com.example.board.domain.user.dao.AdminMapper;
 import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.entity.User;
@@ -21,15 +25,35 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     private final AdminMapper adminMapper;
     private final UserMapper userMapper;
+    private final PostMapper postMapper;
+    private final CommentMapper commentMapper;
 
-    private User getUserOrThrow(Long userId, String errorMessage) {
+    private <T> T getUserOrThrow(Long userId, Long commonId, String type, String errorMessage) {
 
-        User user = userMapper.findById(userId);
-        log.info("user = {}", user);
-        if (user.equals(null)) {
-            throw new BusinessException(errorMessage, "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND.value());
+        switch (type) {
+            case "post":
+                Post post = postMapper.findById(commonId);
+                log.info("post = {}", post);
+                if (post == null) {
+                    throw new BusinessException(errorMessage, "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND.value());
+                }
+
+            case "comment":
+                Comment comment = commentMapper.findById(commonId);
+                log.info("comment = {}", comment);
+                if (comment == null) {
+                    throw new BusinessException(errorMessage, "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND.value());
+                }
+            case "user":
+                User user = userMapper.findById(userId);
+                log.info("user = {}", user);
+                if (user == null) {
+                    throw new BusinessException(errorMessage, "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND.value());
+                }
+
         }
-        return user;
+        return null;
+
     }
 
     private void checkPermissionOrThrow(User user, String errorMessage) {
@@ -40,7 +64,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void deletePost(Long postId, Long adminId) {
-        User admin = getUserOrThrow(adminId, "게시글 삭제에 실패했습니다.");
+        User admin = getUserOrThrow(adminId, postId, "post", "게시글 삭제에 실패했습니다.");
         System.out.println("test admin" + admin);
         checkPermissionOrThrow(admin, "게시글 삭제에 실패했습니다.");
         try {
@@ -55,24 +79,25 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void deleteComment(Long commentId, Long adminId) {
-        User admin = getUserOrThrow(adminId, "댓글 삭제에 실패했습니다.");
+        User admin = getUserOrThrow(adminId, commentId, "comment", "댓글 삭제에 실패했습니다.");
         checkPermissionOrThrow(admin, "댓글 삭제에 실패했습니다.");
         adminMapper.commentDelete(commentId);
     }
 
     @Override
     public void deleteUser(Long targetId, Long adminId) {
-        User admin = getUserOrThrow(adminId, "계정 삭제에 실패했습니다.");
+        User admin = getUserOrThrow(adminId, targetId, "user", "계정 삭제에 실패했습니다.");
         checkPermissionOrThrow(admin, "계정 삭제에 실패했습니다.");
         adminMapper.userDelete(targetId);
     }
 
+    // 확인해봐야 하는 곳
     @Override
     public void unlockUser(Long targetId, Long adminId) {
-        User admin = getUserOrThrow(adminId, "계정 잠금 해지에 실패했습니다.");
+        User admin = getUserOrThrow(adminId, targetId, "user", "계정 잠금 해지에 실패했습니다.");
         checkPermissionOrThrow(admin, "계정 잠금 해지에 실패했습니다.");
 
-        User targetUser = getUserOrThrow(targetId, "계정 잠금 해지에 실패했습니다.");
+        User targetUser = getUserOrThrow(targetId, targetId, "user", "계정 잠금 해지에 실패했습니다.");
         targetUser.adminUserBehavior().unlock();
         adminMapper.unlocked(targetUser);
     }
