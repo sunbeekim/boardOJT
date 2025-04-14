@@ -1,8 +1,11 @@
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\service\PostService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\UserUpdateRequestDto.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\AdminUserBehaviorRegistrar.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\ResourceNotFoundException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\enums\UserRole.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\AdminUserBehavior.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\CheckRequestDto.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\AdminUserService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\impl\UserBehaviorImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\UserBehavior.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\entity\interfaces\impl\PostBehaviorImpl.java
@@ -11,6 +14,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\anno
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\TableNotFoundException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\CommentService.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dao\AdminMapper.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\dto\CommonResponseDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\AdminController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\CommentController.java
@@ -22,7 +26,6 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\G
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\entity\validator\PostValidator.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\UserController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostResponseDto.java
-C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\admin\dao\AdminMapper.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\dto\CommentResponseDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\SignUpRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\entity\Comment.java
@@ -47,8 +50,10 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\dto\CommentCreateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\dto\CommentUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\BusinessException.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\impl\AdminUserBehaviorImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\UserService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\dto\JwtUserInfo.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\impl\AdminUserServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\UserBehaviorRegistrar.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\dao\CommentMapper.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\User.java

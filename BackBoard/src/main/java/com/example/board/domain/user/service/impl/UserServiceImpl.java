@@ -1,9 +1,7 @@
 package com.example.board.domain.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,7 +54,6 @@ public class UserServiceImpl implements UserService {
                     .role(UserRole.ROLE_USER)
                     .enabled(true)
                     .build();
-            user.userBehavior().handleacdd();
             // 레지스터에 의해 Bean에 등록된 엔티티 정적 사용
             // 행동 기능이 래퍼로 확장된 엔티티티
             // user.userBehavior().register(request.getPassword(), passwordEncoder);

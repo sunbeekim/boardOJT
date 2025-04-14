@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.entity.interfaces.impl.AdminUserBehaviorImpl;
 import com.example.board.domain.user.entity.interfaces.impl.UserBehaviorImpl;
 import com.example.board.domain.user.enums.UserRole;
 
@@ -33,4 +35,9 @@ public class User {
     public UserBehavior userBehavior() {
         return new UserBehaviorImpl(this);
     }
+
+    public AdminUserBehavior adminUserBehavior() {
+        return new AdminUserBehaviorImpl(this);
+    }
+
 }

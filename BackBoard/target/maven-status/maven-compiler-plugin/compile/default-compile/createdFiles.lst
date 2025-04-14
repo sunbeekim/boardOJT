@@ -26,7 +26,6 @@ com\example\board\exception\TableNotFoundException.class
 com\example\board\controller\PostController.class
 com\example\board\domain\post\service\impl\PostServiceImpl.class
 com\example\board\exception\ResourceNotFoundException.class
-com\example\board\domain\admin\dao\AdminMapper.class
 com\example\board\exception\DuplicateResourceException.class
 com\example\board\exception\ForbiddenException.class
 com\example\board\domain\user\service\UserService.class

@@ -1,8 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.board.domain.admin.dao.AdminMapper">
+<mapper namespace="com.example.board.domain.dao.AdminMapper">
+    
+    <!--게시글 삭제-->
+    <delete id="postDelete" parameterType="long">
+        DELETE FROM posts WHERE id={#id}
+    </delete>
 
+    <!--댓글 삭제-->
+    <delete id="commentDelete" parameterType="long">
+        DELETE FROM comments WHERE id={#id}
+    </delete>
+
+    <!--계정 잠금 해제-->
+    <update id="unlocked" parameterType="com.example.board.domain.user.entity.User">
+        UPDATE users
+        SET login_fail_count = #{loginFailCount},
+            last_login_attempt = NOW(),
+            locked = #{locked}
+        WHERE id = #{id}
+    </update>
+
+    <!--회원 삭제-->
+    <delete id="userDelete" parameterType="long">
+        DELETE FROM users WHERE id = {#id}
+    </delete>
    
-
 </mapper>

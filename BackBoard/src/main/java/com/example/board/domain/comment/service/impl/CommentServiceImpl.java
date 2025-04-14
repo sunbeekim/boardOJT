@@ -10,6 +10,7 @@ import com.example.board.domain.comment.dto.CommentCreateRequestDto;
 import com.example.board.domain.comment.dto.CommentResponseDto;
 import com.example.board.domain.comment.dto.CommentUpdateRequestDto;
 import com.example.board.domain.comment.service.CommentService;
+import com.example.board.domain.post.dao.PostMapper;
 import com.example.board.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import com.example.board.domain.comment.entity.Comment;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
+    private final PostMapper postMapper;
 
     @Override
     public void insert(CommentCreateRequestDto request, Long postId, Long userId) {
@@ -34,6 +36,7 @@ public class CommentServiceImpl implements CommentService {
 
         // db 저장
         commentMapper.insert(comment);
+        postMapper.increaseCommentCount(postId);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.findById(id);
         // 자신이 작성한 것인지 검증증
         if (comment.getUserId().equals(userId)) {
-            commentMapper.deleteById(id);
+            commentMapper.delete(id);
         } else {
             throw new BusinessException("작성한 사용자가 아닙니다.", "권한 부족", HttpStatus.FORBIDDEN.value());
         }

@@ -16,7 +16,9 @@ import com.example.board.domain.post.service.PostService;
 import com.example.board.domain.user.dao.UserMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -45,6 +47,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto getPostById(Long id) {
         Post post = postMapper.findById(id);
+        postMapper.increaseViewCount(id);
         return PostMapper.toResponseDto(post);
     }
 
@@ -75,7 +78,9 @@ public class PostServiceImpl implements PostService {
                 request.getTitle(),
                 request.getUserId(),
                 request.getDateFrom(),
+                request.getDateTo(),
                 request.getSize(),
+                request.getOffset(),
                 request.getSort(),
                 request.getDirection());
     }

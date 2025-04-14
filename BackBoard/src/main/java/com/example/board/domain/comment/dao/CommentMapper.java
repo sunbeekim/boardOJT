@@ -17,7 +17,7 @@ public interface CommentMapper {
 
     void update(Comment comment);
 
-    void deleteById(@Param("id") Long id);
+    void delete(@Param("id") Long id);
 
     List<CommentResponseDto> findByPostId(
             @Param("postId") Long userId);

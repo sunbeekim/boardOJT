@@ -1,5 +1,6 @@
 package com.example.board.domain.post.dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,15 +25,15 @@ public interface PostMapper {
                         @Param("title") String title,
                         @Param("userId") Long userId,
                         @Param("dateFrom") LocalDateTime dateFrom,
-
+                        @Param("dateTo") LocalDateTime dateTo,
                         @Param("size") int size,
+                        @Param("offset") int offset,
                         @Param("sort") String sort,
                         @Param("direction") String direction);
 
-        int countPosts(
-                        @Param("title") String title,
-                        @Param("content") String content,
-                        @Param("dateFrom") String dateFrom);
+        int increaseCommentCount(@Param("id") Long id);
+
+        int increaseViewCount(@Param("id") Long id);
 
         public static PostResponseDto toResponseDto(Post post) {
                 return PostResponseDto.builder()

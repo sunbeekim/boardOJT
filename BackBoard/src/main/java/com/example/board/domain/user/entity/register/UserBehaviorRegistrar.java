@@ -16,6 +16,7 @@ public class UserBehaviorRegistrar implements BehaviorRegistrarInterface {
 
     @Override
     public void register(BehaviorFactory factory) {
+        
         // BehaviorFactory가 제공하는 메서드를 통해,
         // 특정 엔티티(User.class)에 대한 동작(Behavior)을 등록
         //

@@ -58,10 +58,4 @@ public class UserBehaviorImpl implements UserBehavior {
         }
     }
 
-    @Override
-    public void handleacdd() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'handleacdd'");
-    }
-
 }
