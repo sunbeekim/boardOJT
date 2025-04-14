@@ -62,7 +62,7 @@ Content-Type: application/json
 GET http://localhost:8080/api/posts
 
 ### 게시글 조건 조회
-GET http://localhost:8080/api/posts?title=&nickname=&date=&page=&size=20&sort=createdAt&direction=DESC
+GET http://localhost:8080/api/posts?title=&nickname=&date=2025-04-13&page=&size=20&sort=createdAt&direction=DESC
 
 
 
