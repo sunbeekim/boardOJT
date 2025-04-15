@@ -34,17 +34,4 @@ public interface PostMapper {
         int increaseCommentCount(@Param("id") Long id);
 
         int increaseViewCount(@Param("id") Long id);
-
-        public static PostResponseDto toResponseDto(Post post) {
-                return PostResponseDto.builder()
-                                .id(post.getId())
-                                .title(post.getTitle())
-                                .content(post.getContent())
-                                .userId(post.getUserId())
-                                .viewCount(post.getViewCount())
-                                .commentCount(post.getCommentCount())
-                                .createdAt(post.getCreatedAt())
-                                .updatedAt(post.getUpdatedAt())
-                                .build();
-        }
 }

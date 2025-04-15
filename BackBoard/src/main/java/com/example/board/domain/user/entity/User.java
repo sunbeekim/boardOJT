@@ -34,29 +34,4 @@ public class User {
     private LocalDateTime updatedAt;
     private boolean enabled;
 
-    // 엔티티 내부에서 new를 이용해서 객체를 생성하는 것은 지양해야 함
-    // public UserBehavior userBehavior() {
-    // return new UserBehaviorImpl(this);
-    // }
-
-    // public AdminUserBehavior adminUserBehavior() {
-    // return new AdminUserBehaviorImpl(this);
-    // }
-
-    // public static User toRequestDto(User user) {
-    // return User.builder()
-    // .id(user.getId())
-    // .email(user.getEmail())
-    // .password(user.getPassword())
-    // .nickname(user.getNickname())
-    // .role(user.getRole())
-    // .loginFailCount(user.getLoginFailCount())
-    // .locked(user.locked)
-    // .lastLoginAttempt(user.getUpdatedAt())
-    // .createdAt(user.getUpdatedAt())
-    // .updatedAt(user.getUpdatedAt())
-    // .enabled(user.getUpdatedAt())
-    // .build();
-    // }
-
 }

@@ -7,6 +7,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
         <result property="viewCount" column="view_count"/>
         <result property="commentCount" column="comment_count"/>
         <result property="createdAt" column="created_at"/>
@@ -22,8 +23,11 @@
         )
     </insert>
 
-    <select id="findById" resultMap="postMap" parameterType="long">
-        SELECT p.*, u.nickname FROM posts p JOIN user u ON p.user_id = u.id WHERE id = #{id}
+    <select id="findById" resultType="PostResponseDto" parameterType="long">
+        SELECT p.*, u.nickname 
+        FROM posts p 
+        JOIN users u ON p.user_id = u.id 
+        WHERE p.id = #{id}
     </select>
 
     <update id="update" parameterType="com.example.board.domain.post.entity.Post">

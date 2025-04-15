@@ -46,10 +46,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseDto getPostById(Long id) {
-        Post post = postMapper.findById(id);
+        PostResponseDto post = postMapper.findById(id);
         log.info("post ={}", post);
         postMapper.increaseViewCount(id);
-        return PostMapper.toResponseDto(post);
+        return post;
     }
 
     @Override
