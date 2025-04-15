@@ -65,7 +65,7 @@ public class UserController {
             @AuthenticationPrincipal JwtUserInfo userInfo,
             @Valid @RequestBody UserUpdateRequestDto request) {
 
-        userService.update(request, userInfo.getEmail());
+        userService.update(request, userInfo.getId());
         return ResponseEntity.ok(CommonResponseDto.success("회원정보 수정이 완료되었습니다.", request));
     }
 

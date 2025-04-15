@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.example.board.domain.post.dto.PostResponseDto;
+import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
 import com.example.board.domain.user.entity.interfaces.impl.AdminUserBehaviorImpl;
@@ -39,6 +41,22 @@ public class User {
 
     // public AdminUserBehavior adminUserBehavior() {
     // return new AdminUserBehaviorImpl(this);
+    // }
+
+    // public static User toRequestDto(User user) {
+    // return User.builder()
+    // .id(user.getId())
+    // .email(user.getEmail())
+    // .password(user.getPassword())
+    // .nickname(user.getNickname())
+    // .role(user.getRole())
+    // .loginFailCount(user.getLoginFailCount())
+    // .locked(user.locked)
+    // .lastLoginAttempt(user.getUpdatedAt())
+    // .createdAt(user.getUpdatedAt())
+    // .updatedAt(user.getUpdatedAt())
+    // .enabled(user.getUpdatedAt())
+    // .build();
     // }
 
 }

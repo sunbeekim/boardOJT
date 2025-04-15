@@ -17,12 +17,6 @@ public class PostValidator implements
         DomainValidatorInterface.DeleteValidator {
 
     @Override
-    public void validateDelete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'validateDelete'");
-    }
-
-    @Override
     public void validateUpdate(PostUpdateRequestDto request, Post entity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'validateUpdate'");
@@ -33,6 +27,12 @@ public class PostValidator implements
         if (!post.postBehavior().isOwnedBy(userId)) {
             throw new ForbiddenException("존재하지 않는 작성자입니다.");
         }
+    }
+
+    @Override
+    public void validateDelete(Object request, Object entity) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validateDelete'");
     }
 
 }

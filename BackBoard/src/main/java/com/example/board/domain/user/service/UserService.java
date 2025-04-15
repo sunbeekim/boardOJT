@@ -14,7 +14,7 @@ public interface UserService {
 
     String login(LoginRequestDto request);
 
-    void update(UserUpdateRequestDto request, String email);
+    void update(UserUpdateRequestDto request, Long id);
 
     void delete(Long id);
 }

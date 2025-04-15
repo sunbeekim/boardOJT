@@ -30,7 +30,7 @@
 
     <!-- 로깅 레벨 설정  dev/prod-->
     <springProfile name="dev">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
         </root>

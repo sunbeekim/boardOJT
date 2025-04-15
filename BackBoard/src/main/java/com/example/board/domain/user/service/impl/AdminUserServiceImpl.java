@@ -14,6 +14,8 @@ import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
 import com.example.board.domain.user.service.AdminUserService;
+import com.example.board.domain.user.validator.AdminValidator;
+import com.example.board.domain.user.validator.UserValidator;
 import com.example.board.exception.BusinessException;
 import com.example.board.exception.TableNotFoundException;
 
@@ -30,6 +32,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     private final PostMapper postMapper;
     private final CommentMapper commentMapper;
     private final BehaviorFactory behaviorFactory;
+    private final AdminValidator adminValidator;
 
     private User getUserOrThrow(Long userId, Long commonId, String type, String errorMessage) {
         switch (type) {
@@ -77,6 +80,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         checkPermissionOrThrow(admin, "게시글 삭제에 실패했습니다.");
 
         try {
+            adminValidator.validateDelete(postId, Post.class);
             adminMapper.postDelete(postId);
         } catch (PersistenceException e) {
             if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("unknown column")) {

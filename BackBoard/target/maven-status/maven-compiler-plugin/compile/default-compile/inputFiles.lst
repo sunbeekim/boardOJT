@@ -23,6 +23,8 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\impl\CommentServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\UnauthorizedException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\GlobalExceptionHandler.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\validator\AdminValidator.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\validator\CommonValidator.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\entity\validator\PostValidator.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\UserController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostResponseDto.java

@@ -5,8 +5,8 @@ public interface DomainValidatorInterface<T, E> {
     // 예시시
 
     // 생성할때 검증용
-    public interface CreateValidator<T, U> {
-        void validateCreate(T request, U context);
+    public interface CreateValidator<T, E> {
+        void validateCreate(T request, E entity);
 
         default void validateCreate(T request) {
             validateCreate(request, null);
@@ -19,8 +19,13 @@ public interface DomainValidatorInterface<T, E> {
     }
 
     // 삭제할때 검증용
-    public interface DeleteValidator {
-        void validateDelete(Long id);
+    public interface DeleteValidator<T, E> {
+        void validateDelete(T request, E entity);
+    }
+
+    // 조회할때 검증용
+    public interface SelectValidator<T, E> {
+        void validateDelete(T request, E entity);
     }
 
 }

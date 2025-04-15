@@ -3,6 +3,7 @@ package com.example.board.domain.user.entity.interfaces;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.board.common.interfaces.EntityBehaviorInterface;
+import com.example.board.domain.user.dto.SignUpRequestDto;
 
 // 엔티티가 갖는 행동 명시
 public interface UserBehavior extends EntityBehaviorInterface {
@@ -20,4 +21,5 @@ public interface UserBehavior extends EntityBehaviorInterface {
 
     // 로그인 실패시 실패횟수 증가
     void handleLoginFailure();
+
 }

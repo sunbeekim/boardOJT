@@ -29,127 +29,107 @@ import com.example.board.exception.BusinessException;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private final UserValidator userValidator;
-    private final BehaviorFactory behaviorFactory;
-    private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final UserValidator userValidator; // 유저 검증 객체
+    private final BehaviorFactory behaviorFactory; // 엔티티 권한별 행동 기능 가져오기 위한 팩토리
+    private final UserMapper userMapper; // DB 접근 인터페이스
+    private final PasswordEncoder passwordEncoder; // 암호화
+    private final JwtUtil jwtUtil; // 로그인 성공 시 토큰 반환
 
-    // 서비스 로직의 책임:
-    // 1. 유효성 검증 (Validator를 통한 중복 검사 등)
-    // 2. 엔티티 생성 및 상태 설정 (set/get 등)
-    // 3. 엔티티 행동 위임 (ex. userBehavior().isLocked(), userBehavior().register() 등)
-    // 4. 외부와의 상호작용 (DB 저장 등: userMapper.save())
     @Override
     @Transactional
     public void signup(SignUpRequestDto request) {
-        try {
-            // 유효성 검증 (DuplicateResourceException 발생)
-            userValidator.validateCreate(request);
 
-            // 엔티티 생성
-            User user = User.builder()
-                    .email(request.getEmail())
-                    .nickname(request.getNickname())
-                    .role(UserRole.ROLE_USER)
-                    .enabled(true)
-                    .build();
-            // 레지스터에 의해 Bean에 등록된 엔티티 정적 사용
-            // 행동 기능이 래퍼로 확장된 엔티티티
-            // user.userBehavior().register(request.getPassword(), passwordEncoder);
-            // 아래와 같이 엔티티와 구현체를 동적으로 할당 가능
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            userBehavior.register(request.getPassword(), passwordEncoder);
+        log.info("request ={}", request);
+        // userValidator.validateEmail(request.getEmail());
+        // userValidator.validateNickname(request.getNickname());
+        // userValidator.validateEmailFormat(request.getEmail());
+        // userValidator.validatePasswordFormat(request.getPassword());
+        // userValidator.validateNicknameFormat(request.getNickname());
 
-            // 저장
-            userMapper.save(user);
-        } catch (PersistenceException e) {
-            if (e.getMessage().contains("doesn't exist") || e.getMessage().contains("table")) {
-                throw new TableNotFoundException("users 테이블이 존재하지 않습니다: " + e.getMessage());
-            }
-            throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        }
+        // 위의 검증로직 통합한 메서드
+        userValidator.validateCreate(request);
+
+        // 엔티티 생성
+        User user = createUser(request);
+
+        // 아래와 같이 엔티티와 구현체를 동적으로 할당 가능
+        UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+        // 엔티티의 상태 값 변경(비밀번호)
+        userBehavior.register(request.getPassword(), passwordEncoder);
+
+        // 저장
+        userMapper.save(user);
+
+    }
+
+    public User createUser(SignUpRequestDto request) { // 엔티티 생성성
+        User user = User.builder()
+                .email(request.getEmail())
+                .nickname(request.getNickname())
+                .role(UserRole.ROLE_USER)
+                .enabled(true)
+                .build();
+
+        return user;
     }
 
     @Override
     public String login(LoginRequestDto request) {
+        User user = userMapper.findByEmail(request.getEmail());
+        UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
         try {
-            User user = userMapper.findByEmail(request.getEmail());
-            if (user == null) {
-                throw new UnauthorizedException("존재하지 않는 아이디입니다.");
-            }
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            try {
-
-                userValidator.validateLogin(request, passwordEncoder);
-
-                userBehavior.handleLoginSuccess(); // 성공 시 처리
-                userMapper.updateLoginFailCount(user.getId(),
-                        user.getLoginFailCount(),
-                        user.isLocked());
-            } catch (UnauthorizedException e) {
-                userBehavior.handleLoginFailure(); // 실패 시 처리
-                userMapper.updateLoginFailCount(user.getId(),
-                        user.getLoginFailCount(),
-                        user.isLocked());
-                throw e; // 다시 예외 던짐
-            }
-
-            return jwtUtil.createToken(user);
-        } catch (PersistenceException e) {
-            throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            userValidator.validateExistenceFilter(user); // 계정 존재여부 검증
+            userValidator.verifyAccount(user); // 계정 잠금여부 확인
+            userValidator.validateLogin(request, passwordEncoder); // 비밀번호 일치 검증증
+            userBehavior.handleLoginSuccess(); // 성공 시 엔티티 상태변경(실패 상태 초기화)
+            userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(성공)
+                    user.getLoginFailCount(),
+                    user.isLocked());
+        } catch (UnauthorizedException e) {
+            userBehavior.handleLoginFailure(); // 실패 시 엔티티 상태변경
+            userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(실패)
+                    user.getLoginFailCount(),
+                    user.isLocked());
+            throw e;
         }
+
+        return jwtUtil.createToken(user);
+
     }
 
     @Override
     @Transactional
-    public void update(UserUpdateRequestDto request, String email) {
-        try {
-            User user = userMapper.findByEmail(email);
-            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-            if (user == null) {
-                throw new UnauthorizedException("로그인된 사용자를 찾을 수 없습니다.");
-            }
+    public void update(UserUpdateRequestDto request, Long id) {
+        User user = userMapper.findById(id);
+        // 검증
+        userValidator.validateUpdate(request, user);
+        // 엔티티 행동 기능 가져오기
+        UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+        userBehavior.changeNickname(request.getNickname()); // 상태 값 변경
+        userBehavior.changePassword(request.getPassword(), passwordEncoder); // 비밀번호 암호화
 
-            userValidator.validateUpdate(request, user);
-
-            userBehavior.changeNickname(request.getNickname());
-            userBehavior.changePassword(request.getPassword(), passwordEncoder);
-
-            userMapper.update(user);
-        } catch (PersistenceException e) {
-            throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        }
+        userMapper.update(user); // DB users 테이블 업데이트
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        try {
-            userValidator.validateDelete(id);
-            User user = userMapper.findById(id);
-            if (user == null) {
-                throw new UnauthorizedException("로그인된 사용자를 찾을 수 없습니다.");
-            }
-            userMapper.delete(id);
-        } catch (PersistenceException e) {
-            throw new BusinessException("데이터베이스 오류가 발생했습니다.", "DB_ERROR", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        }
+        User user = userMapper.findById(id);
+        userValidator.validateDelete(id, user);
+        userMapper.delete(id);
     }
 
     @Override
     public boolean checkEmail(CheckRequestDto request) {
-        System.out.println("System print REQUEST : " + request);
         User user = userMapper.findByEmail(request.getEmail());
-        log.info("user = {}", user);
-        System.out.println("System print : " + user);
-        log.info("request = {}", request);
-
-        return userValidator.validateBooleanEmail(request.getEmail());
+        userValidator.validateEmailFormat(request.getEmail()); // 형식 검증
+        return userValidator.validateBooleanEmail(user);
     }
 
     @Override
     public boolean checkNickname(CheckRequestDto request) {
-        return userValidator.validateBooleanNickname(request.getNickname());
+        User user = userMapper.findByEmail(request.getNickname());
+        userValidator.validateNicknameFormat(request.getNickname()); // 형식 검증
+        return userValidator.validateBooleanNickname(user);
     }
 }

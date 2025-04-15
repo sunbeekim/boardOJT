@@ -2,6 +2,7 @@ package com.example.board.domain.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@Slf4j
 public class SignUpRequestDto {
 
     @NotBlank(message = "이메일은 필수 입력값입니다.")
