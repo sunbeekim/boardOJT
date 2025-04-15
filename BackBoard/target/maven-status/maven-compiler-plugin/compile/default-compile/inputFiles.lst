@@ -1,6 +1,7 @@
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\service\PostService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\UserUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\AdminUserBehaviorRegistrar.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\AccessDeniedException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\ResourceNotFoundException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\enums\UserRole.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\AdminUserBehavior.java

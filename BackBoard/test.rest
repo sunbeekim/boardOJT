@@ -30,7 +30,7 @@ POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
 {
-  "email": "admin@admin.com",
+  "email": "test@test.com",
   "password": "admin1234!"
 }
 
@@ -87,7 +87,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiO
 
 ### 댓글 등록
 POST http://localhost:8080/api/comments/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 Content-Type: application/json
 
 {
@@ -96,7 +96,7 @@ Content-Type: application/json
 
 ### 댓글 조회
 GET http://localhost:8080/api/comments/post/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 
 ### 댓글 수정
@@ -111,20 +111,28 @@ Content-Type: application/json
 
 ### 댓글 삭제
 DELETE http://localhost:8080/api/comments/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 
 ### 게시글 삭제 (관리자)
-DELETE http://localhost:8080/api/admin/posts/4
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+DELETE http://localhost:8080/api/admin/posts/15
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 ### 댓글 삭제 (관리자)
 DELETE http://localhost:8080/api/admin/comments/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 ### 계정 삭제 (관리자)
-DELETE http://localhost:8080/api/admin/users/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+DELETE http://localhost:8080/api/admin/users/19
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 ### 계정 잠금 해지 (관리자)
 PATCH  http://localhost:8080/api/admin/users/11/unlock
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NjEzMDMxLCJleHAiOjE3NDQ2OTk0MzF9.YdPPce2_DWmbm5OvyRXIYkSFORrRXn2csQjye-NkGH0
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
+
+
+
+###
+# 관리자 토큰
+# eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
+# 유저 토큰
+# eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs

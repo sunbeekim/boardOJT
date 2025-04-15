@@ -16,18 +16,17 @@ public class AdminUserBehaviorImpl implements AdminUserBehavior {
     @Override
     public void unlock() {
         user.setLocked(false);
+
+    }
+
+    @Override
+    public void changeUserRole() {
+
+    }
+
+    @Override
+    public void resetLoginFailCount() {
         user.setLoginFailCount(0);
-
-    }
-
-    @Override
-    public void changeUserRole(Long id) {
-
-    }
-
-    @Override
-    public void resetLoginFailCount(Long id) {
-
     }
 
     @Override

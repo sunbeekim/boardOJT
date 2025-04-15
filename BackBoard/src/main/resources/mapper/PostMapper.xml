@@ -8,6 +8,7 @@
         <result property="content" column="content"/>
         <result property="userId" column="user_id"/>
         <result property="viewCount" column="view_count"/>
+        <result property="commentCount" column="comment_count"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
     </resultMap>

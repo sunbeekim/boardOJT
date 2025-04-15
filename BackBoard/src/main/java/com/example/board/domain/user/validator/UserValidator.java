@@ -11,7 +11,6 @@ import com.example.board.common.validator.CommonValidator;
 import com.example.board.exception.AccountLockedException;
 import com.example.board.exception.BusinessException;
 import com.example.board.exception.DuplicateResourceException;
-import com.example.board.exception.ResourceNotFoundException;
 import com.example.board.exception.UnauthorizedException;
 import com.example.board.domain.user.dao.UserMapper;
 import com.example.board.domain.user.dto.LoginRequestDto;
@@ -108,7 +107,6 @@ public class UserValidator extends CommonValidator implements
 
         User user = userMapper.findByEmail(request.getEmail());
         String rawPassword = request.getPassword();
-        verifyAccount(user);
         if (!encoder.matches(rawPassword, user.getPassword())) {
             throw new UnauthorizedException("비밀번호가 일치하지 않습니다.");
         }

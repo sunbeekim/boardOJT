@@ -42,6 +42,7 @@ public interface PostMapper {
                                 .content(post.getContent())
                                 .userId(post.getUserId())
                                 .viewCount(post.getViewCount())
+                                .commentCount(post.getCommentCount())
                                 .createdAt(post.getCreatedAt())
                                 .updatedAt(post.getUpdatedAt())
                                 .build();

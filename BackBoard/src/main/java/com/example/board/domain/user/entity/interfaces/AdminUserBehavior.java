@@ -13,10 +13,10 @@ public interface AdminUserBehavior extends EntityBehaviorInterface {
     void unlock();
 
     // 유저 권한 변경
-    void changeUserRole(Long id);
+    void changeUserRole();
 
     // 로그인 실패 횟수 초기화
-    void resetLoginFailCount(Long id);
+    void resetLoginFailCount();
 
     // 유저 비밀번호 변경(관리자)
     void changeForcePassword(String rawPassword, PasswordEncoder encoder);

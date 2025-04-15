@@ -17,12 +17,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
-    
+
     private Long id;
     private String title;
     private String content;
     private Long userId;
     private int viewCount;
+    private int commentCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

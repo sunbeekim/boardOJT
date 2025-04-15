@@ -3,6 +3,8 @@ package com.example.board.domain.user.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.SQLException;
+
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,7 +60,11 @@ public class UserServiceImpl implements UserService {
         userBehavior.register(request.getPassword(), passwordEncoder);
 
         // 저장
-        userMapper.save(user);
+        try {
+            userMapper.save(user);
+        } catch (PersistenceException e) {
+            throw e;
+        }
 
     }
 
@@ -82,14 +88,22 @@ public class UserServiceImpl implements UserService {
             userValidator.verifyAccount(user); // 계정 잠금여부 확인
             userValidator.validateLogin(request, passwordEncoder); // 비밀번호 일치 검증증
             userBehavior.handleLoginSuccess(); // 성공 시 엔티티 상태변경(실패 상태 초기화)
-            userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(성공)
-                    user.getLoginFailCount(),
-                    user.isLocked());
+            try {
+                userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(성공)
+                        user.getLoginFailCount(),
+                        user.isLocked());
+            } catch (PersistenceException e) {
+                throw e;
+            }
         } catch (UnauthorizedException e) {
             userBehavior.handleLoginFailure(); // 실패 시 엔티티 상태변경
-            userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(실패)
-                    user.getLoginFailCount(),
-                    user.isLocked());
+            try {
+                userMapper.updateLoginFailCount(user.getId(), // DB 엔티티 상태 업데이트(실패)
+                        user.getLoginFailCount(),
+                        user.isLocked());
+            } catch (PersistenceException ex) {
+                throw ex;
+            }
             throw e;
         }
 
@@ -107,8 +121,11 @@ public class UserServiceImpl implements UserService {
         UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
         userBehavior.changeNickname(request.getNickname()); // 상태 값 변경
         userBehavior.changePassword(request.getPassword(), passwordEncoder); // 비밀번호 암호화
-
-        userMapper.update(user); // DB users 테이블 업데이트
+        try {
+            userMapper.update(user); // DB users 테이블 업데이트
+        } catch (PersistenceException e) {
+            throw e;
+        }
     }
 
     @Override
@@ -116,7 +133,11 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user = userMapper.findById(id);
         userValidator.validateDelete(id, user);
-        userMapper.delete(id);
+        try {
+            userMapper.delete(id);
+        } catch (PersistenceException e) {
+            throw e;
+        }
     }
 
     @Override
