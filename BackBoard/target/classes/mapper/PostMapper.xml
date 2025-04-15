@@ -22,8 +22,11 @@
         )
     </insert>
 
-    <select id="findById" resultMap="postMap" parameterType="long">
-        SELECT * FROM posts WHERE id = #{id}
+    <select id="findById" resultType="com.example.board.domain.post.dto.PostResponseDto" parameterType="long">
+        SELECT p.*, u.nickname 
+        FROM posts p 
+        JOIN users u ON p.user_id = u.id
+        WHERE p.id = #{id}
     </select>
 
     <update id="update" parameterType="com.example.board.domain.post.entity.Post">
@@ -47,11 +50,10 @@
     <update id="increaseCommentCount" parameterType="long">
         UPDATE posts SET comment_count = comment_count + 1 WHERE id = #{id}
     </update>
-    
     <!-- 닉네임 조인, 댓글 수 추가 -->
     <select id="searchPosts" resultType="PostResponseDto" parameterType="map">
         SELECT u.nickname, p.*
-        FROM Posts p JOIN Users u ON p.user_id = u.id
+        FROM posts p JOIN users u ON p.user_id = u.id
         WHERE 1 = 1
             <if test="title != null">AND title LIKE CONCAT('%', #{title}, '%')</if>
             <if test="userId != null">AND user_id = #{userId}</if>

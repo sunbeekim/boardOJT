@@ -23,7 +23,7 @@
     </insert>
 
     <select id="findById" resultMap="postMap" parameterType="long">
-        SELECT * FROM posts WHERE id = #{id}
+        SELECT p.*, u.nickname FROM posts p JOIN user u ON p.user_id = u.id WHERE id = #{id}
     </select>
 
     <update id="update" parameterType="com.example.board.domain.post.entity.Post">
