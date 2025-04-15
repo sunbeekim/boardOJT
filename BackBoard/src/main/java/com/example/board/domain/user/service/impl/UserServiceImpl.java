@@ -78,16 +78,17 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new UnauthorizedException("존재하지 않는 아이디입니다.");
             }
-
+            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
             try {
 
                 userValidator.validateLogin(request, passwordEncoder);
-                user.userBehavior().handleLoginSuccess(); // 성공 시 처리
+
+                userBehavior.handleLoginSuccess(); // 성공 시 처리
                 userMapper.updateLoginFailCount(user.getId(),
                         user.getLoginFailCount(),
                         user.isLocked());
             } catch (UnauthorizedException e) {
-                user.userBehavior().handleLoginFailure(); // 실패 시 처리
+                userBehavior.handleLoginFailure(); // 실패 시 처리
                 userMapper.updateLoginFailCount(user.getId(),
                         user.getLoginFailCount(),
                         user.isLocked());
@@ -105,14 +106,15 @@ public class UserServiceImpl implements UserService {
     public void update(UserUpdateRequestDto request, String email) {
         try {
             User user = userMapper.findByEmail(email);
+            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
             if (user == null) {
                 throw new UnauthorizedException("로그인된 사용자를 찾을 수 없습니다.");
             }
 
             userValidator.validateUpdate(request, user);
 
-            user.userBehavior().changeNickname(request.getNickname());
-            user.userBehavior().changePassword(request.getPassword(), passwordEncoder);
+            userBehavior.changeNickname(request.getNickname());
+            userBehavior.changePassword(request.getPassword(), passwordEncoder);
 
             userMapper.update(user);
         } catch (PersistenceException e) {

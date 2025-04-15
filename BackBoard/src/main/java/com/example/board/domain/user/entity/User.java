@@ -32,12 +32,13 @@ public class User {
     private LocalDateTime updatedAt;
     private boolean enabled;
 
-    public UserBehavior userBehavior() {
-        return new UserBehaviorImpl(this);
-    }
+    // 엔티티 내부에서 new를 이용해서 객체를 생성하는 것은 지양해야 함
+    // public UserBehavior userBehavior() {
+    // return new UserBehaviorImpl(this);
+    // }
 
-    public AdminUserBehavior adminUserBehavior() {
-        return new AdminUserBehaviorImpl(this);
-    }
+    // public AdminUserBehavior adminUserBehavior() {
+    // return new AdminUserBehaviorImpl(this);
+    // }
 
 }
