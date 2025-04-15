@@ -49,10 +49,17 @@ public class UserValidator extends CommonValidator implements
     public void validateUpdate(UserUpdateRequestDto request, User currentUser) {
         validateExistenceFilter(currentUser);
         verifyAccount(currentUser);
+        
+        // 닉네임 변경 시에만 중복 검증
         if (!request.getNickname().equals(currentUser.getNickname())) {
-            // 현재 사용자의 닉네임이 아닌 경우에만 중복 검증
-            validateNickname(currentUser.getNickname());
+            validateNickname(request.getNickname());  // request의 닉네임 검증
         }
+        
+        // 비밀번호 변경 시 현재 비밀번호 확인
+        if (StringUtils.hasText(request.getPassword())) {
+            validateCurrentPassword(currentUser, request.getCurrentPassword());
+        }
+        
         validatePasswordFormat(request.getPassword());
         validateNicknameFormat(request.getNickname());
     }

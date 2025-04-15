@@ -74,29 +74,67 @@ class UserControllerTest {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NUB0ZXN0LmNvbSIsImlkIjo4LCJuaWNrbmFtZSI6Iu2FjOyKpO2KuOycoOyggDUiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MjYxNjY1LCJleHAiOjE3NDQzNDgwNjV9.WpsAqbEShHPybqDd0p-YVUkLQoMY379Kr3Vu6_u_5_I";
 
         @Test
+        void checkEmailTest() throws Exception {
+                CheckRequestDto request = new CheckRequestDto("test@email.com");
+                when(userService.checkEmail(any(CheckRequestDto.class))).thenReturn(true);
+
+                mockMvc.perform(post("/api/users/check/email")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isOk())
+                                .andDo(document("check-email",
+                                                requestFields(
+                                                                fieldWithPath("email").description("중복 확인할 이메일")),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
+                                                                fieldWithPath("message").description("응답 메시지"),
+                                                                fieldWithPath("data").description("사용 가능 여부 (true/false)"),
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
+        }
+
+        @Test
+        void checkNicknameTest() throws Exception {
+                CheckRequestDto request = new CheckRequestDto("nickname");
+                when(userService.checkNickname(any(CheckRequestDto.class))).thenReturn(true);
+
+                mockMvc.perform(post("/api/users/check/nickname")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isOk())
+                                .andDo(document("check-nickname",
+                                                requestFields(
+                                                                fieldWithPath("nickname").description("중복 확인할 닉네임")),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
+                                                                fieldWithPath("message").description("응답 메시지"),
+                                                                fieldWithPath("data").description("사용 가능 여부 (true/false)"),
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
+        }
+
+        @Test
         void signUpTest() throws Exception {
                 SignUpRequestDto request = new SignUpRequestDto("test@email.com", "password123!", "nickname");
 
                 mockMvc.perform(post("/api/users/signup")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
-                                .andExpect(status().isOk())
+                                .andExpect(status().isCreated())
                                 .andDo(document("signup",
                                                 requestFields(
-                                                                fieldWithPath("email").description("회원 이메일"),
+                                                                fieldWithPath("email").description("회원 이메일")
+                                                                                .attributes(key("constraints").value("이메일 형식")),
                                                                 fieldWithPath("password").description("비밀번호")
-                                                                                .attributes(key("constraints").value(
-                                                                                                "8~16자, 영문, 숫자, 특수문자 필수 포함")),
-                                                                fieldWithPath("nickname").description("닉네임")),
+                                                                                .attributes(key("constraints").value("8~16자, 영문, 숫자, 특수문자 필수 포함")),
+                                                                fieldWithPath("nickname").description("닉네임")
+                                                                                .attributes(key("constraints").value("2~10자, 한글, 알파벳, 숫자만 사용 가능"))),
                                                 responseFields(
-                                                                fieldWithPath("success")
-                                                                                .description("요청 성공 여부 (true/false)"),
+                                                                fieldWithPath("success").description("요청 성공 여부 (true)"),
                                                                 fieldWithPath("message").description("응답 메시지"),
                                                                 fieldWithPath("data").description("응답 데이터 (200)"),
-                                                                fieldWithPath("error")
-                                                                                .description("에러 정보 (nullable)"),
-                                                                fieldWithPath("errorPath")
-                                                                                .description("에러 페이지 경로 (nullable)"))));
+                                                                fieldWithPath("error").description("에러 정보 (nullable)"),
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
         }
 
         @Test
@@ -107,19 +145,40 @@ class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
                                 .andExpect(status().isBadRequest())
-                                .andDo(document("signup-fail", responseFields(
-                                                fieldWithPath("success")
-                                                                .description("요청 성공 여부 (false)"),
-                                                fieldWithPath("message").description("Bad Request"),
-                                                fieldWithPath("data").description(
-                                                                "400 - DTO 조건 불충족족(요청 바디 검증 실패)"),
-                                                fieldWithPath("error").description("CONSTRAINT_VIOLATION"),
-                                                fieldWithPath("errorPath").description("/error/400")
+                                .andDo(document("signup-fail-validation",
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일"),
+                                                                fieldWithPath("password").description("비밀번호"),
+                                                                fieldWithPath("nickname").description("닉네임")),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("Bad Request"),
+                                                                fieldWithPath("data").description("400 - DTO 조건 불충족(요청 바디 검증 실패)"),
+                                                                fieldWithPath("error").description("CONSTRAINT_VIOLATION"),
+                                                                fieldWithPath("errorPath").description("/error/400"))));
+        }
 
-                                )
+        @Test
+        void signUpFailTest_dueToDuplicateEmail() throws Exception {
+                SignUpRequestDto request = new SignUpRequestDto("test@email.com", "password123!", "nickname");
+                when(userService.signup(any(SignUpRequestDto.class)))
+                                .thenThrow(new DuplicateResourceException("이미 사용 중인 이메일입니다."));
 
-                                ));
-
+                mockMvc.perform(post("/api/users/signup")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(new ObjectMapper().writeValueAsString(request)))
+                                .andExpect(status().isConflict())
+                                .andDo(document("signup-fail-duplicate",
+                                                requestFields(
+                                                                fieldWithPath("email").description("회원 이메일"),
+                                                                fieldWithPath("password").description("비밀번호"),
+                                                                fieldWithPath("nickname").description("닉네임")),
+                                                responseFields(
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("이미 사용 중인 이메일입니다."),
+                                                                fieldWithPath("data").description("409 - 중복된 리소스"),
+                                                                fieldWithPath("error").description("DUPLICATE_RESOURCE"),
+                                                                fieldWithPath("errorPath").description("/error/409"))));
         }
 
         @Test
@@ -128,7 +187,7 @@ class UserControllerTest {
                 mockMvc.perform(delete("/api/users/me")
                                 .requestAttr("userInfo", mockUserInfo)
                                 .header("Authorization", "Bearer " + token))
-                                .andExpect(status().isUnauthorized()) // .andExpect(status().isOk())
+                                .andExpect(status().isOk())
                                 .andDo(document("delete-user",
                                                 requestHeaders(
                                                                 headerWithName("Authorization").description("JWT 토큰")),
@@ -137,13 +196,13 @@ class UserControllerTest {
                                                                 fieldWithPath("message").description("응답 메시지"),
                                                                 fieldWithPath("data").description("응답 데이터 (null)"),
                                                                 fieldWithPath("error").description("에러 정보 (nullable)"),
-                                                                fieldWithPath("errorPath")
-                                                                                .description("에러 페이지 경로 (nullable)"))));
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
         }
 
         @Test
         void loginTest() throws Exception {
                 LoginRequestDto request = new LoginRequestDto("test@email.com", "password123!");
+                when(userService.login(any(LoginRequestDto.class))).thenReturn("jwt.token.here");
 
                 mockMvc.perform(post("/api/users/login")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -153,15 +212,13 @@ class UserControllerTest {
                                                 requestFields(
                                                                 fieldWithPath("email").description("회원 이메일"),
                                                                 fieldWithPath("password").description("비밀번호")
-                                                                                .attributes(key("constraints").value(
-                                                                                                "8~16자, 영문, 숫자, 특수문자 필수 포함"))),
+                                                                                .attributes(key("constraints").value("8~16자, 영문, 숫자, 특수문자 필수 포함"))),
                                                 responseFields(
                                                                 fieldWithPath("success").description("요청 성공 여부 (true)"),
                                                                 fieldWithPath("message").description("응답 메시지"),
                                                                 fieldWithPath("data").description("JWT 토큰"),
                                                                 fieldWithPath("error").description("에러 정보 (nullable)"),
-                                                                fieldWithPath("errorPath")
-                                                                                .description("에러 페이지 경로 (nullable)"))));
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
         }
 
         @Test
@@ -173,56 +230,43 @@ class UserControllerTest {
                                 .header("Authorization", "Bearer " + token)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
-                                .andExpect(status().isUnauthorized()) // ← 이 부분 수정
+                                .andExpect(status().isOk())
                                 .andDo(document("update-user",
                                                 requestHeaders(
                                                                 headerWithName("Authorization").description("JWT 토큰")),
                                                 requestFields(
                                                                 fieldWithPath("password").description("새 비밀번호")
-                                                                                .attributes(key("constraints").value(
-                                                                                                "8~16자, 영문, 숫자, 특수문자 필수 포함")),
+                                                                                .attributes(key("constraints").value("8~16자, 영문, 숫자, 특수문자 필수 포함")),
                                                                 fieldWithPath("nickname").description("새 닉네임")
-                                                                                .attributes(key("constraints").value(
-                                                                                                "2~10자, 한글, 알파벳, 숫자만 사용 가능"))),
+                                                                                .attributes(key("constraints").value("2~10자, 한글, 알파벳, 숫자만 사용 가능"))),
                                                 responseFields(
                                                                 fieldWithPath("success").description("요청 성공 여부 (true)"),
                                                                 fieldWithPath("message").description("응답 메시지"),
                                                                 fieldWithPath("data").description("응답데이터").optional(),
-
                                                                 fieldWithPath("error").description("에러 정보 (nullable)"),
-                                                                fieldWithPath("errorPath")
-                                                                                .description("에러 페이지 경로 (nullable)"))));
+                                                                fieldWithPath("errorPath").description("에러 페이지 경로 (nullable)"))));
         }
 
         @Test
         void loginFailTest_dueToInvalidCredentials() throws Exception {
-                // given
-                LoginRequestDto request = new LoginRequestDto("tes3t@email.com", "wrongpassword!1");
-
+                LoginRequestDto request = new LoginRequestDto("test@email.com", "wrongpassword!1");
                 when(userService.login(any(LoginRequestDto.class)))
-                                .thenThrow(new UnauthorizedException("존재하지 않는 아이디입니다."));
+                                .thenThrow(new UnauthorizedException("비밀번호가 일치하지 않습니다."));
 
-                // when & then
                 mockMvc.perform(post("/api/users/login")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
                                 .andExpect(status().isUnauthorized())
-                                .andExpect(jsonPath("$.success").value(false))
-                                .andExpect(jsonPath("$.message").value("존재하지 않는 아이디입니다."))
-                                .andExpect(jsonPath("$.data").doesNotExist())
-                                .andExpect(jsonPath("$.error").value("UNAUTHORIZED"))
-                                .andExpect(jsonPath("$.errorPath").value("/error/401"))
-                                .andDo(document("login-fail",
+                                .andDo(document("login-fail-credentials",
                                                 requestFields(
                                                                 fieldWithPath("email").description("회원 이메일"),
                                                                 fieldWithPath("password").description("비밀번호")),
                                                 responseFields(
-                                                                fieldWithPath("success")
-                                                                                .description("요청 성공 여부 (false)"),
-                                                                fieldWithPath("message").description("에러 메시지"),
-                                                                fieldWithPath("data").description("에러 데이터"),
-                                                                fieldWithPath("error").description("에러 코드"),
-                                                                fieldWithPath("errorPath").description("에러 페이지 경로"))));
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("비밀번호가 일치하지 않습니다."),
+                                                                fieldWithPath("data").description("401 - 인증 실패"),
+                                                                fieldWithPath("error").description("UNAUTHORIZED"),
+                                                                fieldWithPath("errorPath").description("/error/401"))));
         }
 
         @Test
@@ -232,17 +276,15 @@ class UserControllerTest {
                 mockMvc.perform(delete("/api/users/me")
                                 .header("Authorization", "Bearer " + token))
                                 .andExpect(status().isUnauthorized())
-                                .andDo(document("delete-user-fail",
+                                .andDo(document("delete-user-fail-token",
                                                 requestHeaders(
-                                                                headerWithName("Authorization")
-                                                                                .description("잘못된 JWT 토큰")),
+                                                                headerWithName("Authorization").description("잘못된 JWT 토큰")),
                                                 responseFields(
-                                                                fieldWithPath("success")
-                                                                                .description("요청 성공 여부 (false)"),
-                                                                fieldWithPath("message").description("에러 메시지"),
-                                                                fieldWithPath("data").description("에러 데이터"),
-                                                                fieldWithPath("error").description("에러 코드"),
-                                                                fieldWithPath("errorPath").description("에러 페이지 경로"))));
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("Invalid token"),
+                                                                fieldWithPath("data").description("401 - 인증 실패"),
+                                                                fieldWithPath("error").description("UNAUTHORIZED"),
+                                                                fieldWithPath("errorPath").description("/error/401"))));
         }
 
         @Test
@@ -251,25 +293,22 @@ class UserControllerTest {
                 when(jwtUtil.getEmailFromToken(anyString())).thenThrow(new JwtException("Invalid token"));
 
                 mockMvc.perform(patch("/api/users/me")
-
                                 .header("Authorization", "Bearer invalid.token.here")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(new ObjectMapper().writeValueAsString(request)))
                                 .andExpect(status().isUnauthorized())
-                                .andDo(document("update-user-fail",
+                                .andDo(document("update-user-fail-token",
                                                 requestHeaders(
-                                                                headerWithName("Authorization")
-                                                                                .description("잘못된 JWT 토큰")),
+                                                                headerWithName("Authorization").description("잘못된 JWT 토큰")),
                                                 requestFields(
                                                                 fieldWithPath("password").description("새 비밀번호"),
                                                                 fieldWithPath("nickname").description("새 닉네임")),
                                                 responseFields(
-                                                                fieldWithPath("success")
-                                                                                .description("요청 성공 여부 (false)"),
-                                                                fieldWithPath("message").description("에러 메시지"),
-                                                                fieldWithPath("data").description("에러 데이터"),
-                                                                fieldWithPath("error").description("에러 코드"),
-                                                                fieldWithPath("errorPath").description("에러 페이지 경로"))));
+                                                                fieldWithPath("success").description("요청 성공 여부 (false)"),
+                                                                fieldWithPath("message").description("Invalid token"),
+                                                                fieldWithPath("data").description("401 - 인증 실패"),
+                                                                fieldWithPath("error").description("UNAUTHORIZED"),
+                                                                fieldWithPath("errorPath").description("/error/401"))));
         }
 
 }

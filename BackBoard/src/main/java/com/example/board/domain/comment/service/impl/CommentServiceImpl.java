@@ -9,13 +9,20 @@ import com.example.board.domain.comment.dao.CommentMapper;
 import com.example.board.domain.comment.dto.CommentCreateRequestDto;
 import com.example.board.domain.comment.dto.CommentResponseDto;
 import com.example.board.domain.comment.dto.CommentUpdateRequestDto;
+import com.example.board.domain.comment.entity.Comment;
+import com.example.board.domain.comment.entity.validator.CommentValidator;
 import com.example.board.domain.comment.service.CommentService;
 import com.example.board.domain.post.dao.PostMapper;
+import com.example.board.domain.post.entity.Post;
+import com.example.board.domain.post.entity.validator.PostValidator;
+import com.example.board.domain.user.dao.UserMapper;
+import com.example.board.domain.user.entity.User;
+import com.example.board.domain.user.validator.UserValidator;
 import com.example.board.exception.BusinessException;
+import com.example.board.exception.ForbiddenException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import com.example.board.domain.comment.entity.Comment;
 
 @Slf4j
 @Service
@@ -24,9 +31,23 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentMapper commentMapper;
     private final PostMapper postMapper;
+    private final UserMapper userMapper;
+    private final UserValidator userValidator;
+    private final PostValidator postValidator;
+    private final CommentValidator commentValidator;
 
     @Override
     public void insert(CommentCreateRequestDto request, Long postId, Long userId) {
+        log.info("댓글 등록 요청 - postId: {}, userId: {}", postId, userId);
+        
+        // 계정 존재 여부 검증
+        User user = userMapper.findById(userId);
+        userValidator.validateExistenceFilter(user);
+        
+        // 게시글 존재 여부 검증
+        Post post = postMapper.findById(postId);
+        postValidator.validateExistenceFilter(post);
+        
         // 엔티티와 요청데이터 매핑
         Comment comment = Comment.builder()
                 .content(request.getContent())
@@ -37,39 +58,64 @@ public class CommentServiceImpl implements CommentService {
         // db 저장
         commentMapper.insert(comment);
         postMapper.increaseCommentCount(postId);
+        log.info("댓글 등록 완료 - commentId: {}", comment.getId());
     }
 
     @Override
     public void update(Long id, CommentUpdateRequestDto request, Long userId) {
+        log.info("댓글 수정 요청 - commentId: {}, userId: {}", id, userId);
+        
+        // 계정 존재 여부 검증
+        User user = userMapper.findById(userId);
+        userValidator.validateExistenceFilter(user);
+        
+        // 댓글 존재 여부 검증
         Comment comment = commentMapper.findById(id);
-        // 자신이 작성한 것인지 검증증
-        if (comment.getUserId().equals(userId)) {
-            comment.setContent(request.getContent());
-            commentMapper.update(comment);
-        } else {
-            throw new BusinessException("작성한 사용자가 아닙니다.", "권한 부족", HttpStatus.FORBIDDEN.value());
+        commentValidator.validateExistenceFilter(comment);
+        
+        // 작성자 본인 여부 검증
+        if (!comment.getUserId().equals(userId)) {
+            log.warn("댓글 수정 권한 없음 - commentId: {}, userId: {}", id, userId);
+            throw new ForbiddenException("댓글 작성자만 수정할 수 있습니다.");
         }
+        
+        comment.setContent(request.getContent());
+        commentMapper.update(comment);
+        log.info("댓글 수정 완료 - commentId: {}", id);
     }
 
     @Override
     public void delete(Long id, Long userId) {
+        log.info("댓글 삭제 요청 - commentId: {}, userId: {}", id, userId);
+        
+        // 계정 존재 여부 검증
+        User user = userMapper.findById(userId);
+        userValidator.validateExistenceFilter(user);
+        
+        // 댓글 존재 여부 검증
         Comment comment = commentMapper.findById(id);
-        // 자신이 작성한 것인지 검증증
-        if (comment.getUserId().equals(userId)) {
-            commentMapper.delete(id);
-        } else {
-            throw new BusinessException("작성한 사용자가 아닙니다.", "권한 부족", HttpStatus.FORBIDDEN.value());
+        commentValidator.validateExistenceFilter(comment);
+        
+        // 작성자 본인 여부 검증
+        if (!comment.getUserId().equals(userId)) {
+            log.warn("댓글 삭제 권한 없음 - commentId: {}, userId: {}", id, userId);
+            throw new ForbiddenException("댓글 작성자만 삭제할 수 있습니다.");
         }
-
+        
+        commentMapper.delete(id);
+        log.info("댓글 삭제 완료 - commentId: {}", id);
     }
 
     @Override
     public List<CommentResponseDto> getFindByPostId(Long postId) {
-        try {
-            log.info("댓글 조회 postId={}");
-            return commentMapper.findByPostId(postId);
-        } catch (BusinessException e) {
-            throw new BusinessException("조회 에러러", "sdsdssd", HttpStatus.FORBIDDEN.value());
-        }
+        log.info("댓글 목록 조회 요청 - postId: {}", postId);
+        
+        // 게시글 존재 여부 검증
+        Post post = postMapper.findById(postId);
+        postValidator.validateExistenceFilter(post);
+        
+        List<CommentResponseDto> comments = commentMapper.findByPostId(postId);
+        log.info("댓글 목록 조회 완료 - postId: {}, 조회된 댓글 수: {}", postId, comments.size());
+        return comments;
     }
 }
