@@ -33,5 +33,6 @@ public interface PostMapper {
 
         int increaseCommentCount(@Param("id") Long id);
 
-        int increaseViewCount(@Param("id") Long id);
+        int increaseViewCount(@Param("id") Long id, @Param("viewCount") int viewCount);
+
 }

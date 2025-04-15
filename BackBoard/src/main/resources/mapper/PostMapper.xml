@@ -44,9 +44,10 @@
     </delete>
 
     
-    <update id="increaseViewCount" parameterType="long">
-        UPDATE posts SET view_count = view_count + 1 WHERE id = #{id}
+    <update id="increaseViewCount" parameterType="map">
+        UPDATE posts SET view_count = #{viewCount} WHERE id = #{id}
     </update>
+
 
     <update id="increaseCommentCount" parameterType="long">
         UPDATE posts SET comment_count = comment_count + 1 WHERE id = #{id}

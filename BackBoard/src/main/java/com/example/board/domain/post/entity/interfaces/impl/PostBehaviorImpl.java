@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.example.board.domain.post.entity.Post;
 import com.example.board.domain.post.entity.interfaces.PostBehavior;
+import com.example.board.exception.ForbiddenException;
 
 public class PostBehaviorImpl implements PostBehavior {
     private final Post post;
@@ -14,42 +15,51 @@ public class PostBehaviorImpl implements PostBehavior {
 
     @Override
     public void changeTitle(String title) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeTitle'");
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("제목은 필수 입력값입니다.");
+        }
+        if (title.length() < 2 || title.length() > 100) {
+            throw new IllegalArgumentException("제목은 2~100자 사이여야 합니다.");
+        }
+        post.setTitle(title);
     }
 
     @Override
     public void changeContent(String content) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeContent'");
+        if (content == null || content.isBlank()) {
+            throw new IllegalArgumentException("내용은 필수 입력값입니다.");
+        }
+        if (content.length() < 2 || content.length() > 1000) {
+            throw new IllegalArgumentException("내용은 2~1000자 사이여야 합니다.");
+        }
+        post.setContent(content);
     }
 
     @Override
-    public void increaseView(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'increaseView'");
+    public void increaseView() {
+        post.setViewCount(post.getViewCount() + 1);
     }
 
     @Override
     public boolean isDeleted() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isDeleted'");
+        return post.isDeleted();
     }
 
     @Override
     public void validateOwnership(Long userId) {
-
+        if (!isOwnedBy(userId)) {
+            throw new ForbiddenException("게시글 작성자만 수정/삭제할 수 있습니다.");
+        }
     }
 
     @Override
     public boolean isOwnedBy(Long userId) {
-        return true;
+        return post.getUserId().equals(userId);
     }
 
     @Override
     public void update(String title, String content) {
-        post.setTitle(title);
-        post.setContent(content);
+        changeTitle(title);
+        changeContent(content);
     }
-
 }

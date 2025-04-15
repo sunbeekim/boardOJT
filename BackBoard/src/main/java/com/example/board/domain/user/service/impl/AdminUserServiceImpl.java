@@ -26,7 +26,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void deletePost(Long postId, Long adminId) {
-        log.info("관리자 게시글 삭제 요청 - postId: {}, adminId: {}", postId, adminId);
+        log.info("관리자 계정으로 게시글 삭제 요청 - postId: {}, adminId: {}", postId, adminId);
         
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
@@ -45,7 +45,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public void deleteComment(Long commentId, Long adminId) {
-        log.info("관리자 댓글 삭제 요청 - commentId: {}, adminId: {}", commentId, adminId);
+        log.info("관리자 계정으로 댓글 삭제 요청 - commentId: {}, adminId: {}", commentId, adminId);
         
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
@@ -59,12 +59,12 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminValidator.getUserOrThrow(commentId, "comment", "댓글 삭제에 실패했습니다.");
         
         adminMapper.commentDelete(commentId);
-        log.info("관리자 댓글 삭제 완료 - commentId: {}", commentId);
+        log.info("관리자 계정으로 댓글 삭제 완료 - commentId: {}", commentId);
     }
 
     @Override
     public void deleteUser(Long targetId, Long adminId) {
-        log.info("관리자 회원 삭제 요청 - targetId: {}, adminId: {}", targetId, adminId);
+        log.info("관리자 계정으로 회원 삭제 요청 - targetId: {}, adminId: {}", targetId, adminId);
         
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
@@ -78,12 +78,12 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminValidator.getUserOrThrow(targetId, "user", "계정 삭제에 실패했습니다.");
         
         adminMapper.userDelete(targetId);
-        log.info("관리자 회원 삭제 완료 - targetId: {}", targetId);
+        log.info("관리자 계정으로 회원 삭제 완료 - targetId: {}", targetId);
     }
 
     @Override
     public void unlockUser(Long targetId, Long adminId) {
-        log.info("관리자 계정 잠금 해제 요청 - targetId: {}, adminId: {}", targetId, adminId);
+        log.info("잠금 해제 요청 - targetId: {}, adminId: {}", targetId, adminId);
         
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
@@ -94,7 +94,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
         
         // 대상 회원 존재 여부 검증
-        User targetUser = adminValidator.getUserOrThrow(targetId, "user", "계정 잠금 해지에 실패했습니다.");
+        User targetUser = adminValidator.getUserOrThrow(targetId, "user", "계정 잠금 해제에 실패했습니다.");
         
         // 계정 잠금 해제 및 로그인 실패 횟수 초기화
         AdminUserBehavior targetBehavior = behaviorFactory.wrap(targetUser, AdminUserBehavior.class);
@@ -102,6 +102,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         targetBehavior.resetLoginFailCount();
         
         adminMapper.unlocked(targetId);
-        log.info("관리자 계정 잠금 해제 완료 - targetId: {}", targetId);
+        log.info("잠금 해제 완료 - targetId: {}", targetId);
     }
 }

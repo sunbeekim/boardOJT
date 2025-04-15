@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.example.board.common.factory.BehaviorFactory;
 import com.example.board.domain.post.dao.PostMapper;
 import com.example.board.domain.post.dto.PostCreateRequestDto;
 import com.example.board.domain.post.dto.PostResponseDto;
 import com.example.board.domain.post.dto.PostSearchConditionDto;
 import com.example.board.domain.post.dto.PostUpdateRequestDto;
 import com.example.board.domain.post.entity.Post;
+import com.example.board.domain.post.entity.interfaces.PostBehavior;
 import com.example.board.domain.post.entity.validator.PostValidator;
 import com.example.board.domain.post.service.PostService;
 import com.example.board.domain.user.dao.UserMapper;
@@ -31,6 +33,7 @@ public class PostServiceImpl implements PostService {
     private final PostValidator postValidator;
     private final UserMapper userMapper;
     private final UserValidator userValidator;
+    private final BehaviorFactory behaviorFactory;
 
     @Override
     public void createPost(PostCreateRequestDto request, Long userId) {
@@ -63,7 +66,11 @@ public class PostServiceImpl implements PostService {
         Post post = postMapper.findById(id);
         postValidator.validateExistenceFilter(post);
         
-        postMapper.increaseViewCount(id);
+        // 조회수 증가 및 엔티티 상태 업데이트       
+        PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
+        postBehavior.increaseView(id);
+        postMapper.increaseViewCount(id, post.getViewCount());
+        
         log.info("게시글 조회 완료 - postId: {}", id);
         return post;
     }
@@ -80,11 +87,9 @@ public class PostServiceImpl implements PostService {
         Post post = postMapper.findById(id);
         postValidator.validateExistenceFilter(post);
         
-        // 작성자 본인 여부 검증
-        if (!post.getUserId().equals(userId)) {
-            log.warn("게시글 삭제 권한 없음 - postId: {}, userId: {}", id, userId);
-            throw new ForbiddenException("게시글 작성자만 삭제할 수 있습니다.");
-        }
+        // PostBehavior를 통해 작성자 본인 여부 검증
+        PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
+        postBehavior.validateOwnership(userId);
         
         postMapper.deleteById(id);
         log.info("게시글 삭제 완료 - postId: {}", id);
@@ -135,15 +140,10 @@ public class PostServiceImpl implements PostService {
         Post post = postMapper.findById(id);
         postValidator.validateExistenceFilter(post);
         
-        // 작성자 본인 여부 검증
-        if (!post.getUserId().equals(userId)) {
-            log.warn("게시글 수정 권한 없음 - postId: {}, userId: {}", id, userId);
-            throw new ForbiddenException("게시글 작성자만 수정할 수 있습니다.");
-        }
-        
-        // 수정 사항 반영
-        post.setTitle(request.getTitle());
-        post.setContent(request.getContent());
+        // PostBehavior를 통해 작성자 본인 여부 검증 및 수정
+        PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
+        postBehavior.validateOwnership(userId);
+        postBehavior.update(request.getTitle(), request.getContent());
         
         // DB 업데이트
         postMapper.update(post);
