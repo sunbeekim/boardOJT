@@ -19,6 +19,8 @@ import io.jsonwebtoken.JwtException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -132,7 +134,13 @@ public class GlobalExceptionHandler {
         }
 
         // DB 연결이 끊어져 있을 때 예외처리
-        @ExceptionHandler(CannotGetJdbcConnectionException.class)
+        @ExceptionHandler({ CannotGetJdbcConnectionException.class,
+                        org.springframework.dao.DataAccessException.class,
+                        org.apache.ibatis.exceptions.PersistenceException.class,
+                        java.sql.SQLException.class,
+                        SQLException.class,
+                        java.sql.SQLNonTransientConnectionException.class,
+        })
         public ResponseEntity<CommonResponseDto<?>> handleDbConnectionError(CannotGetJdbcConnectionException e) {
                 log.error("DB 연결 실패: {}", e.getMessage());
                 return ResponseEntity

@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.save(user);
             log.info("회원가입 완료 - userId: {}", user.getId());
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             log.error("회원가입 실패 - email: {}", request.getEmail(), e);
             throw e;
         }
@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.update(user);
             log.info("회원정보 수정 완료 - userId: {}", id);
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             log.error("회원정보 수정 실패 - userId: {}", id, e);
             throw e;
         }
@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
         try {
             userMapper.delete(id);
             log.info("회원탈퇴 완료 - userId: {}", id);
-        } catch (PersistenceException e) {
+        } catch (Exception e) {
             log.error("회원탈퇴 실패 - userId: {}", id, e);
             throw e;
         }

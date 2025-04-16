@@ -46,7 +46,7 @@ Content-Type: application/json
 
 ### 회원탈퇴
 DELETE http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0NEB0ZXN0LmNvbSIsImlkIjo3LCJuaWNrbmFtZSI6Iu2FjOyKpO2KuOycoOyggDQiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MjYwMDMxLCJleHAiOjE3NDQzNDY0MzF9.GdMYlSTwipgWRuTzzULMw8wCy12hzOYDaTG0HOBXcsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDc5NjcxMywiZXhwIjoxNzQ0ODgzMTEzfQ.1Hl3om2K0anh3gPURta6-pmTfKVbVFzGCrgCTVR_MNg
 
 ### 게시글 등록
 POST http://localhost:8080/api/posts
