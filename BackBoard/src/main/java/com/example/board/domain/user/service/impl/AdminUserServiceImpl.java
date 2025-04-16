@@ -72,7 +72,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void unlockUser(Long targetId, Long adminId) {
+    public String unlockUser(Long targetId, Long adminId) {
         log.info("잠금 해제 요청 - targetId: {}, adminId: {}", targetId, adminId);
 
         // 관리자 권한 검증
@@ -91,6 +91,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         // targetBehavior.resetLoginFailCount();
 
         adminMapper.unlocked(targetUser);
+
         log.info("잠금 해제 완료 - targetId: {}", targetId);
+        return targetUser.getEmail();
     }
 }

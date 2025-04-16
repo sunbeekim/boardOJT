@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
 public class PostUpdateRequestDto {
     @NotBlank(message = "제목은 필수 입력값입니다.")

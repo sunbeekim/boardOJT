@@ -7,6 +7,6 @@ public interface AdminUserService {
 
     void deleteUser(Long targetUserId, Long adminId);
 
-    void unlockUser(Long targetUserId, Long adminId);
+    String unlockUser(Long targetUserId, Long adminId);
 
 }

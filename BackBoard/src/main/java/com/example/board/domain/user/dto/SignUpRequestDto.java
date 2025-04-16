@@ -9,8 +9,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
-@Slf4j
 public class SignUpRequestDto {
 
     @NotBlank(message = "이메일은 필수 입력값입니다.")

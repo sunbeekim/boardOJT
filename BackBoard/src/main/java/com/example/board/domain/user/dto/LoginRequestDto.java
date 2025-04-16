@@ -9,7 +9,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
 public class LoginRequestDto {
     @NotBlank(message = "이메일은 필수 입력값입니다.")
     @Email(message = "올바른 이메일 형식이 아닙니다.")

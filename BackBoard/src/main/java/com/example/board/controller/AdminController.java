@@ -7,6 +7,9 @@ import com.example.board.domain.user.service.AdminUserService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +56,10 @@ public class AdminController {
     public ResponseEntity<CommonResponseDto<?>> unlockUser(
             @PathVariable Long userId,
             @AuthenticationPrincipal JwtUserInfo userInfo) {
-        adminUserServiceService.unlockUser(userId, userInfo.getId());
-        return ResponseEntity.ok(CommonResponseDto.success("계정 잠금이 해지되었습니다.", null));
+        String targetEmail = adminUserServiceService.unlockUser(userId, userInfo.getId());
+        // Map<String, String> response = new HashMap<>();
+        // response.put("", "200");
+        // response.put("email : ", targetEmail);
+        return ResponseEntity.ok(CommonResponseDto.success("계정 잠금이 해지되었습니다.", targetEmail));
     }
 }

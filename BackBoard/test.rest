@@ -30,17 +30,17 @@ POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test2@test.com",
+  "email": "admin@admin.com",
   "password": "admin1234!"
 }
 
 ### 회원정보 수정
 PATCH http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDc5NjcxMywiZXhwIjoxNzQ0ODgzMTEzfQ.1Hl3om2K0anh3gPURta6-pmTfKVbVFzGCrgCTVR_MNg
 Content-Type: application/json
 
 {
-  "nickname": "사용자",
+  "nickname": "사용자dfgdsgsrgdfgfsdg",
   "password": "admin1234!"
 }
 
@@ -128,7 +128,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZ
 
 ### 계정 잠금 해지 (관리자)
 PATCH  http://localhost:8080/api/admin/users/11/unlock
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDc5MDQ5OCwiZXhwIjoxNzQ0ODc2ODk4fQ.a7hRou3EkLcuu4qAOYvmO2ZkH7qeYFiLeqiP88nfrMc
 
 ### 계정 잠금 해지 (유저)
 PATCH  http://localhost:8080/api/admin/users/11/unlock
@@ -138,6 +138,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiO
 
 ###
 # 관리자 토큰
-# eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
+# eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDc5MDQ5OCwiZXhwIjoxNzQ0ODc2ODk4fQ.a7hRou3EkLcuu4qAOYvmO2ZkH7qeYFiLeqiP88nfrMc
 # 유저 토큰
 # eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs

@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Getter
-@Setter
 public class PostCreateRequestDto {
 
     @NotBlank(message = "제목은 필수 입력값입니다.")
