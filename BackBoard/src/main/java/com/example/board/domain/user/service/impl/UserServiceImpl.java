@@ -1,7 +1,5 @@
 package com.example.board.domain.user.service.impl;
 
-import java.sql.SQLException;
-
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,10 +13,10 @@ import com.example.board.domain.user.dto.SignUpRequestDto;
 import com.example.board.domain.user.dto.UserUpdateRequestDto;
 import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
+import com.example.board.domain.user.entity.provider.UserBehaviorProvider;
 import com.example.board.domain.user.enums.UserRole;
 import com.example.board.domain.user.service.UserService;
 import com.example.board.domain.user.validator.UserValidator;
-import com.example.board.exception.UnauthorizedException;
 import com.example.board.util.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper; // DB 접근 인터페이스
     private final PasswordEncoder passwordEncoder; // 암호화
     private final JwtUtil jwtUtil; // 로그인 성공 시 토큰 반환
+    private final UserBehaviorProvider userBehaviorProvider;
 
     @Override
     @Transactional
@@ -45,14 +44,18 @@ public class UserServiceImpl implements UserService {
         // userValidator.validatePasswordFormat(request.getPassword());
         // userValidator.validateNicknameFormat(request.getNickname());
 
-        // 위의 검증로직 통합한 메서드
+        // 위의 검증로직 통합한 공통 메서드
         userValidator.validateCreate(request);
 
         // 엔티티 생성
         User user = createUser(request);
 
-        // 비밀번호 암호화 및 초기 상태 설정
+        // 팩토리 로직을 몰라도 되게 하기 위한 중간 계층
+        // UserBehavior userBehavior = userBehaviorProvider.get(user);
+
         UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+
+        // 비밀번호 암호화 및 초기 상태 설정
         userBehavior.register(request.getPassword(), passwordEncoder);
 
         // 저장

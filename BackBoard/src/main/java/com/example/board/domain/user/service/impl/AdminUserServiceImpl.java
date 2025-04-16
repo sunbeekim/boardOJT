@@ -9,7 +9,6 @@ import com.example.board.domain.user.entity.User;
 import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
 import com.example.board.domain.user.service.AdminUserService;
 import com.example.board.domain.user.validator.AdminValidator;
-import com.example.board.exception.ForbiddenException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +30,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
         AdminUserBehavior behavior = behaviorFactory.wrap(admin, AdminUserBehavior.class);
-        if (!behavior.checkPermission()) {
-            log.warn("관리자 권한 없음 - adminId: {}", adminId);
-            throw new ForbiddenException("관리자 권한이 필요합니다.");
-        }
+        adminValidator.checkRole(behavior.checkPermission());
 
         // 게시글 존재 여부 검증
         adminValidator.getUserOrThrow(postId, "post", "게시글 삭제에 실패했습니다.");
@@ -50,10 +46,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
         AdminUserBehavior behavior = behaviorFactory.wrap(admin, AdminUserBehavior.class);
-        if (!behavior.checkPermission()) {
-            log.warn("관리자 권한 없음 - adminId: {}", adminId);
-            throw new ForbiddenException("관리자 권한이 필요합니다.");
-        }
+        adminValidator.checkRole(behavior.checkPermission());
 
         // 댓글 존재 여부 검증
         adminValidator.getUserOrThrow(commentId, "comment", "댓글 삭제에 실패했습니다.");
@@ -69,10 +62,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         // 관리자 권한 검증
         User admin = userMapper.findById(adminId);
         AdminUserBehavior behavior = behaviorFactory.wrap(admin, AdminUserBehavior.class);
-        if (!behavior.checkPermission()) {
-            log.warn("관리자 권한 없음 - adminId: {}", adminId);
-            throw new ForbiddenException("관리자 권한이 필요합니다.");
-        }
+        adminValidator.checkRole(behavior.checkPermission());
 
         // 대상 회원 존재 여부 검증
         adminValidator.getUserOrThrow(targetId, "user", "계정 삭제에 실패했습니다.");

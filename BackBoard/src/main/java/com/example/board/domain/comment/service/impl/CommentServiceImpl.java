@@ -63,10 +63,6 @@ public class CommentServiceImpl implements CommentService {
     public void update(Long id, CommentUpdateRequestDto request, Long userId) {
         log.info("댓글 수정 요청 - commentId: {}, userId: {}", id, userId);
 
-        // 유저가 작성한 게시판 존재 여부 검증
-        Post post = postMapper.findByUserId(userId);
-        postValidator.validateExistenceFilter(post, Post.class);
-
         // 댓글 존재 여부 검증
         Comment comment = commentMapper.findById(id);
         commentValidator.validateExistenceFilter(comment, Comment.class);
@@ -85,10 +81,6 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void delete(Long id, Long userId) {
         log.info("댓글 삭제 요청 - commentId: {}, userId: {}", id, userId);
-
-        // 유저가 작성한 게시판 존재 여부 검증
-        Post post = postMapper.findByUserId(userId);
-        postValidator.validateExistenceFilter(post, Post.class);
 
         // 댓글 존재 여부 검증
         Comment comment = commentMapper.findById(id);

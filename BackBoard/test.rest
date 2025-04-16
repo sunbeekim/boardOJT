@@ -70,9 +70,10 @@ GET http://localhost:8080/api/posts?title=&nickname=&date=&page=2&size=10&sort=c
 GET http://localhost:8080/api/posts/1
 
 
+
 ### 게시글 수정
-PUT http://localhost:8080/api/posts/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0MzU4MzA0LCJleHAiOjE3NDQ0NDQ3MDR9.P4lUK5RT71XKTlGhG4MS7x0J-2RqKaLolKE-QigD7XY
+PUT http://localhost:8080/api/posts/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 Content-Type: application/json
 
 {

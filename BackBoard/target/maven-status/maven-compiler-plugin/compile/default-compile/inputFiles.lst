@@ -1,3 +1,4 @@
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\provider\AdminUserBehaviorProvider.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\service\PostService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\UserUpdateRequestDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\AdminUserBehaviorRegistrar.java
@@ -21,6 +22,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\dto\
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\AdminController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\CommentController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post\dto\PostCreateRequestDto.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\provider\UserBehaviorProvider.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\service\impl\UserServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\impl\CommentServiceImpl.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\UnauthorizedException.java

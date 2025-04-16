@@ -8,11 +8,8 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import com.example.board.domain.post.dto.PostResponseDto;
-import com.example.board.domain.user.dto.SignUpRequestDto;
-import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
+import com.example.board.common.interfaces.EntityBehaviorInterface;
 import com.example.board.domain.user.entity.interfaces.UserBehavior;
-import com.example.board.domain.user.entity.interfaces.impl.AdminUserBehaviorImpl;
 import com.example.board.domain.user.entity.interfaces.impl.UserBehaviorImpl;
 import com.example.board.domain.user.enums.UserRole;
 
@@ -33,5 +30,9 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private boolean enabled;
+
+    // public UserBehavior behavior() {
+    // return new UserBehaviorImpl(this);
+    // }
 
 }

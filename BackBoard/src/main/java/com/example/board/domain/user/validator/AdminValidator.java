@@ -41,6 +41,7 @@ public class AdminValidator extends CommonValidator implements
 
     public void checkRole(boolean isRole) {
         if (!isRole) {
+            log.warn("관리자 권한 없음 - isRole: {}", isRole);
             throw new BusinessException("권한이 부족합니다.", "AccessDeniedException", HttpStatus.LOCKED.value());
         }
     }
