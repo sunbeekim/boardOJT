@@ -21,6 +21,12 @@
         WHERE id = #{id}
     </select> 
 
+    <select id="findNicknameById" resultType="String" parameterType="long">
+        SELECT nickname
+        FROM users
+        WHERE id = #{id}
+    </select> 
+
     <select id="findByEmail" resultMap="userMap">
         SELECT *
         FROM users

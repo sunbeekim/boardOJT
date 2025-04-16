@@ -10,7 +10,7 @@
 |응답 메시지
 
 |`+data+`
-|`+Null+`
+|`+String+`
 |JWT 토큰
 
 |`+error+`

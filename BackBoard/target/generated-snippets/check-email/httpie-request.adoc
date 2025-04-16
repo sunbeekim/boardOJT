@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"email":"test@email.com","nickname":""}' | http POST 'http://localhost:8080/api/users/check/email' \
+    'Content-Type:application/json;charset=UTF-8'
+----

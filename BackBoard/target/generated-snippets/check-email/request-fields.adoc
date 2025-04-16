@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+email+`
+|`+String+`
+|중복 확인할 이메일
+
+|`+nickname+`
+|`+String+`
+|중복 확인할 닉네임
+
+|===

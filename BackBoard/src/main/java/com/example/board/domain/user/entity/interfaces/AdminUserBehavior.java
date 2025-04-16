@@ -3,6 +3,7 @@ package com.example.board.domain.user.entity.interfaces;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.board.common.interfaces.EntityBehaviorInterface;
+import com.example.board.domain.user.entity.User;
 
 public interface AdminUserBehavior extends EntityBehaviorInterface {
 
@@ -10,13 +11,13 @@ public interface AdminUserBehavior extends EntityBehaviorInterface {
     boolean checkPermission();
 
     // 잠금 계정 해지
-    void unlock();
+    void unlock(User user);
 
     // 유저 권한 변경
     void changeUserRole();
 
     // 로그인 실패 횟수 초기화
-    void resetLoginFailCount();
+    void resetLoginFailCount(User user);
 
     // 유저 비밀번호 변경(관리자)
     void changeForcePassword(String rawPassword, PasswordEncoder encoder);

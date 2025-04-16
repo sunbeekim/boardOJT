@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/posts?title=Test&nickname=testUser&dateFrom=2024-01-01T00%3A00%3A00&dateTo=2024-12-31T23%3A59%3A59&sort=createdAt&direction=DESC&size=10&offset=0' -i -X GET
+----

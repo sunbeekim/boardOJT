@@ -14,11 +14,11 @@
     </delete>
 
     <!--계정 잠금 해제-->
-    <update id="unlocked" parameterType="long">
+    <update id="unlocked" parameterType="com.example.board.domain.user.entity.User">
         UPDATE users
-        SET login_fail_count = 0,
+        SET login_fail_count = #{loginFailCount},
             last_login_attempt = NOW(),
-            locked = false
+            locked = #{locked}
         WHERE id = #{id}
     </update>
 

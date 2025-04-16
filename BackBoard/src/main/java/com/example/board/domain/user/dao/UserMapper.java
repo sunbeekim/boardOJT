@@ -19,6 +19,8 @@ public interface UserMapper {
 
     User findByNickname(@Param("nickname") String nickname);
 
+    String findNicknameById(@Param("id") Long id);
+
     void save(User user);
 
     void update(User user);

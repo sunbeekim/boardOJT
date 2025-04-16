@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"success":true,"message":"�뙎湲� 議고쉶媛� �셿猷뚮릺�뿀�뒿�땲�떎.","data":[{"id":1,"content":"Test Comment","postId":1,"userId":1,"nickname":"testUser","createdAt":"2025-04-16T13:50:09.8997878","updatedAt":"2025-04-16T13:50:09.8997878"}],"error":null,"errorPath":null}
+----

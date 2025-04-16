@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 269
+
+{"success":true,"message":"댓글 조회가 완료되었습니다.","data":[{"id":1,"content":"Test Comment","postId":1,"userId":1,"nickname":"testUser","createdAt":"2025-04-16T13:50:09.8997878","updatedAt":"2025-04-16T13:50:09.8997878"}],"error":null,"errorPath":null}
+----

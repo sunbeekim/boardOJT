@@ -16,4 +16,12 @@ public class CommentCreateRequestDto {
     @NotBlank(message = "PostId는 필수 입력값입니다.")
     private Long postId;
 
+    public CommentCreateRequestDto() {
+    }
+
+    public CommentCreateRequestDto(String content, Long postId) {
+        this.content = content;
+        this.postId = postId;
+    }
+
 }

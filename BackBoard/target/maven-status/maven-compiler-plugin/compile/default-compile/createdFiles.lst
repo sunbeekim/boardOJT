@@ -24,6 +24,7 @@ com\example\board\domain\post\dao\PostMapper.class
 com\example\board\domain\post\entity\interfaces\PostBehavior.class
 com\example\board\domain\user\dto\CheckRequestDto.class
 com\example\board\domain\comment\service\impl\CommentServiceImpl.class
+com\example\board\domain\comment\validator\CommentValidator.class
 com\example\board\domain\user\dto\SignUpRequestDto.class
 com\example\board\exception\TableNotFoundException.class
 com\example\board\controller\PostController.class
@@ -41,6 +42,7 @@ com\example\board\common\annotation\RequireAuth.class
 com\example\board\domain\user\entity\User.class
 com\example\board\domain\post\dto\PostCreateRequestDto.class
 com\example\board\domain\user\dto\UserUpdateRequestDto.class
+com\example\board\common\interfaces\DomainValidatorInterface$SelectValidator.class
 com\example\board\domain\user\entity\interfaces\impl\AdminUserBehaviorImpl.class
 com\example\board\common\dto\CommonResponseDto.class
 com\example\board\config\JwtConfig.class
@@ -59,6 +61,9 @@ com\example\board\config\AuthValidationAspect.class
 com\example\board\domain\comment\service\CommentService.class
 com\example\board\common\dto\CommonResponseDto$CommonResponseDtoBuilder.class
 com\example\board\domain\user\service\impl\UserServiceImpl.class
+com\example\board\exception\AccessDeniedException.class
+com\example\board\common\validator\CommonValidator.class
+com\example\board\domain\user\validator\AdminValidator.class
 com\example\board\common\interfaces\DomainValidatorInterface$UpdateValidator.class
 com\example\board\domain\user\dao\UserMapper.class
 com\example\board\domain\user\entity\interfaces\UserBehavior.class

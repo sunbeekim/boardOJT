@@ -1,2 +1,5 @@
 com\example\board\BoardApplicationTests.class
+com\example\board\controller\PostControllerTest.class
+com\example\board\controller\AdminControllerTest.class
+com\example\board\controller\CommentControllerTest.class
 com\example\board\controller\UserControllerTest.class

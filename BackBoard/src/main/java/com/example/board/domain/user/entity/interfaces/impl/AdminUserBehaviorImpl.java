@@ -7,15 +7,16 @@ import com.example.board.domain.user.entity.interfaces.AdminUserBehavior;
 import com.example.board.domain.user.enums.UserRole;
 
 public class AdminUserBehaviorImpl implements AdminUserBehavior {
-    private final User user;
+    private final User adminUser;
 
-    public AdminUserBehaviorImpl(User user) {
-        this.user = user;
+    public AdminUserBehaviorImpl(User adminUser) {
+        this.adminUser = adminUser;
     }
 
     @Override
-    public void unlock() {
-        user.setLocked(false);
+    public void unlock(User targetUser) {
+        targetUser.setLocked(false);
+        resetLoginFailCount(targetUser);
 
     }
 
@@ -25,8 +26,8 @@ public class AdminUserBehaviorImpl implements AdminUserBehavior {
     }
 
     @Override
-    public void resetLoginFailCount() {
-        user.setLoginFailCount(0);
+    public void resetLoginFailCount(User targetUser) {
+        targetUser.setLoginFailCount(0);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class AdminUserBehaviorImpl implements AdminUserBehavior {
 
     @Override
     public boolean checkPermission() {
-        return UserRole.ROLE_ADMIN.equals(user.getRole());
+        return UserRole.ROLE_ADMIN.equals(adminUser.getRole());
     }
 
 }

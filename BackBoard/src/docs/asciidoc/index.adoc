@@ -49,13 +49,6 @@ include::{snippets}/signup/http-response.adoc[]
 === 응답 필드 설명 (성공)
 include::{snippets}/signup/response-fields.adoc[]
 
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/signup-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/signup-fail/response-fields.adoc[]
-
 == 로그인 API
 
 === 요청 정보
@@ -72,12 +65,6 @@ include::{snippets}/login/http-response.adoc[]
 === 응답 필드 설명 (성공)
 include::{snippets}/login/response-fields.adoc[]
 
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/login-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/login-fail/response-fields.adoc[]
 
 == 회원정보 수정 API
 
@@ -98,12 +85,6 @@ include::{snippets}/update-user/http-response.adoc[]
 === 응답 필드 설명 (성공)
 include::{snippets}/update-user/response-fields.adoc[]
 
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/update-user-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/update-user-fail/response-fields.adoc[]
 
 == 회원탈퇴 API
 
@@ -121,88 +102,6 @@ include::{snippets}/delete-user/http-response.adoc[]
 === 응답 필드 설명 (성공)
 include::{snippets}/delete-user/response-fields.adoc[]
 
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/delete-user-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/delete-user-fail/response-fields.adoc[]
-
-== 관리자 API
-
-=== 전체 사용자 조회 API
-
-=== 요청 정보
-.HTTP 요청
-include::{snippets}/get-all-users/http-request.adoc[]
-
-=== 요청 헤더 설명
-include::{snippets}/get-all-users/request-headers.adoc[]
-
-=== 응답 정보 (성공)
-.HTTP 응답
-include::{snippets}/get-all-users/http-response.adoc[]
-
-=== 응답 필드 설명 (성공)
-include::{snippets}/get-all-users/response-fields.adoc[]
-
-=== 사용자 역할 변경 API
-
-=== 요청 정보
-.HTTP 요청
-include::{snippets}/update-user-role/http-request.adoc[]
-
-=== 요청 헤더 설명
-include::{snippets}/update-user-role/request-headers.adoc[]
-
-=== 요청 필드 설명
-include::{snippets}/update-user-role/request-fields.adoc[]
-
-=== 응답 정보 (성공)
-.HTTP 응답
-include::{snippets}/update-user-role/http-response.adoc[]
-
-=== 응답 필드 설명 (성공)
-include::{snippets}/update-user-role/response-fields.adoc[]
-
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/update-user-role-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/update-user-role-fail/response-fields.adoc[]
-
-=== 사용자 계정 잠금 API
-
-=== 요청 정보
-.HTTP 요청
-include::{snippets}/lock-user/http-request.adoc[]
-
-=== 요청 헤더 설명
-include::{snippets}/lock-user/request-headers.adoc[]
-
-=== 응답 정보 (성공)
-.HTTP 응답
-include::{snippets}/lock-user/http-response.adoc[]
-
-=== 응답 필드 설명 (성공)
-include::{snippets}/lock-user/response-fields.adoc[]
-
-=== 사용자 계정 잠금 해제 API
-
-=== 요청 정보
-.HTTP 요청
-include::{snippets}/unlock-user/http-request.adoc[]
-
-=== 요청 헤더 설명
-include::{snippets}/unlock-user/request-headers.adoc[]
-
-=== 응답 정보 (성공)
-.HTTP 응답
-include::{snippets}/unlock-user/http-response.adoc[]
-
-=== 응답 필드 설명 (성공)
-include::{snippets}/unlock-user/response-fields.adoc[]
 
 === 사용자 삭제 API
 
@@ -220,12 +119,6 @@ include::{snippets}/delete-user/http-response.adoc[]
 === 응답 필드 설명 (성공)
 include::{snippets}/delete-user/response-fields.adoc[]
 
-=== 응답 정보 (실패)
-.HTTP 응답
-include::{snippets}/delete-user-fail/http-request.adoc[]
-
-=== 응답 필드 설명 (실패)
-include::{snippets}/delete-user-fail/response-fields.adoc[]
 
 == 게시글 API
 
@@ -380,3 +273,76 @@ include::{snippets}/delete-comment/http-response.adoc[]
 
 === 응답 필드 설명 (성공)
 include::{snippets}/delete-comment/response-fields.adoc[]
+
+=== 관리자 API
+
+=== 잠금 해제
+.HTTP 요청
+include::{snippets}/unlock-user/http-request.adoc[]
+
+=== 요청 헤더 설명
+include::{snippets}/unlock-user/request-headers.adoc[]
+
+=== 응답 정보 (성공)
+.HTTP 응답
+include::{snippets}/unlock-user/http-response.adoc[]
+
+=== 응답 필드 설명 (성공)
+include::{snippets}/unlock-user/response-fields.adoc[]
+
+
+=== 게시글 삭제
+.HTTP 요청
+include::{snippets}/admin-delete-post/http-request.adoc[]
+
+=== 요청 헤더 설명
+include::{snippets}/admin-delete-post/request-headers.adoc[]
+
+=== 응답 정보 (성공)
+.HTTP 응답
+include::{snippets}/admin-delete-post/http-response.adoc[]
+
+=== 응답 필드 설명 (성공)
+include::{snippets}/admin-delete-post/response-fields.adoc[]
+
+=== 댓글 삭제
+.HTTP 요청
+include::{snippets}/admin-delete-comment/http-request.adoc[]
+
+=== 요청 헤더 설명
+include::{snippets}/admin-delete-comment/request-headers.adoc[]
+
+=== 응답 정보 (성공)
+.HTTP 응답
+include::{snippets}/admin-delete-comment/http-response.adoc[]
+
+=== 응답 필드 설명 (성공)
+include::{snippets}/admin-delete-comment/response-fields.adoc[]
+
+=== 게시글 수정 실패
+.HTTP 요청
+include::{snippets}/update-post-fail-unauthorized/http-request.adoc[]
+
+=== 요청 헤더 설명
+include::{snippets}/update-post-fail-unauthorized/request-headers.adoc[]
+
+=== 응답 정보 (실패)
+.HTTP 응답
+include::{snippets}/update-post-fail-unauthorized/http-response.adoc[]
+
+=== 응답 필드 설명 (실패)
+include::{snippets}/update-post-fail-unauthorized/response-fields.adoc[]
+
+=== 게시글 삭제 실패
+.HTTP 요청
+include::{snippets}/delete-post-fail-not-found/http-request.adoc[]
+
+=== 요청 헤더 설명
+include::{snippets}/delete-post-fail-not-found/request-headers.adoc[]
+
+=== 응답 정보 (실패)
+.HTTP 응답
+include::{snippets}/delete-post-fail-not-found/http-response.adoc[]
+
+=== 응답 필드 설명 (실패)
+include::{snippets}/delete-post-fail-not-found/response-fields.adoc[]

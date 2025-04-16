@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (false)
+
+|`+message+`
+|`+String+`
+|존재하지 않는 댓글입니다.
+
+|`+data+`
+|`+Number+`
+|404 - 리소스 없음
+
+|`+error+`
+|`+String+`
+|NOT_FOUND
+
+|`+errorPath+`
+|`+String+`
+|/error/404
+
+|===

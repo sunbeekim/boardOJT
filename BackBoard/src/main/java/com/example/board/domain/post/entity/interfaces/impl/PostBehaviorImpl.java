@@ -36,16 +36,6 @@ public class PostBehaviorImpl implements PostBehavior {
     }
 
     @Override
-    public void increaseView() {
-        post.setViewCount(post.getViewCount() + 1);
-    }
-
-    @Override
-    public boolean isDeleted() {
-        return post.isDeleted();
-    }
-
-    @Override
     public void validateOwnership(Long userId) {
         if (!isOwnedBy(userId)) {
             throw new ForbiddenException("게시글 작성자만 수정/삭제할 수 있습니다.");
@@ -62,4 +52,10 @@ public class PostBehaviorImpl implements PostBehavior {
         changeTitle(title);
         changeContent(content);
     }
+
+    @Override
+    public void increaseView(Long id) {
+        post.setViewCount(post.getViewCount() + 1);
+    }
+
 }

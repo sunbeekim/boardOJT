@@ -17,6 +17,8 @@ public interface PostMapper {
 
         Post findById(@Param("id") Long id);
 
+        Post findByUserId(@Param("userId") Long userId);
+
         void update(Post post);
 
         void delete(@Param("id") Long id);

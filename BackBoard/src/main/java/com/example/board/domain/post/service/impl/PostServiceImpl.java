@@ -38,21 +38,21 @@ public class PostServiceImpl implements PostService {
     @Override
     public void createPost(PostCreateRequestDto request, Long userId) {
         log.info("게시글 등록 요청 - userId: {}, title: {}", userId, request.getTitle());
-        
+
         // 계정 존재 여부 검증
         User user = userMapper.findById(userId);
-        userValidator.validateExistenceFilter(user);
-        
+        userValidator.validateExistenceFilter(user, User.class);
+
         // 엔티티와 요청데이터 매핑
         Post post = Post.builder()
                 .title(request.getTitle())
                 .content(request.getContent())
                 .userId(userId)
                 .build();
-        
+
         // 게시글 생성 검증
         postValidator.validateCreate(post, userId);
-        
+
         // db 저장
         postMapper.insert(post);
         log.info("게시글 등록 완료 - postId: {}", post.getId());
@@ -61,44 +61,56 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostResponseDto getPostById(Long id) {
         log.info("게시글 조회 요청 - postId: {}", id);
-        
+
         // 게시글 존재 여부 검증
         Post post = postMapper.findById(id);
-        postValidator.validateExistenceFilter(post);
-        
-        // 조회수 증가 및 엔티티 상태 업데이트       
+        postValidator.validateExistenceFilter(post, Post.class);
+
+        // 조회수 증가 및 엔티티 상태 업데이트
         PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
         postBehavior.increaseView(id);
         postMapper.increaseViewCount(id, post.getViewCount());
-        
+
+        String nickname = userMapper.findNicknameById(post.getUserId());
+
         log.info("게시글 조회 완료 - postId: {}", id);
-        return post;
+        return PostResponseDto.builder()
+                .id(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .userId(post.getUserId())
+                .nickname(nickname)
+                .viewCount(post.getViewCount())
+                .commentCount(post.getCommentCount())
+                .createdAt(post.getCreatedAt())
+                .updatedAt(post.getUpdatedAt())
+                .build();
     }
 
     @Override
     public void deletePost(Long id, Long userId) {
         log.info("게시글 삭제 요청 - postId: {}, userId: {}", id, userId);
-        
+
         // 계정 존재 여부 검증
         User user = userMapper.findById(userId);
-        userValidator.validateExistenceFilter(user);
-        
+        userValidator.validateExistenceFilter(user, User.class);
+
         // 게시글 존재 여부 검증
         Post post = postMapper.findById(id);
-        postValidator.validateExistenceFilter(post);
-        
+        postValidator.validateExistenceFilter(post, Post.class);
+
         // PostBehavior를 통해 작성자 본인 여부 검증
         PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
         postBehavior.validateOwnership(userId);
-        
-        postMapper.deleteById(id);
+
+        postMapper.delete(id);
         log.info("게시글 삭제 완료 - postId: {}", id);
     }
 
     @Override
     public List<PostResponseDto> searchPosts(PostSearchConditionDto request) {
         log.info("게시글 목록 조회 요청 - title: {}, nickname: {}", request.getTitle(), request.getNickname());
-        
+
         // 화이트리스트 매핑
         Map<String, String> sortMap = Map.of(
                 "createdAt", "created_at",
@@ -113,7 +125,7 @@ public class PostServiceImpl implements PostService {
 
         String mappedSort = sortMap.getOrDefault(request.getSort(), "created_at");
         request.setSort(mappedSort);
-        
+
         List<PostResponseDto> posts = postMapper.searchPosts(
                 request.getTitle(),
                 request.getUserId(),
@@ -123,7 +135,7 @@ public class PostServiceImpl implements PostService {
                 request.getOffset(),
                 request.getSort(),
                 request.getDirection());
-                
+
         log.info("게시글 목록 조회 완료 - 조회된 게시글 수: {}", posts.size());
         return posts;
     }
@@ -131,20 +143,20 @@ public class PostServiceImpl implements PostService {
     @Override
     public void updatePost(Long id, PostUpdateRequestDto request, Long userId) {
         log.info("게시글 수정 요청 - postId: {}, userId: {}", id, userId);
-        
+
         // 계정 존재 여부 검증
         User user = userMapper.findById(userId);
-        userValidator.validateExistenceFilter(user);
-        
+        userValidator.validateExistenceFilter(user, User.class);
+
         // 게시글 존재 여부 검증
         Post post = postMapper.findById(id);
-        postValidator.validateExistenceFilter(post);
-        
+        postValidator.validateExistenceFilter(post, Post.class);
+
         // PostBehavior를 통해 작성자 본인 여부 검증 및 수정
         PostBehavior postBehavior = behaviorFactory.wrap(post, PostBehavior.class);
         postBehavior.validateOwnership(userId);
         postBehavior.update(request.getTitle(), request.getContent());
-        
+
         // DB 업데이트
         postMapper.update(post);
         log.info("게시글 수정 완료 - postId: {}", id);

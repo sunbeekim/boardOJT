@@ -3,6 +3,7 @@ package com.example.board.domain.post.entity.validator;
 import org.springframework.stereotype.Component;
 
 import com.example.board.common.interfaces.DomainValidatorInterface;
+import com.example.board.common.validator.CommonValidator;
 import com.example.board.domain.post.dto.PostUpdateRequestDto;
 import com.example.board.domain.post.entity.Post;
 import com.example.board.exception.ForbiddenException;
@@ -11,7 +12,7 @@ import lombok.RequiredArgsConstructor;;
 
 @Component
 @RequiredArgsConstructor
-public class PostValidator implements
+public class PostValidator extends CommonValidator implements
         DomainValidatorInterface.CreateValidator<Post, Long>,
         DomainValidatorInterface.UpdateValidator<PostUpdateRequestDto, Post>,
         DomainValidatorInterface.DeleteValidator {

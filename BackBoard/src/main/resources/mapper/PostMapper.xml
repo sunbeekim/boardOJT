@@ -23,11 +23,17 @@
         )
     </insert>
 
-    <select id="findById" resultType="PostResponseDto" parameterType="long">
+    <select id="findById" resultType="Post" parameterType="long">
         SELECT p.*, u.nickname 
         FROM posts p 
         JOIN users u ON p.user_id = u.id 
         WHERE p.id = #{id}
+    </select>
+
+    <select id="findByUserId" resultType="Post" parameterType="long">
+        SELECT *
+        FROM posts       
+        WHERE user_id = #{userId}
     </select>
 
     <update id="update" parameterType="com.example.board.domain.post.entity.Post">

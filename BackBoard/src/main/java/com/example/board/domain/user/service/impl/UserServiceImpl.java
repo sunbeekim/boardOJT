@@ -47,14 +47,14 @@ public class UserServiceImpl implements UserService {
 
         // 위의 검증로직 통합한 메서드
         userValidator.validateCreate(request);
-        
+
         // 엔티티 생성
         User user = createUser(request);
-        
+
         // 비밀번호 암호화 및 초기 상태 설정
         UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
         userBehavior.register(request.getPassword(), passwordEncoder);
-        
+
         // 저장
         try {
             userMapper.save(user);
@@ -77,15 +77,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(LoginRequestDto request) {
         log.info("로그인 시도 - email: {}", request.getEmail());
-        
+
         User user = userMapper.findByEmail(request.getEmail());
         UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
 
-        
         try {
-           
+
             // 계정 존재 여부 검증
-            userValidator.validateExistenceFilter(user);
+            userValidator.validateExistenceFilter(user, User.class);
 
             // 계정 잠금 여부 확인
             userValidator.verifyAccount(user);
@@ -96,15 +95,15 @@ public class UserServiceImpl implements UserService {
             // 로그인 성공 처리
             userBehavior.handleLoginSuccess();
             userMapper.updateLoginFailCount(user.getId(), user.getLoginFailCount(), user.isLocked());
-            
+
             log.info("로그인 성공 - userId: {}", user.getId());
             return jwtUtil.createToken(user);
-            
-        } catch (PersistenceException e) {
+
+        } catch (Exception e) {
             // 로그인 실패 처리
             userBehavior.handleLoginFailure();
             userMapper.updateLoginFailCount(user.getId(), user.getLoginFailCount(), user.isLocked());
-            
+
             log.warn("로그인 실패 - email: {}", request.getEmail());
             throw e;
         }
@@ -114,12 +113,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(UserUpdateRequestDto request, Long id) {
         log.info("회원정보 수정 요청 - userId: {}", id);
-        
+
         User user = userMapper.findById(id);
-        
+
         // 수정 검증
         userValidator.validateUpdate(request, user);
-        
+
         // 엔티티 상태 변경
         UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
         userBehavior.changeNickname(request.getNickname()); // 상태 값 변경
@@ -137,10 +136,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(Long id) {
         log.info("회원탈퇴 요청 - userId: {}", id);
-        
+
         User user = userMapper.findById(id);
         userValidator.validateDelete(id, user);
-        
+
         try {
             userMapper.delete(id);
             log.info("회원탈퇴 완료 - userId: {}", id);
@@ -153,10 +152,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkEmail(CheckRequestDto request) {
         log.info("이메일 중복 확인 - email: {}", request.getEmail());
-        
+
         userValidator.validateEmailFormat(request.getEmail());
         User user = userMapper.findByEmail(request.getEmail());
-        
+
         boolean isAvailable = userValidator.validateBooleanEmail(user);
         log.info("이메일 중복 확인 결과 - email: {}, isAvailable: {}", request.getEmail(), isAvailable);
         return isAvailable;
@@ -165,10 +164,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkNickname(CheckRequestDto request) {
         log.info("닉네임 중복 확인 - nickname: {}", request.getNickname());
-        
+
         userValidator.validateNicknameFormat(request.getNickname());
         User user = userMapper.findByNickname(request.getNickname());
-        
+
         boolean isAvailable = userValidator.validateBooleanNickname(user);
         log.info("닉네임 중복 확인 결과 - nickname: {}, isAvailable: {}", request.getNickname(), isAvailable);
         return isAvailable;

@@ -15,6 +15,8 @@ public interface CommentMapper {
 
     Comment findById(@Param("id") Long id);
 
+    Comment findByUserId(@Param("userId") Long userId);
+
     void update(Comment comment);
 
     void delete(@Param("id") Long id);

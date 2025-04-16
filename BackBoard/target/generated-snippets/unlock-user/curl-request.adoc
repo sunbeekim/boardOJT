@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/api/admin/users/1/unlock' -i -X PATCH \
+    -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo'
+----

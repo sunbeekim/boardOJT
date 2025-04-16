@@ -12,6 +12,6 @@ public interface AdminMapper {
 
     void userDelete(Long id);
 
-    void unlocked(Long id);
+    void unlocked(User user);
 
 }

@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"success":true,"message":"寃뚯떆湲� 議곌굔 議고쉶媛� �셿猷뚮릺�뿀�뒿�땲�떎.","data":[{"id":1,"title":"Test Title","content":"Test Content","nickname":"testUser","userId":1,"viewCount":0,"commentCount":0,"createdAt":"2025-04-16T13:50:10.4997106","updatedAt":"2025-04-16T13:50:10.4997106"}],"error":null,"errorPath":null}
+----

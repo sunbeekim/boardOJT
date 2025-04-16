@@ -1,0 +1,32 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (true)
+
+|`+message+`
+|`+String+`
+|응답 메시지
+
+|`+data+`
+|`+Object+`
+|응답데이터
+
+|`+data.password+`
+|`+String+`
+|변경된 비밀번호
+
+|`+data.nickname+`
+|`+String+`
+|변경된 닉네임
+
+|`+error+`
+|`+Null+`
+|에러 정보 (nullable)
+
+|`+errorPath+`
+|`+Null+`
+|에러 페이지 경로 (nullable)
+
+|===

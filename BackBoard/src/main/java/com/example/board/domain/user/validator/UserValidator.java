@@ -41,25 +41,20 @@ public class UserValidator extends CommonValidator implements
     // 검증 통합 메서드 =============================================================//
     @Override
     public void validateDelete(Object id, Object entity) {
-        validateExistenceFilter(entity);
+        validateExistenceFilter(entity, User.class);
         verifyAccount((User) entity);
     }
 
     @Override
     public void validateUpdate(UserUpdateRequestDto request, User currentUser) {
-        validateExistenceFilter(currentUser);
+        validateExistenceFilter(currentUser, User.class);
         verifyAccount(currentUser);
-        
+
         // 닉네임 변경 시에만 중복 검증
         if (!request.getNickname().equals(currentUser.getNickname())) {
-            validateNickname(request.getNickname());  // request의 닉네임 검증
+            validateNickname(request.getNickname()); // request의 닉네임 검증
         }
-        
-        // 비밀번호 변경 시 현재 비밀번호 확인
-        if (StringUtils.hasText(request.getPassword())) {
-            validateCurrentPassword(currentUser, request.getCurrentPassword());
-        }
-        
+
         validatePasswordFormat(request.getPassword());
         validateNicknameFormat(request.getNickname());
     }

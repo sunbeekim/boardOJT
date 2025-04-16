@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"title":"Updated Title","content":"Updated Content"}
+----

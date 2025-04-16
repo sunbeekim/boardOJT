@@ -26,6 +26,13 @@
         WHERE id = #{id}
     </select>
 
+    <!-- 특정 댓글 유저 조회-->
+    <select id="findByUserId" resultMap="commentMap" parameterType="long">
+        SELECT * 
+        FROM comments
+        WHERE user_id = #{userId}
+    </select>
+
     <!-- 특정 게시글의 댓글 목록 조회 -->
     <select id="findByPostId" resultType="CommentResponseDto" parameterType="long">
         SELECT c.*, u.nickname

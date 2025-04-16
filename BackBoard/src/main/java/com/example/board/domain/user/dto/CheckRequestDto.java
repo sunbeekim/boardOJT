@@ -18,4 +18,9 @@ public class CheckRequestDto {
     // @Pattern(regexp = "^[가-힣a-zA-Z0-9]+$", message = "닉네임은 한글, 알파벳, 숫자만 사용
     // 가능합니다.")
     private String nickname;
+
+    public CheckRequestDto(String email, String nickname) {
+        this.email = email;
+        this.nickname = nickname;
+    }
 }

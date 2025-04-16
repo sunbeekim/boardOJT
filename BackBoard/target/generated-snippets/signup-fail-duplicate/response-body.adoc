@@ -1,0 +1,4 @@
+[source,options="nowrap"]
+----
+{"success":false,"message":"�씠誘� �궗�슜 以묒씤 �씠硫붿씪�엯�땲�떎.","data":409,"error":"DUPLICATE_RESOURCE","errorPath":"/error/409"}
+----

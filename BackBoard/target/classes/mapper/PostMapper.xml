@@ -7,6 +7,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="userId" column="user_id"/>
+        <result property="nickname" column="nickname"/>
         <result property="viewCount" column="view_count"/>
         <result property="commentCount" column="comment_count"/>
         <result property="createdAt" column="created_at"/>
@@ -22,11 +23,17 @@
         )
     </insert>
 
-    <select id="findById" resultType="com.example.board.domain.post.dto.PostResponseDto" parameterType="long">
+    <select id="findById" resultType="Post" parameterType="long">
         SELECT p.*, u.nickname 
         FROM posts p 
-        JOIN users u ON p.user_id = u.id
+        JOIN users u ON p.user_id = u.id 
         WHERE p.id = #{id}
+    </select>
+
+    <select id="findByUserId" resultType="Post" parameterType="long">
+        SELECT *
+        FROM posts       
+        WHERE user_id = #{userId}
     </select>
 
     <update id="update" parameterType="com.example.board.domain.post.entity.Post">
@@ -43,9 +50,10 @@
     </delete>
 
     
-    <update id="increaseViewCount" parameterType="long">
-        UPDATE posts SET view_count = view_count + 1 WHERE id = #{id}
+    <update id="increaseViewCount" parameterType="map">
+        UPDATE posts SET view_count = #{viewCount} WHERE id = #{id}
     </update>
+
 
     <update id="increaseCommentCount" parameterType="long">
         UPDATE posts SET comment_count = comment_count + 1 WHERE id = #{id}
@@ -53,7 +61,7 @@
     <!-- 닉네임 조인, 댓글 수 추가 -->
     <select id="searchPosts" resultType="PostResponseDto" parameterType="map">
         SELECT u.nickname, p.*
-        FROM posts p JOIN users u ON p.user_id = u.id
+        FROM Posts p JOIN Users u ON p.user_id = u.id
         WHERE 1 = 1
             <if test="title != null">AND title LIKE CONCAT('%', #{title}, '%')</if>
             <if test="userId != null">AND user_id = #{userId}</if>

@@ -1,0 +1,12 @@
+|===
+|Path|Type|Description
+
+|`+postId+`
+|`+Number+`
+|댓글이 달릴 게시글의 ID
+
+|`+content+`
+|`+String+`
+|댓글 내용
+
+|===

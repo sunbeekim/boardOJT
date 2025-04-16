@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (false)
+
+|`+message+`
+|`+String+`
+|Bad Request
+
+|`+data+`
+|`+String+`
+|400 - DTO 조건 불충족(요청 바디 검증 실패)
+
+|`+error+`
+|`+String+`
+|CONSTRAINT_VIOLATION
+
+|`+errorPath+`
+|`+String+`
+|/error/400
+
+|===

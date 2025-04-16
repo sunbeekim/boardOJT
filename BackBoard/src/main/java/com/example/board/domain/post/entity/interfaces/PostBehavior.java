@@ -13,8 +13,6 @@ public interface PostBehavior extends EntityBehaviorInterface {
 
     void increaseView(Long id);
 
-    boolean isDeleted();
-
     void validateOwnership(Long userId);
 
     boolean isOwnedBy(Long userId);

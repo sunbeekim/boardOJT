@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (false)
+
+|`+message+`
+|`+String+`
+|이미 사용 중인 이메일입니다.
+
+|`+data+`
+|`+Number+`
+|409 - 중복된 리소스
+
+|`+error+`
+|`+String+`
+|DUPLICATE_RESOURCE
+
+|`+errorPath+`
+|`+String+`
+|/error/409
+
+|===

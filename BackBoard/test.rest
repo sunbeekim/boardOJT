@@ -3,9 +3,9 @@ POST http://localhost:8080/api/users/signup
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "test2@test.com",
   "password": "admin1234!",
-  "nickname": "test"
+  "nickname": "test2"
 }
 
 ### 이메일 중복확인
@@ -30,17 +30,17 @@ POST http://localhost:8080/api/users/login
 Content-Type: application/json
 
 {
-  "email": "test@test.com",
+  "email": "test2@test.com",
   "password": "admin1234!"
 }
 
 ### 회원정보 수정
 PATCH http://localhost:8080/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdiLCJpZCI6OSwibmlja25hbWUiOiJBZG1pbiIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDQzMzE5MzcsImV4cCI6MTc0NDQxODMzN30._zMAQm0sm-hv1gZdj0KRiQ6YjuxzYBKs65qfZScmPGg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 Content-Type: application/json
 
 {
-  "nickname": "관리자",
+  "nickname": "사용자",
   "password": "admin1234!"
 }
 
@@ -101,8 +101,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZ
 
 ### 댓글 수정
 
-PUT http://localhost:8080/api/comments/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzQ0NTkyNzkyLCJleHAiOjE3NDQ2NzkxOTJ9.aY_yIFLX1EShdNRL36B4NWJiecpX9-OhcThXO6IbaJ8
+PUT http://localhost:8080/api/comments/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 Content-Type: application/json
 
 {
@@ -110,15 +110,15 @@ Content-Type: application/json
 }
 
 ### 댓글 삭제
-DELETE http://localhost:8080/api/comments/2
+DELETE http://localhost:8080/api/comments/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 
 ### 게시글 삭제 (관리자)
-DELETE http://localhost:8080/api/admin/posts/15
+DELETE http://localhost:8080/api/admin/posts/16
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 ### 댓글 삭제 (관리자)
-DELETE http://localhost:8080/api/admin/comments/2
+DELETE http://localhost:8080/api/admin/comments/7
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
 
 ### 계정 삭제 (관리자)
@@ -128,6 +128,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZ
 ### 계정 잠금 해지 (관리자)
 PATCH  http://localhost:8080/api/admin/users/11/unlock
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBhZG1pbi5jb20iLCJpZCI6MTAsIm5pY2tuYW1lIjoiQWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzU4MywiZXhwIjoxNzQ0Nzg5OTgzfQ.F7vhdPb2Qft956AtDTg5Vzt5-hpcNnKvyBetvm3EWIo
+
+### 계정 잠금 해지 (유저)
+PATCH  http://localhost:8080/api/admin/users/11/unlock
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiaWQiOjExLCJuaWNrbmFtZSI6InRlc3QiLCJyb2xlIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc0NDcwMzY2MSwiZXhwIjoxNzQ0NzkwMDYxfQ.Pfpaw0_AFkV_4_peWl0CY1qegJBs_x-cqlIQLt_pFDs
 
 
 

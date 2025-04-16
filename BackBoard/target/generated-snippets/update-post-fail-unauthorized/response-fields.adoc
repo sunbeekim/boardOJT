@@ -1,0 +1,24 @@
+|===
+|Path|Type|Description
+
+|`+success+`
+|`+Boolean+`
+|요청 성공 여부 (false)
+
+|`+message+`
+|`+String+`
+|게시글 수정 권한이 없습니다.
+
+|`+data+`
+|`+Null+`
+|401 - 인증 실패
+
+|`+error+`
+|`+String+`
+|UNAUTHORIZED
+
+|`+errorPath+`
+|`+String+`
+|/error/401
+
+|===

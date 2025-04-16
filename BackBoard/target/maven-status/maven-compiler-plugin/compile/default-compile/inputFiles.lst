@@ -3,6 +3,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\register\AdminUserBehaviorRegistrar.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\AccessDeniedException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\ResourceNotFoundException.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\validator\CommentValidator.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\enums\UserRole.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\entity\interfaces\AdminUserBehavior.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dto\CheckRequestDto.java

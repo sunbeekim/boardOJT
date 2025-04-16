@@ -31,12 +31,12 @@ public class AdminValidator extends CommonValidator implements
 
     @Override
     public void validateUpdate(UserUpdateRequestDto request, User entity) {
-        validateExistenceFilter(entity);
+        validateExistenceFilter(entity, User.class);
     }
 
     @Override
     public void validateDelete(Object request, Object entity) {
-        validateExistenceFilter(entity);
+        validateExistenceFilter(entity, User.class);
     }
 
     public void checkRole(boolean isRole) {

@@ -1,0 +1,14 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 320
+
+{"success":true,"message":"게시글 조건 조회가 완료되었습니다.","data":[{"id":1,"title":"Test Title","content":"Test Content","nickname":"testUser","userId":1,"viewCount":0,"commentCount":0,"createdAt":"2025-04-16T13:50:10.4997106","updatedAt":"2025-04-16T13:50:10.4997106"}],"error":null,"errorPath":null}
+----
