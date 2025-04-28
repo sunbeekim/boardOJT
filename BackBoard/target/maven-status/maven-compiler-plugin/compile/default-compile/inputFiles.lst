@@ -16,6 +16,7 @@ C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\post
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\exception\TableNotFoundException.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\comment\service\CommentService.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\domain\user\dao\AdminMapper.java
+C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\MainController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\common\dto\CommonResponseDto.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\AdminController.java
 C:\Users\sunbee\ojtProject\BackBoard\src\main\java\com\example\board\controller\CommentController.java

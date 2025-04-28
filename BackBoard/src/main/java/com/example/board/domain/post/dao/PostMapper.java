@@ -23,7 +23,7 @@ public interface PostMapper {
 
         List<PostResponseDto> searchPosts(
                         @Param("title") String title,
-                        @Param("userId") Long userId,
+                        @Param("nickName") String nickName,
                         @Param("dateFrom") LocalDateTime dateFrom,
                         @Param("dateTo") LocalDateTime dateTo,
                         @Param("size") int size,

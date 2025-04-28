@@ -67,17 +67,17 @@ public class PostServiceImpl implements PostService {
                 "views", "views",
                 "title", "title");
 
-        Long userId;
-        if (request.getNickname() != null && !request.getNickname().isBlank()) {
-            userId = userMapper.findByNickname(request.getNickname()).getId();
-            request.setUserId(userId);
-        }
+        // Long userId;
+        // if (request.getNickname() != null && !request.getNickname().isBlank()) {
+        // userId = userMapper.findByNickname(request.getNickname()).getId();
+        // request.setUserId(userId);
+        // }
 
         String mappedSort = sortMap.getOrDefault(request.getSort(), "created_at");
         request.setSort(mappedSort);
         return postMapper.searchPosts(
                 request.getTitle(),
-                request.getUserId(),
+                request.getNickname(),
                 request.getDateFrom(),
                 request.getDateTo(),
                 request.getSize(),

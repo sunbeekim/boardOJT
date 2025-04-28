@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="kr">
+<!-- begin::Head -->
+<head>
+  <meta charset="utf-8"/>
+  <title>Mayfarmsoft 게시판</title>
+  <meta name="description" content="Login page example">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link type="text/css" href="./css/front/login-v3.default.css" rel="stylesheet">
+  <link type="text/css" href="./css/front/style.bundle1.css" rel="stylesheet">
+</head>
+<!-- end::Head -->
+
+<!-- begin::Body -->
+<body class="background-img">
+  <!-- begin::Page -->
+  <div class="login login--v3 login--signin">
+    <div class="login__wrapper">
+      <div class="login__container">
+        <div class="login__logo" style="margin-bottom: 0px; height: 150px;">
+          <a href="#">
+            <img src="./img/front/logo.png" width="300px">
+          </a>
+        </div>
+        <div class="login__signin">
+          <form class="form" action="/board/board.html" method="get">
+            <div class="input-group">
+              <input class="form-control" type="email" placeholder="아이디(이메일 형식)" name="userid"
+                    autocomplete="off" style="margin-top: 0;">
+            </div>
+            <div class="input-group">
+              <input class="form-control" type="password" placeholder="비밀번호(영문, 숫자, 특수문자를 포함한 8~16자)" name="password">
+            </div>
+            <div class="login__actions">
+              <button type="submit" class="btn btn-brand login__btn-primary">로그인
+              </button>
+            </div>
+          </form>
+          <a class="login-sub-signup" href="/signup">
+            회원가입
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end::Page -->
+
+  <!-- begin::Script -->
+  <script type="text/javascript" src="./app/js/app.js"></script>
+  <!-- end::Script -->
+
+</body>
+</html>

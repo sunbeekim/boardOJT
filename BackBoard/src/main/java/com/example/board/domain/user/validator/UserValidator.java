@@ -140,18 +140,18 @@ public class UserValidator extends CommonValidator implements
     public boolean validateBooleanEmail(User user) {
 
         // 이메일 중복 검증
-        if (user == null) {
-            return true;
+        if (user != null) {
+            throw new DuplicateResourceException("이미 사용 중인 이메일입니다.");
         }
-        return false;
+        return true;
     }
 
     public boolean validateBooleanNickname(User user) {
         // 닉네임 중복 검증
-        if (user == null) {
-            return true;
+        if (user != null) {
+            throw new DuplicateResourceException("이미 사용 중인 닉네임입니다.");
         }
-        return false;
+        return true;
     }
 
 }

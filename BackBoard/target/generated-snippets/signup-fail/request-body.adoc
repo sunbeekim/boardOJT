@@ -1,4 +1,0 @@
-[source,options="nowrap"]
-----
-{"email":"test@email.com","password":"","nickname":"nickname"}
-----

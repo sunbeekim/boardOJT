@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(template)">
+<head>
+  <meta charset="utf-8">
+  <title>Mayfarmsoft 게시판</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../css/front/layout.css" media="all">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <!-- Include jQuery -->
+  <script src="../js/jquery-3.1.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</head>
+<body>
+  <header id="header" class="header">
+    <div class="inner">
+      <div class="sec_inner">
+        <div class="gnb_pc">
+          <div class="navbar">
+            <!--logo (desktop)-->
+            <a href="/board/board" class="logo-desktop">
+              <div class="icn icon-logo"></div>
+            </a>
+            <div class="search-area">
+              <div class="search-wrap">
+                <div class="search-inner">
+                  <div class="left">
+                    <input id="search" name="text" type="text" placeholder="검색어를 입력하세요." class="main-search" onclick="openToggle()" autocomplete="off">
+                    <a class="btn-search" onclick="sendDetail()"><img src="../img/front/icon-search.svg" alt="검색버튼"></a>
+                  </div>
+                </div>
+
+                <div class="label-area">
+                  <span>검색영역</span>
+                  <div class="label-list">
+                    <label class="checkl">
+                      <div class="icheckbox_flat-blue checked" style="position: relative;">
+                        <input name="fields" id="searchTotal" type="checkbox" style="position: absolute; opacity: 0;" checked>
+                        <ins class="search-range-ins"></ins>
+                      </div>
+                      <span>전체</span>
+                    </label>
+                    <label class="checkl">
+                      <div class="icheckbox_flat-blue" style="position: relative;">
+                        <input name="fields" id="searchTitle" type="checkbox" style="position: absolute; opacity: 0;">
+                        <ins class="search-range-ins"></ins>
+                      </div>
+                      <span>제목</span>
+                    </label>
+                    <label class="checkl">
+                      <div class="icheckbox_flat-blue" style="position: relative;">
+                        <input name="fields" id="searchTitle" type="checkbox" style="position: absolute; opacity: 0;">
+                        <ins class="search-range-ins"></ins>
+                      </div>
+                      <span>닉네임</span>
+                    </label>
+                    <span> | </span>
+                    <div style="display: inline; margin: 10px;">
+                      <span>등록일</span>
+                      <input style="border-radius: 4px; height: 30px; width: 100px;" type="text" id="prev_date">
+                      ~
+                      <input style="border-radius: 4px; height: 30px; width: 100px;" type="text" id="after_date">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="user_info" >
+              <button type="button" class="btn btn-dual" onclick="showMenu()">
+                  <img src="../img/front/avatar.jpg" alt="Header Avatar" style="width: 18px;">
+                  <span>메이어2</span>
+                  <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
+              </button>
+              <div class="dropdown-menu">
+                  <div class="p-3 bg-primary">
+                      <img class="img-avatar img-avatar45 img-avatar-thumb" src="../img/front/avatar.jpg" alt="">
+                  </div>
+                  <div class="p-2">
+                      <a class="dropdown-item" href="/user_info">
+                          <span>마이페이지</span>
+                          <i class="si si-logout ml-1"></i>
+                      </a>
+                  </div>
+                  <div class="p-2">
+                    <a class="dropdown-item" href="/login">
+                      <span>로그아웃</span>
+                      <i class="si si-logout ml-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/상단 검색 nav-->
+        </div>
+      </div>
+    </div>
+  </header>
+  <!--남색 gnb 공통-->
+
+  
+  <div style="text-align: right; margin: 20px;">
+    <label for="pageSize">페이지당 출력 건수</label>
+    <select class="form-control" name="pageSize" id="pageSize">
+      <option value="pageSize5">5</option>
+      <option value="pageSize10">10</option>
+      <option value="pageSize20">20</option>
+      <option value="pageSize30">30</option>
+    </select>
+  </div>
+
+  <div style="display: block; text-align: right; margin: 5px;">
+    <span style="font-size: 18px;"><b>정렬</b></span>
+    <a class="btn active">제목순 <span style="font-size: 12px;">▲</span></a>
+    <a class="btn active">날짜순 <span style="font-size: 12px;">▼</span></a>
+    <a class="btn">조회순</a>
+  </div>
+
+  <div >
+    <table style="display: block;">
+      <thead class="gnb-top">
+      <tr class="table_tr">
+        <th class="table_item" style="width: 300px;">제목</th>
+        <th class="table_item" style="width: 200px;">작성자</th>
+        <th class="table_item" style="width: 200px;">등록일자</th>
+        <th class="table_item" style="width: 200px;">수정일자</th>
+        <th class="table_item" style="width: 100px;">조회수</th>
+      </tr>
+      </thead>
+      <tbody style="display: block;">
+        <tr class="table_tr">
+          <td class="table_item" style="width: 300px;"><a href="/board/post_01">이 페이지를 이용하여 개발해주세요. <strong style="color: red;">(6)</strong></td>
+          <td class="table_item" style="width: 200px;">메이팜소프트</td>
+          <td class="table_item" style="width: 200px;">2024-02-27 12:11</td>
+          <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+          <td class="table_item" style="width: 100px;">0</td>
+        </tr>
+        <tr class="table_tr">
+          <td class="table_item" style="width: 300px;"><a href="/board/post_01">이 페이지를 이용하여 개발해주세요. <strong style="color: red;">(1)</strong></td>
+          <td class="table_item" style="width: 200px;">메이팜소프트</td>
+          <td class="table_item" style="width: 200px;">2024-02-25 12:12</td>
+          <td class="table_item" style="width: 200px;">2024-02-25 12:12</td>
+          <td class="table_item" style="width: 100px;">2</td>
+        </tr>
+        <tr class="table_tr">
+          <td class="table_item" style="width: 300px;"><a href="/board/post_01">이 페이지를 이용하여 개발해주세요.</td>
+          <td class="table_item" style="width: 200px;">메이팜소프트</td>
+          <td class="table_item" style="width: 200px;">2024-02-17 12:11</td>
+          <td class="table_item" style="width: 200px;">2024-02-24 16:20</td>
+          <td class="table_item" style="width: 100px;">12</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align: right; margin-right: 20px;">
+    <a href="/board/write_post_01" role="button" class="btn btn-primary"> 게시글 작성 </a>
+  </div>
+  <div class="pagination">
+    <a class="btn_first">&lt;&lt;</a>
+    <a class="btn_prev">&lt;</a>
+        <a class="number current">1</a>
+        <a class="number">2</a>
+        <a class="number">3</a>
+        <a class="number">4</a>
+        <a class="number">5</a>
+        <a class="number">6</a>
+        <a class="number">7</a>
+        <a class="number">8</a>
+        <a class="number">9</a>
+        <a class="number">10</a>
+    <a class="btn_next">&gt;</a>
+    <a class="btn_first">&gt;&gt;</a>
+  </div>
+  <script src="../js/board.js"></script>
+</body>
+</html>

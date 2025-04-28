@@ -1,9 +1,0 @@
-[source,http,options="nowrap"]
-----
-POST /api/users/login HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 56
-Host: localhost:8080
-
-{"email":"tes3t@email.com","password":"wrongpassword!1"}
-----

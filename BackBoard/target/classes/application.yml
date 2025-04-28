@@ -7,6 +7,14 @@ spring:
   #   include-binding-errors: always
   application:
     name: board
+  thymeleaf:
+    cache: false # 개발 환경에서는 캐시를 비활성화
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    content-type: text/html
+    enabled: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/board_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8

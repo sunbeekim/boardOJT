@@ -53,7 +53,7 @@
         FROM Posts p JOIN Users u ON p.user_id = u.id
         WHERE 1 = 1
             <if test="title != null">AND title LIKE CONCAT('%', #{title}, '%')</if>
-            <if test="userId != null">AND user_id = #{userId}</if>
+            <if test="userId != null">AND u.nickname = #{nickName}</if>
             <if test="dateFrom != null">AND p.created_at &gt;= #{dateFrom}</if>  
             <if test="dateTo != null">AND p.created_at &lt;= #{dateTo}</if>            
         ORDER BY ${sort} ${direction}

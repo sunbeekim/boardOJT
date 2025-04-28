@@ -53,6 +53,10 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                         .antMatchers("/api/users/**", "/api/admin/**").authenticated()
                         .antMatchers("/docs/**", "/error/**").permitAll()
+                        .antMatchers("/", "/login", "/signup", "/board", "/board/**", "/user_info", "/user_info_edit",
+                                "/error/**", "/css/**", "/js/**",
+                                "/img/**")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
