@@ -66,6 +66,16 @@ public class GlobalExceptionHandler {
                                                 "/error/" + 403));
         }
 
+        
+        @ExceptionHandler(NullPointerException.class)
+        public ResponseEntity<CommonResponseDto<?>> handleNullPointerException(NullPointerException e) {
+                log.error("NullPointerException: {}", e.getMessage());
+                return ResponseEntity
+                                .status(HttpStatus.FORBIDDEN)
+                                .body(CommonResponseDto.error("값이 비어있습니다.", "Object_NotFound", 411,
+                                                "/error/" + 411));
+        }
+
         // 유효성 검사 예외 처리 (MethodArgumentNotValidException) - dto RequestBody에 대한 매치 실패(필수
         // 값 누락 or 불필요 값 포함), 400 Bad Request
         @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -133,15 +143,15 @@ public class GlobalExceptionHandler {
                                                 "구문 오류를 확인해주세요.", "/error/" + 401));
         }
 
-        // DB 연결이 끊어져 있을 때 예외처리
-        @ExceptionHandler({ CannotGetJdbcConnectionException.class,
+        // DB 연결이 끊어져 있을 때 예외처리(필요시 Exception 세분화) 503
+        @ExceptionHandler({
+                        CannotGetJdbcConnectionException.class,
                         org.springframework.dao.DataAccessException.class,
                         org.apache.ibatis.exceptions.PersistenceException.class,
-                        java.sql.SQLException.class,
                         SQLException.class,
                         java.sql.SQLNonTransientConnectionException.class,
         })
-        public ResponseEntity<CommonResponseDto<?>> handleDbConnectionError(CannotGetJdbcConnectionException e) {
+        public ResponseEntity<CommonResponseDto<?>> handleDbConnectionError(Exception e) {
                 log.error("DB 연결 실패: {}", e.getMessage());
                 return ResponseEntity
                                 .status(HttpStatus.SERVICE_UNAVAILABLE)

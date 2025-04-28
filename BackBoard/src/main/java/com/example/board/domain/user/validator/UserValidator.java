@@ -1,7 +1,9 @@
 package com.example.board.domain.user.validator;
 
+import java.sql.SQLException;
 import java.util.regex.Pattern;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -122,19 +124,30 @@ public class UserValidator extends CommonValidator implements
     }
 
     public void validateEmail(String email) {
-        User verifyEmail = userMapper.findByEmail(email);
-
-        // 이메일 중복 검증
-        if (verifyEmail != null) {
-            throw new DuplicateResourceException("이미 사용 중인 이메일입니다.");
+        try {
+            User verifyEmail = userMapper.findByEmail(email);
+            // 이메일 중복 검증
+            if (verifyEmail != null) {
+                throw new DuplicateResourceException("이미 사용 중인 이메일입니다.");
+            }
+        } catch (Exception e) {
+            log.error("이메일 중복 검사 실패 - email: {}", email, e);
+            throw new BusinessException("DB 연결을 확인해주세요.", "SERVICE_UNAVAILABLE", 503);
         }
+
     }
 
     public void validateNickname(String nickname) {
-        User verifyNickname = userMapper.findByNickname(nickname);
-        // 닉네임 중복 검증
-        if (verifyNickname != null) {
-            throw new DuplicateResourceException("이미 사용 중인 닉네임입니다.");
+        try {
+            User verifyNickname = userMapper.findByNickname(nickname);
+            // 닉네임 중복 검증
+            if (verifyNickname != null) {
+                log.warn("닉네임 중복 - nickname: {}", nickname);
+                throw new DuplicateResourceException("이미 사용 중인 닉네임입니다.");
+            }
+        } catch (Exception e) {
+            log.error("닉네임 중복 검사 실패 - email: {}", nickname, e);
+            throw new BusinessException("DB 연결을 확인해주세요.", "SERVICE_UNAVAILABLE", 503);
         }
     }
 

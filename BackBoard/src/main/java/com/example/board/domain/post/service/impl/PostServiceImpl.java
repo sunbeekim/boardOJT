@@ -117,18 +117,18 @@ public class PostServiceImpl implements PostService {
                 "views", "views",
                 "title", "title");
 
-        Long userId = null;
-        if (request.getNickname() != null && !request.getNickname().isBlank()) {
-            userId = userMapper.findByNickname(request.getNickname()).getId();
-            request.setUserId(userId);
-        }
+        // Long userId = null;
+        // if (request.getNickname() != null && !request.getNickname().isBlank()) {
+        //     userId = userMapper.findByNickname(request.getNickname()).getId();
+        //     request.setUserId(userId);
+        // }
 
         String mappedSort = sortMap.getOrDefault(request.getSort(), "created_at");
         request.setSort(mappedSort);
 
         List<PostResponseDto> posts = postMapper.searchPosts(
                 request.getTitle(),
-                request.getUserId(),
+                request.getNickname(),
                 request.getDateFrom(),
                 request.getDateTo(),
                 request.getSize(),

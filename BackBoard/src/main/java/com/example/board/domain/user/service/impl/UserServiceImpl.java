@@ -1,6 +1,5 @@
 package com.example.board.domain.user.service.impl;
 
-import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,28 +37,25 @@ public class UserServiceImpl implements UserService {
     public void signup(SignUpRequestDto request) {
 
         log.info("회원가입 요청 - request: {}", request);
-        // userValidator.validateEmail(request.getEmail());
-        // userValidator.validateNickname(request.getNickname());
-        // userValidator.validateEmailFormat(request.getEmail());
-        // userValidator.validatePasswordFormat(request.getPassword());
-        // userValidator.validateNicknameFormat(request.getNickname());
-
-        // 위의 검증로직 통합한 공통 메서드
-        userValidator.validateCreate(request);
-
-        // 엔티티 생성
-        User user = createUser(request);
-
-        // 팩토리 로직을 몰라도 되게 하기 위한 중간 계층
-        // UserBehavior userBehavior = userBehaviorProvider.get(user);
-
-        UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
-
-        // 비밀번호 암호화 및 초기 상태 설정
-        userBehavior.register(request.getPassword(), passwordEncoder);
-
-        // 저장
         try {
+            userValidator.validateEmail(request.getEmail());
+            // userValidator.validateNickname(request.getNickname());
+            // userValidator.validateEmailFormat(request.getEmail());
+            // userValidator.validatePasswordFormat(request.getPassword());
+            // userValidator.validateNicknameFormat(request.getNickname());
+            // 위의 검증로직 통합한 공통 메서드
+            userValidator.validateCreate(request);
+
+            // 엔티티 생성
+            User user = createUser(request);
+
+            // 팩토리 로직을 몰라도 되게 하기 위한 중간 계층
+            // UserBehavior userBehavior = userBehaviorProvider.get(user);
+
+            UserBehavior userBehavior = behaviorFactory.wrap(user, UserBehavior.class);
+
+            // 비밀번호 암호화 및 초기 상태 설정
+            userBehavior.register(request.getPassword(), passwordEncoder);
             userMapper.save(user);
             log.info("회원가입 완료 - userId: {}", user.getId());
         } catch (Exception e) {
