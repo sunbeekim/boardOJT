@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="kr">
+<!-- begin::Head -->
+<head>
+  <meta charset="utf-8"/>
+  <title>Mayfarmsoft 게시판</title>
+  <meta name="description" content="Login page example">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link type="text/css" href="./css/front/login-v3.default.css" rel="stylesheet">
+  <link type="text/css" href="./css/front/style.bundle1.css" rel="stylesheet">
+</head>
+<!-- end::Head -->
+<!-- begin::Body -->
+<body class="background-img">
+  <!-- begin::Page -->
+  <div class="login login--v3 login--signin">
+    <div class="login__wrapper">
+      <div class="signup__container">
+        <a href="/login.html">
+          <img class="signup__logo" src="./img/front/logo.png" alt="mayfarm logo">
+        </a>
+        <div>
+          <form class="form" action="/login.html" method="get">
+            <div class="signup-input-group id-group">
+              <input class="form-control signup__input-group-top" type="email" placeholder="아이디(이메일 형식)" name="userid" autocomplete="off">
+              <a class="btn btn-secondary" type="button">중복체크</a>
+            </div>
+            
+            <div class="signup-input-group">
+              <input class="form-control signup__input-group-mid" type="text" placeholder="닉네임(특수문자를 제외한 한글, 알파벳 대소문자, 숫자로 구성된 2~10글자)" name="nickname" autocomplete="off">
+            </div>
+            <div class="signup-input-group">
+              <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+            </div>
+            <div class="signup-input-group">
+              <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호 확인(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+            </div>
+
+            <div class="role-group">
+              <label for="userRole">권한</label>
+              <select class="form-control" name="role" id="userRole">
+                <option value="admin">관리자</option>
+                <option value="user">사용자</option>
+              </select>
+            </div>
+
+            <!--begin::회원가입 버튼-->
+            <div class="signup__actions">
+              <button type="submit" class="btn btn-primary login__btn-primary">
+                회원가입
+              </button>
+            </div>
+            <!--end::회원가입 버튼-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end::Page -->
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- begin::Head -->
+<head>
+  <meta charset="utf-8"/>
+  <title>Mayfarmsoft 게시판</title>
+  <meta name="description" content="Login page example">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link type="text/css" href="./css/front/style.bundle1.css" rel="stylesheet">
+  <link type="text/css" href="./css/front/layout.css" rel="stylesheet">
+</head>
+<!-- end::Head -->
+
+<!-- begin::Body -->
+<body>
+  <!-- begin::Page -->
+    <div class="user_info_container">
+      <div>
+        <div style="margin-top: 40px; margin-bottom: 20px;">
+          <a href="/board/board.html">
+            <img class="logo-small" src="./img/front/logo.png">
+          </a>
+        </div>
+        <!-- begin::현재페이지제목 -->
+        <div class="page_title">
+          <h2>회원 정보 수정</h2>
+        </div>
+        <!-- end::현재페이지제목 -->
+        <div class="user_info_wrap">
+          <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="130px" height="130px" fill="currentColor" viewBox="-3 -3 25 25">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="user_info_text">
+              <span class="text">아이디</span>
+              <span>mayfarmsoft</span>
+            </div>
+            <div class="user_info_text">
+              <span class="text">닉네임</span>
+              <div class="signup-input-group">
+                <input class="form-control signup__input-group-mid" value="메이팜소프트" type="text" placeholder="닉네임(특수문자를 제외한 한글, 알파벳 대소문자, 숫자로 구성된 2~10글자)" name="nickname" autocomplete="off">
+              </div>
+            </div>
+            <div class="user_info_text">
+              <span class="text">비밀번호</span>
+              <div class="signup-input-group">
+                <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+              </div>
+            </div>
+            <div class="user_info_text">
+              <span class="text">비밀번호 확인</span>
+              <div class="signup-input-group">
+                <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호 확인(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+              </div>
+            </div>
+            <div class="user_info_text">
+              <span class="text">마지막 수정 날짜</span>
+              <span>2024.02.29. 12:20</span>
+            </div>
+          </div>
+          <hr/>
+          <!--begin::정보수정 버튼-->
+          <div class="content_btn_wrap">
+            <button type="submit" class="btn btn-success" onclick="location.href='/user_info.html'">
+              수정
+            </button>
+            <button type="submit" class="btn btn-secondary" onclick="location.href='/user_info.html'">
+              취소
+            </button>
+          </div>
+          <!--end::정보수정 버튼-->
+        </div>
+    </div>
+  </div>
+  <!-- end::Page -->
+
+  <!-- begin::Script -->
+  <script type="text/javascript" src="./app/js/app.js"></script>
+  <!-- end::Script -->
+
+</body>
+</html>

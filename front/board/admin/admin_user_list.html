@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(template)">
+<head>
+  <meta charset="utf-8">
+  <title>Mayfarmsoft 게시판</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="../../css/front/layout.css" media="all">
+  <!-- Include jQuery -->
+  <script src="../../js/jquery-3.1.0.min.js"></script>
+  
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="inner">
+          <div class="sec_inner">
+            <div class="gnb_pc">
+              <div class="navbar">
+                <!--logo (desktop)-->
+                <a href="/board/admin/admin_article_list.html" class="logo-desktop" style="margin-right:15em">
+                    <div class="icn icon-logo"></div>
+                    <!-- begin::현재페이지제목 -->
+                    <div class="page_title">
+                        <h2>회원 관리</h2>
+                    </div>
+                    <!-- end::현재페이지제목 -->
+                </a>
+                <div class="user_info" >
+                  <button type="button" class="btn btn-dual" onclick="showMenu()">
+                      <img src="../../img/front/avatar.jpg" alt="Header Avatar" style="width: 18px;">
+                      <span>메이어2</span>
+                      <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                      <div class="p-3 bg-primary">
+                          <img class="img-avatar img-avatar45 img-avatar-thumb" src="../../img/front/avatar.jpg" alt="">
+                      </div>
+                      <div class="p-2">
+                        <a class="dropdown-item" href="/board/admin/admin_article_list.html">
+                          <span>게시글 관리</span>
+                          <i class="si si-logout ml-1"></i>
+                      </a>
+                    </div>
+                      <div class="p-2">
+                        <a class="dropdown-item" href="/login.html">
+                          <span>로그아웃</span>
+                          <i class="si si-logout ml-1"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--/상단 검색 nav-->
+            </div>
+          </div>
+        </div>
+      </header>
+  <!--남색 gnb 공통-->
+  
+  <div>
+    <table style="display: block;">
+      <thead class="gnb-top">
+      <tr class="table_tr">
+        <th class="table_item" style="width: 50px;"><input type="checkbox"/></th>
+        <th class="table_item" style="width: 200px;">닉네임</th>
+        <th class="table_item" style="width: 200px;">아이디</th>
+        <th class="table_item" style="width: 200px;">생성일자</th>
+        <th class="table_item" style="width: 200px;">수정일자</th>
+        <th class="table_item" style="width: 100px;">계정 잠금/해제</th>
+      </tr>
+      </thead>
+      <tbody style="display: block;">
+        <tr class="table_tr">
+          <td style="text-align: center; width: 50px;"><input type="checkbox"/></td>
+          <td class="table_item" style="width: 200px;">메이팜소프트</td>
+          <td class="table_item" style="width: 200px;">mayfarm</td>
+          <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+          <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+          <td class="table_item" style="width: 100px;"><a href="#" role="button" class="btn btn-success"> 해제 </a></td>
+        </tr>
+        <tr class="table_tr">
+            <td style="text-align: center; width: 50px;"><input type="checkbox"/></td>
+            <td class="table_item" style="width: 200px;">메이어1</td>
+            <td class="table_item" style="width: 200px;">mayer1</td>
+            <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+            <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+            <td class="table_item" style="width: 100px;"><a href="#" role="button" class="btn btn-primary"> 잠금 </a></td>
+        </tr>
+        <tr class="table_tr">
+            <td style="text-align: center; width: 50px;"><input type="checkbox"/></td>
+            <td class="table_item" style="width: 200px;">신입 메이어</td>
+            <td class="table_item" style="width: 200px;">newMayer</td>
+            <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+            <td class="table_item" style="width: 200px;">2024-02-27 16:20</td>
+            <td class="table_item" style="width: 100px;"><a href="#" role="button" class="btn btn-primary"> 잠금 </a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="content_btn_wrap">
+    <a href="#" role="button" class="btn btn-warning"> 선택 삭제 </a>
+    <a href="#" role="button" class="btn btn-danger"> 모두 삭제 </a>
+  </div>
+  
+  <div class="pagination">
+    <a class="btn_first">&lt;&lt;</a>
+    <a class="btn_prev">&lt;</a>
+        <a class="number current">1</a>
+        <a class="number">2</a>
+        <a class="number">3</a>
+        <a class="number">4</a>
+        <a class="number">5</a>
+        <a class="number">6</a>
+        <a class="number">7</a>
+        <a class="number">8</a>
+        <a class="number">9</a>
+        <a class="number">10</a>
+    <a class="btn_next">&gt;</a>
+    <a class="btn_first">&gt;&gt;</a>
+  </div>
+  <script src="../../js/board.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(template)">
+
+<head>
+    <meta charset="utf-8" />
+    <title>게시글</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../css/front/layout.css" media="all" />
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; width: 0; height: 0" aria-hidden="true">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17" id="ico-post-comment-323232"><g fill="none" fill-rule="evenodd" stroke="currentColor"><path stroke-width="1.6" d="M7.225.8h2.55c1.774 0 3.38.72 4.543 1.882A6.403 6.403 0 0116.2 7.225a6.402 6.402 0 01-1.547 4.182 6.413 6.413 0 01-4.206 2.208L8.18 15.68l-1.625-2.065a6.405 6.405 0 01-4.208-2.209A6.393 6.393 0 01.8 7.225c0-1.774.72-3.38 1.882-4.543A6.403 6.403 0 017.225.8z"></path><path fill="currentColor" stroke-width=".6" d="M12.253 6.892a.555.555 0 01-.394.951.559.559 0 01-.557-.557c0-.154.063-.293.163-.394.101-.101.24-.163.788 0zm-3.428 0a.557.557 0 11-.788 0c.1-.101.24-.163.788 0zm-3.429 0a.557.557 0 11-.788 0c.101-.101.24-.163.788 0z"></path></g></symbol>
+    </svg>
+    <header id="header" class="header">
+        <div class="inner">
+            <div class="sec_inner">
+                <div class="gnb_pc">
+                    <div class="navbar">
+                        <!--logo (desktop)-->
+                        <a href="/board/board.html" class="logo-desktop">
+                            <div class="icn icon-logo"></div>
+                        </a>
+                    </div>
+                    <!--/상단 검색 nav-->
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--남색 gnb 공통-->
+
+    <div class="ArticleContentBox">
+        
+        <article>
+            <!-- begin::현재페이지제목 -->
+            <div class="page_title" style="margin-bottom: 20px;">
+                <h2>게시글 작성</h2>
+            </div>
+            <!-- end::현재페이지제목 -->
+            <header class="article_header">
+                <!-- begin::게시글 제목 -->
+                <div class="ArticleTitle">
+                    <input style="width: 100%; border-style: none; border-radius: 4px; padding: 10px; background-color: #f9f9f9; color: #616161;" 
+                           placeholder="제목을 입력해 주세요."/>
+                </div>
+                
+                <!-- end::게시글 제목 -->
+                <!-- begin::게시글 정보 -->
+                <div class="WriterInfo">
+                    <div>
+                        <div class="article_info">
+                            <span>작성자</span>
+                            <span>메이팜소프트</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- end::게시글 정보 -->
+            </header>
+
+            <div class="ArticleWriter">
+                <div class="article_inbox">
+                    <textarea placeholder="내용을 작성해 주세요." rows="1" class="article_inbox_text" 
+                    style="overflow: hidden; overflow-wrap: break-word; height: 55px;"></textarea>
+                </div>
+                <div style="text-align: right;">
+                    <a href="/board/post_01.html" role="button" class="btn btn-success"> 등록 </a>
+                    <a href="/board/board.html" role="button" class="btn btn-secondary"> 목록으로 </a>
+                </div>
+            </div>
+
+        </article>
+    </div>
+</body>
+</form>
+
+</html>
