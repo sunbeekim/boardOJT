@@ -21,20 +21,32 @@
           <form class="form" action="/login" method="get">
             <div class="signup-input-group id-group">
               <input class="form-control signup__input-group-top" type="email" placeholder="아이디(이메일 형식)" name="userId" required
-              data-regex="/^[^\s@]+@[^\s@]+\.[^\s@]+$/"
+              data-regex="^[^\s@]+@[^\s@]+\.[^\s@]+$"
               data-error-message="아이디는 이메일 형식이어야 합니다." autocomplete="off">
               <button class="btn btn-secondary" type="button" id="checkIdBtn">중복체크</button>
             </div>
+            <div class="invalid-feedback" style="display: none;"></div>
             
             <div class="signup-input-group">
-              <input class="form-control signup__input-group-mid" type="text" placeholder="닉네임(특수문자를 제외한 한글, 알파벳 대소문자, 숫자로 구성된 2~10글자)" name="nickname" autocomplete="off">
+              <input class="form-control signup__input-group-mid" type="text" placeholder="닉네임(특수문자를 제외한 한글, 알파벳 대소문자, 숫자로 구성된 2~10글자)" name="nickname" autocomplete="off"
+              data-regex="^[가-힣a-zA-Z0-9]{2,10}$"
+              data-error-message="닉네임은 특수문자를 제외한 한글, 알파벳 대소문자, 숫자로 구성된 2~10글자여야 합니다.">
             </div>
+            <div class="invalid-feedback" style="display: none;"></div>
+
             <div class="signup-input-group">
-              <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+              <input class="form-control signup__input-group-mid" type="password" placeholder="비밀번호(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off"
+              data-regex="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$"
+              data-error-message="비밀번호는 영문, 숫자, 특수문자를 포함한 8~16자여야 합니다.">
             </div>
+            <div class="invalid-feedback" style="display: none;"></div>
+
             <div class="signup-input-group">
-              <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호 확인(영문, 숫자, 특수문자를 포함한 8~16자)" name="password" autocomplete="off">
+              <input class="form-control signup__input-group-btm" type="password" placeholder="비밀번호 확인(영문, 숫자, 특수문자를 포함한 8~16자)" name="passwordConfirm" autocomplete="off"
+              data-regex="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$"
+              data-error-message="비밀번호는 영문, 숫자, 특수문자를 포함한 8~16자여야 합니다.">
             </div>
+            <div class="invalid-feedback" style="display: none;"></div>
 
             <div class="role-group">
               <label for="userRole">권한</label>

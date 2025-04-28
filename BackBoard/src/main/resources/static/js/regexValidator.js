@@ -3,32 +3,61 @@ $(document).ready(() => {
 
     // 아이디 입력 필드 변경 시 userIdCheck 초기화
     $('input[name="userId"]').on('input', (e) => {
-      userIdCheck = false;
-      $(e.currentTarget).removeClass('is-valid is-invalid');
+        userIdCheck = false;
+        validateInput(e.currentTarget);
     });
 
-    // 실시간 입력 검증
+    // 모든 입력 필드에 대한 실시간 검증
     $('input[data-regex]').on('input', (e) => {
-        const $input = $(e.currentTarget);
+        validateInput(e.currentTarget);
+    });
+
+    // 입력 필드 포커스 아웃 시 검증
+    $('input[data-regex]').on('blur', (e) => {
+        validateInput(e.currentTarget);
+    });
+
+    // 입력 필드 검증 함수
+    const validateInput = (input) => {
+        const $input = $(input);
         const value = $input.val();
         const regex = new RegExp($input.data('regex'));
         const errorMessage = $input.data('error-message');
-      
+        const $errorMessage = $input.parent().next('.invalid-feedback');
+        
         if (value === '') {
-          $input.removeClass('is-valid is-invalid');
-          $input.siblings('.invalid-feedback').remove();
-          return;
+            $input.removeClass('is-valid is-invalid');
+            $errorMessage.hide();
+            return;
         }
-      
+        
         if (regex.test(value)) {
-          $input.removeClass('is-invalid').addClass('is-valid');
-          $input.siblings('.invalid-feedback').remove();
+            $input.removeClass('is-invalid').addClass('is-valid');
+            $errorMessage.hide();
         } else {
-          $input.removeClass('is-valid').addClass('is-invalid');
-          if ($input.siblings('.invalid-feedback').length === 0) {
-            $input.after(`<div class="invalid-feedback">${errorMessage}</div>`);
-          }
+            $input.removeClass('is-valid').addClass('is-invalid');
+            $errorMessage.text(errorMessage).show();
         }
-      });
-      
+    }
+
+    // 비밀번호 확인 검증
+    $('input[name="passwordConfirm"]').on('input', (e) => {
+        const password = $('input[name="password"]').val();
+        const confirmPassword = $(e.currentTarget).val();
+        const $errorMessage = $(e.currentTarget).parent().next('.invalid-feedback');
+        
+        if (confirmPassword === '') {
+            $(e.currentTarget).removeClass('is-valid is-invalid');
+            $errorMessage.hide();
+            return;
+        }
+        
+        if (password === confirmPassword) {
+            $(e.currentTarget).removeClass('is-invalid').addClass('is-valid');
+            $errorMessage.hide();
+        } else {
+            $(e.currentTarget).removeClass('is-valid').addClass('is-invalid');
+            $errorMessage.text('비밀번호가 일치하지 않습니다.').show();
+        }
+    });
 });
